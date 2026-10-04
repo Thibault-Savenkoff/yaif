@@ -154,17 +154,15 @@ BD-rate on mean curves, PSNR + SSIMULACRA2 built from libjxl v0.11.1 `jxlsrc/bui
   7.7 Mpx q 50: +0.5 s native, +1 s CPU libyaif, +3 s single-thread JS. **Luma halos (grey smudges
   next to edges in skies, kodim19) NOT addressed** -- y8 luma smoothing tried, nothing visible.
 - All tests green: lossy.sh (+q 50 recon), js.sh/libyaif.sh (+q 50/70), replicas.sh (+q 50), unit.sh
-  2768/0 + 720 corrupt files. Needs a beta.9 (format flag). Local trap: `test/unit.sh` exits 1 silently
+  2768/0 + 720 corrupt files. **beta.9 PUBLISHED 2026-10-04** (tag on `f98b315`, run `37217385047`, 7 jobs green, 7 assets, pre-release; notes `release/NOTES-v2.0.0-beta.9.md`; beta.8 refuses filtered files: stripe count > 16). Local trap: `test/unit.sh` exits 1 silently
   when `lisaac` is not on PATH (`/var/tmp/yaif-work/lisaac/bin`). **Keep big work files out of the
   scratchpad: /tmp is RAM (tmpfs, 3.9 G on a 7 G host)** -- use /var/tmp/yaif-work.
 
 ### To do (details in the entries below)
 Next up, in order:
-1. **Mac test on real hardware** (user has no Mac access right now): `install.sh`, `nova convert`
+1. **Mac test on real hardware** (user has no Mac access right now): `install.sh`, `yaif convert`
    (HEIC -> JPEG/AVIF/HEIC, CR3 -> DNG), `.heic` with its gain map -- CI covers macOS, no human has.
-2. **Decide the rename (YAIF is the user's favourite) and do it**, or explicitly keep NOVA -- before
-   v2.0.0 final. See the naming entry further down for the full history and the open question
-   (keep reading old `.nova` files after the rename? recommended yes).
+2. **v2.0.0 final**: v2 to `main` (puts the v2 web page/PWA live). (Rename: done 2026-09-24.)
 Open, no date:
 - `install.ps1` for Windows (`irm | iex`): sidesteps SmartScreen/Defender; ~150-200 lines.
 - **Rename the format (and `.nova`) or not -- decide BEFORE v2.0.0 final, never after.** `.nova` is
