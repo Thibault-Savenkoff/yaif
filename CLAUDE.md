@@ -158,6 +158,30 @@ BD-rate on mean curves, PSNR + SSIMULACRA2 built from libjxl v0.11.1 `jxlsrc/bui
   when `lisaac` is not on PATH (`/var/tmp/yaif-work/lisaac/bin`). **Keep big work files out of the
   scratchpad: /tmp is RAM (tmpfs, 3.9 G on a 7 G host)** -- use /var/tmp/yaif-work.
 
+### Pre-v2.0.0 review (2026-10-17): findings NOT fixed yet
+Diff main..v2 = 30.8k lines > ultrareview's 8k limit, so split into 4 local branch pairs
+`review/N` (tree = v2) vs `review/N-base` (v2 minus the chunk's files): 1-codec, 2-io, 3-decoders,
+4-install (not pushed; delete when done). 3 free ultrareviews used on 1-3 (none left; the $100
+cloud-session credit does NOT pay for them). Chunk 4 (install/CI/web) NOT reviewed: a local
+`/code-review max` hit the user's 5h limit -- ask before any heavy local review.
+To fix, worst first (full text in the session transcript, 2026-10-17):
+- Crafted-file memory bugs: libyaifdec.c level-5 RGBA `n > len - 8` size_t underflow (len 6/7);
+  int pixel offsets in sample()/store() (> 536 Mpx); no early stop on `overrun` (tiny file, huge
+  IHDR = minutes of CPU, same in JS); yaif.li collect_meta iCCP + APP2 ICC heap overflow (reset
+  iccp_n); second IHDR accepted after frames (FDLT over-read); RAWH cblack count unchecked
+  (nr_restore, write_dng); TIFF `ext` buffer fixed-size vs merge_ifd0; add_exif reads before its
+  bound check; WIC CopyPixels size check in 32 bits; WIC bad_alloc escapes COM; heif_meta.js
+  ipma/iloc loops unbounded.
+- Windows: `long` = 32 bits in yaif_par/zlib/hdr C helpers (>2 GB buffers); np_reg 256 slots never
+  reused (long animations); `convert` gets no replicas (slow).
+- Encoder: no 65535 check on non-RAW sources; child exit status never checked (corrupt file, "Done");
+  put_gain_map uses near-lossless eps as wavelet quality on levels 1-4.
+- nu_cmp strcmp: beta.10 < beta.9 -- bites the very next release.
+- Smaller: nz_inflate dlopens libz.so.1 only (macOS loses PNG iCCP); PNG iDOT copied (Apple);
+  libheif error string used after free; stale HEIC gain map in bench; Qt canRead() true after last
+  frame (no loop); gdk-pixbuf RAW reports sensor size; web strip drops EXIF orientation; unchecked
+  realloc x4; tables init without memory barrier; TIFF maker-note offsets.
+
 ### To do (details in the entries below)
 Next up, in order:
 1. **Mac test on real hardware** (user has no Mac access right now): `install.sh`, `yaif convert`
