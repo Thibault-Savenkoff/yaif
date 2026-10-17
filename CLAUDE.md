@@ -162,8 +162,23 @@ BD-rate on mean curves, PSNR + SSIMULACRA2 built from libjxl v0.11.1 `jxlsrc/bui
 Diff main..v2 = 30.8k lines > ultrareview's 8k limit, so split into 4 local branch pairs
 `review/N` (tree = v2) vs `review/N-base` (v2 minus the chunk's files): 1-codec, 2-io, 3-decoders,
 4-install (not pushed; delete when done). 3 free ultrareviews used on 1-3 (none left; the $100
-cloud-session credit does NOT pay for them). Chunk 4 (install/CI/web) NOT reviewed: a local
-`/code-review max` hit the user's 5h limit -- ask before any heavy local review.
+cloud-session credit does NOT pay for them). Chunk 4 (install/CI/web) reviewed 2026-10-17 in a
+claude.ai/code session (its verify pass died on the limit; items 1-6 below re-read in the code and
+real). A local `/code-review max` had hit the user's 5h limit -- ask before any heavy local review.
+Chunk 4, worst first: (1) yaif.nsi:122/201 ReadRegStr on a PATH > NSIS_MAX_STRLEN returns EMPTY +
+error flag (not a cut string) -> install writes `;<InstDir>` as the whole PATH, uninstall an empty
+one (careful: a missing HKCU Path also sets the error flag); (2) the MSI never runs
+`yaif-profile.ps1 -Remove`, Active Setup lines for other users never removed -> every PowerShell
+start errors once the script is gone (wrap the line in `if (Test-Path ...)`); (3) win/dist.sh has
+no exit on makensis/wixl failure -> CI green, release without .exe/.msi; (4) install.sh:588 removes
+NOVA before the YAIF download is verified; NOVA <= beta.4 has no share/nova/install.sh; zsh PATH
+line skipped because the current shell's PATH still has ~/.local/bin; (5) `--uninstall --system`:
+final `rm -f "$manifest"` without sudo; (6) macOS: yaif dlopens leaf names (libheif.1.dylib...),
+dyld never searches /opt/homebrew/lib -> no HEIC/WebP/RAW/AVIF from Homebrew on Apple Silicon,
+while check_lib prints a tick. Unverified single-agent ones: gdk-pixbuf-query-loaders not on
+Debian's PATH, plugin installs "ok" after a failed sudo, Dolphin uninstall restores the whole old
+plugin list, bash completion breaks on spaces, web: same file re-picked ignored, iPad seen as
+desktop, "Save image" drops EXIF; test/install.sh dies silently.
 To fix, worst first (full text in the session transcript, 2026-10-17):
 - Crafted-file memory bugs: libyaifdec.c level-5 RGBA `n > len - 8` size_t underflow (len 6/7);
   int pixel offsets in sample()/store() (> 536 Mpx); no early stop on `overrun` (tiny file, huge
