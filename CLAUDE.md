@@ -265,7 +265,12 @@ Open, no date:
   dataset; name otherwise small iOS/Lua libs. My advice: YAIF (only one free on name, extension
   AND searchability). **User leans YAIF, likes its self-deprecation -- no "go" yet.** Open point for
   the rename: keep READING old `.nova` files (old magic) while writing YAIF -- recommended.
-- macOS Finder/Quick Look: an ImageIO plugin, deferred past v2.
+- macOS Finder/Quick Look: **decided (user, 2026-11-12): do it, but AFTER v2.0.0 final.** Plan: Quick Look
+  extension (QLThumbnailProvider + preview) on `libyaif` + the PREV chunk, tiny host `.app`, ad-hoc signature,
+  built on the user's machine by install.sh (a locally built binary has no quarantine, so Gatekeeper lets it run,
+  no paid Apple account needed; downloaded binaries would show "unidentified developer" -- same accepted trade-off
+  as SmartScreen). Unverified: do the Xcode command-line tools alone build an appex, and does Quick Look register one
+  outside /Applications (pluginkit). Each trial must be run by the user on the Mac. Until then Finder shows a generic icon.
 - GNOME: re-verify the glycin install fix on the VM; Nautilus thumbnails still fail (not chased);
   `plugins/gdk-pixbuf` untested.
 - libheif PR #1503: once in a libheif release, drop `libheif-gainmap/` for the system libheif.
