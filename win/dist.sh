@@ -103,7 +103,8 @@ cat > $D/yaif-profile.ps1 <<'EOF'
 # Adds (or, with -Remove, takes out) the line that loads YAIF's tab completion, in your PowerShell
 # profile. Run it once: .\yaif-profile.ps1
 param([switch]$Remove, [string]$Script = "$PSScriptRoot\yaif-completion.ps1", [switch]$ThisHostOnly)
-$line = ". `"$Script`""
+# Guarded: once the install is gone the line must load nothing, not print an error in every new window.
+$line = "if (Test-Path `"$Script`") { . `"$Script`" }"
 if (-not (Test-Path $PROFILE)) {
     if ($Remove) { return }
     New-Item -ItemType File -Path $PROFILE -Force | Out-Null
@@ -138,14 +139,14 @@ if (-not $ThisHostOnly) {
 }
 EOF
 sed -i 's/$/\r/' $D/README.txt $D/LICENSE-*.txt $D/yaif-completion.ps1 $D/yaif-profile.ps1 $D/install.bat $D/uninstall.bat
-(cd dist && zip -qr yaif-windows.zip yaif-windows) && ls -l dist/yaif-windows.zip
+(cd dist && zip -qr yaif-windows.zip yaif-windows) && ls -l dist/yaif-windows.zip || exit 1
 # Both installers show yaif.li's version in Settings > Apps. An MSI ProductVersion is numbers only,
 # so the MSI gets 2.0.0 where NSIS shows the whole 2.0.0-beta.2.
 V=$(sed -n 's/.*- version:String := "\(.*\)"/\1/p' yaif.li)
 # Installer (sudo dnf install mingw32-nsis): dist/yaif-setup.exe
-if command -v makensis >/dev/null; then makensis -V2 -DVERSION="$V" win/yaif.nsi && ls -l dist/yaif-setup.exe; else echo "makensis missing: no yaif-setup.exe"; fi
+if command -v makensis >/dev/null; then makensis -V2 -DVERSION="$V" win/yaif.nsi && ls -l dist/yaif-setup.exe || exit 1; else echo "makensis missing: no yaif-setup.exe"; fi
 # MSI (sudo dnf install msitools): dist/yaif-setup.msi
-if command -v wixl >/dev/null; then wixl -a x64 -D Version="${V%%-*}" -o dist/yaif-setup.msi win/yaif.wxs && ls -l dist/yaif-setup.msi; else echo "wixl missing: no yaif-setup.msi"; fi
+if command -v wixl >/dev/null; then wixl -a x64 -D Version="${V%%-*}" -o dist/yaif-setup.msi win/yaif.wxs && ls -l dist/yaif-setup.msi || exit 1; else echo "wixl missing: no yaif-setup.msi"; fi
 
 # Release names, the shape release/pack.sh gives the Linux and macOS archives
 # (yaif-<version>-<os>-<arch>); the release's SHA256SUMS is written when it is published.

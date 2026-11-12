@@ -117,12 +117,35 @@ Section "YAIF" SecCore
     MessageBox MB_OK|MB_ICONEXCLAMATION "The viewer codec could not be registered (regsvr32 error $0)."
 
   ; yaif.exe on the PATH (new terminals): HKLM for an all-users install, HKCU for the current user only
-  ; NSIS strings stop at ${NSIS_MAX_STRLEN} characters: a longer PATH would come back cut, so leave it alone
+  ; ReadRegStr on a value longer than ${NSIS_MAX_STRLEN} comes back EMPTY with the error flag set, the same
+  ; as for a missing value: writing "$1;dir" then would replace the whole PATH. Tell the two apart.
+  ClearErrors
   ${if} $MultiUser.InstallMode == "AllUsers"
     ReadRegStr $1 HKLM "${ENV_ALLUSERS}" "Path"
   ${else}
     ReadRegStr $1 HKCU "${ENV_CURRENTUSER}" "Path"
   ${endif}
+  IfErrors 0 pathread
+    StrCpy $4 0
+    pathenum:
+      ${if} $MultiUser.InstallMode == "AllUsers"
+        EnumRegValue $2 HKLM "${ENV_ALLUSERS}" $4
+      ${else}
+        EnumRegValue $2 HKCU "${ENV_CURRENTUSER}" $4
+      ${endif}
+      StrCmp $2 "" pathnone
+      StrCmp $2 "Path" pathlong
+      IntOp $4 $4 + 1
+      Goto pathenum
+    pathnone:
+    ; no PATH value at all: create it
+    ${if} $MultiUser.InstallMode == "AllUsers"
+      WriteRegExpandStr HKLM "${ENV_ALLUSERS}" "Path" "$InstDir"
+    ${else}
+      WriteRegExpandStr HKCU "${ENV_CURRENTUSER}" "Path" "$InstDir"
+    ${endif}
+    Goto pathdone
+  pathread:
   StrLen $3 "$1;$InstDir"
   IntCmp $3 ${NSIS_MAX_STRLEN} pathlong 0 pathlong
   Push $1
@@ -197,11 +220,14 @@ Section "Uninstall"
   ${DisableX64FSRedirection}
   ExecWait '"$SYSDIR\regsvr32.exe" /s /u "$InstDir\yaif_wic.dll"'
   ${EnableX64FSRedirection}
+  ClearErrors
   ${if} $MultiUser.InstallMode == "AllUsers"
     ReadRegStr $1 HKLM "${ENV_ALLUSERS}" "Path"
   ${else}
     ReadRegStr $1 HKCU "${ENV_CURRENTUSER}" "Path"
   ${endif}
+  ; empty + error flag: missing (nothing to remove) or too long to read (leave it alone)
+  IfErrors unpathdone
   StrLen $3 $1
   IntCmp $3 ${NSIS_MAX_STRLEN} unpathdone 0 unpathdone
   ${UnStrRep} $1 $1 ";$InstDir" ""
