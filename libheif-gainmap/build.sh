@@ -1,7 +1,7 @@
 #!/bin/sh
 # Builds libyaif-heif: libheif with the gain-map API of its pull request #1503 (pr1503.patch, the
-# rebase kept at github.com/fxthomas/libheif, branch pr/1503-gain-maps-v1.23.1; it applies clean on
-# 1.23.4), and kvazaar (BSD) as its only codec, linked in statically. yaif loads it for one thing:
+# rebase kept at github.com/fxthomas/libheif, branch pr/1503-gain-maps-v1.23.1; it applies on
+# 1.23.7, two context.cc hunks with fuzz 2: the CI's tmap check is what vouches for it), and kvazaar (BSD) as its only codec, linked in statically. yaif loads it for one thing:
 # writing a .heic that keeps the photo's HDR gain map (ISO 21496-1 `tmap`), which no released
 # libheif can do. Everything else, reading HEIC first of all, stays on the system's libheif, which
 # gets the distribution's security fixes -- this copy would not. Renamed (yaif-heif) so it can
@@ -13,8 +13,8 @@
 # curl and patch. When #1503 is in a libheif release, this directory goes away.
 set -eu
 
-HEIF=1.23.4
-HEIF_SHA=d0c02b4b0e978f34a1974b6f3eea7975a537bf7a9195ffeea38e7242ff316fdd
+HEIF=1.23.7
+HEIF_SHA=f7483e818503ea6224c8863e4a56ac02c7089021a98472c811c12aa19faf2475
 KVAZAAR=2.3.2
 KVAZAAR_SHA=b95d2e20f2b0d8d7ed320055740be2e7a730abe28b153b5a788cfca371cc38b2
 

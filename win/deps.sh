@@ -17,10 +17,10 @@
 # Fedora: sudo dnf install mingw64-gcc-c++ mingw64-filesystem mingw64-pkg-config cmake yasm perl
 set -eu
 
-AOM=3.13.1
-AVIF=1.3.0
+AOM=3.15.3
+AVIF=1.4.2
 DE265=1.1.3
-HEIF=1.23.4
+HEIF=1.23.7
 KVAZAAR=2.3.2
 
 stage=${1:?usage: win/deps.sh <staging-dir>}
@@ -105,8 +105,9 @@ if ! built "heif-$HEIF+kvazaar"; then
 fi
 
 # Only yaif's HDR gain-map AVIF goes through libavif (yaif_heic.li dlopens "libavif.so.16", which
-# win/yaif_win.h turns into libavif-16.dll); plain AVIF is libheif's job. 1.3.0 is the version
-# yaif_heic.li checked its struct offsets against, and it has the gain-map API unconditionally.
+# win/yaif_win.h turns into libavif-16.dll); plain AVIF is libheif's job. yaif_heic.li's struct offsets
+# were checked against 1.3.0; 1.4.2's avif.h (diffed) only appends fields to avifEncoder, after the ones
+# used, so they hold. The gain-map API is unconditional there.
 if ! built "avif-$AVIF"; then
   get "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v$AVIF.tar.gz"
   build "avif-$AVIF" "libavif-$AVIF" \

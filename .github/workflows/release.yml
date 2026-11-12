@@ -49,7 +49,7 @@ jobs:
             arch: x86_64
     runs-on: ${{ matrix.runner }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Read the pinned Lisaac Ω version from README.md
         id: lisaac
@@ -72,7 +72,7 @@ jobs:
       # x86_64-only libglfw3.a), and it edits ~/.bashrc. yaif needs none of that.
       - name: Restore/build Lisaac Ω ${{ steps.lisaac.outputs.version }}
         id: lisaac-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ runner.temp }}/lisaac
           key: lisaac-compiler-${{ matrix.os }}-${{ matrix.arch }}-${{ steps.lisaac.outputs.version }}-${{ steps.lisaac.outputs.etag }}
@@ -104,7 +104,7 @@ jobs:
 
       # The unit tests (with the corrupt-file fuzz, which needs uv) and the install.sh test, once:
       # they test yaif's code and the installer, not the platform.
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v10.3.3
         if: matrix.os == 'linux' && matrix.arch == 'x86_64'
 
       - name: Tests
@@ -131,7 +131,7 @@ jobs:
           grep -q tmap "$RUNNER_TEMP/hdr.heic" || { echo "::error::no gain map (tmap) in the HEIC" >&2; exit 1; }
 
       # macOS: an input of the universal job below, not a release file (publish takes yaif-*).
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os == 'macos' && 'part' || 'yaif' }}-${{ matrix.os }}-${{ matrix.arch }}
           path: dist/*
@@ -139,7 +139,7 @@ jobs:
 
       # The Windows job cross-compiles this instead of building Lisaac Ω again.
       # One copy is enough, and two linux jobs uploading the same name would fail.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: matrix.os == 'linux' && matrix.arch == 'x86_64'
         with:
           name: c-source
@@ -152,9 +152,9 @@ jobs:
     needs: build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: part-macos-*
           path: parts
@@ -173,7 +173,7 @@ jobs:
           ./install.sh --from dist/yaif-*-macos-universal.tar.gz --prefix "$RUNNER_TEMP/p" -y --no-plugins --no-heic-hdr
           "$RUNNER_TEMP/p/bin/yaif" --version
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: yaif-macos-universal
           path: dist/*
@@ -199,9 +199,9 @@ jobs:
             mingw64-LibRaw mingw64-winpthreads mingw64-binutils mingw64-pkg-config \
             cmake yasm perl patch mingw32-nsis msitools
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: c-source
 
@@ -213,7 +213,7 @@ jobs:
       # one library's flags then does not pay for aom again (~10 min on its own).
       - name: Restore/build the cross-compiled libraries
         id: deps-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ runner.temp }}/windeps
           key: windeps-fedora44-${{ hashFiles('win/deps.sh', 'libheif-gainmap/*') }}
@@ -225,7 +225,7 @@ jobs:
       - name: Build the Windows files
         run: bash win/dist.sh
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: yaif-windows
           path: |
@@ -239,7 +239,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Check the tag matches yaif.li's version
         run: |
@@ -247,7 +247,7 @@ jobs:
           v=$(sed -n 's/.*- version:String := "\(.*\)"/\1/p' yaif.li)
           [ "$tag" = "$v" ] || { echo "::error::tag v$tag does not match yaif.li's version ($v); bump yaif.li first" >&2; exit 1; }
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           # Only the release files: c-source is the Windows job's input, not
           # something to attach to the release.
