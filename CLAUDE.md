@@ -223,7 +223,8 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
 - Smaller review findings fixed: install.sh (failed install_file aborts plugin step, multiarch gdk-pixbuf-query-loaders, Dolphin uninstall removes only libyaifthumb), bash completion `_filedir`, web page (same file re-picked, iPad/phone), test/install.sh reports "stopped early" and keeps logs.
 - Trap: every `env -i` step of test/install.sh needs `TMPDIR` (uninstall's mktemp died on read-only /tmp, silently).
 - Skipped on purpose: web "Save image" drops EXIF, Qt canRead() after last frame, TIFF maker-note offsets, LibRaw bump.
-- Next: beta.10 = rebuild docs/yaif_enc.wasm with Lisaac 0.7 (docs/build.sh), bump `?v=`, version bump + release/NOTES-v2.0.0-beta.10.md; user pushes the tag.
+- **beta.10 PUBLISHED 2026-11-12** (tag on `cbc14fb`, run `43245267306`, 7 jobs green, 7 assets, pre-release; notes `release/NOTES-v2.0.0-beta.10.md`). wasm rebuilt with Lisaac 0.7, page `?v=17`. Still untested on real Windows/Mac (NSIS PATH, profile line, AVIF HDR with aom 3.15.3/libavif 1.4.2, Homebrew dlopen).
+- Trap: a background `until s=...; case ... esac; do` loop exits at once (case status 0) -- use `while :; do ...; [ ... ] && break; done`.
 
 ### To do (details in the entries below)
 Next up, in order:
