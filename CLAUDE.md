@@ -224,6 +224,8 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
 - Trap: every `env -i` step of test/install.sh needs `TMPDIR` (uninstall's mktemp died on read-only /tmp, silently).
 - Skipped on purpose: web "Save image" drops EXIF, Qt canRead() after last frame, TIFF maker-note offsets, LibRaw bump.
 - **beta.10 PUBLISHED 2026-11-12** (tag on `cbc14fb`, run `43245267306`, 7 jobs green, 7 assets, pre-release; notes `release/NOTES-v2.0.0-beta.10.md`). wasm rebuilt with Lisaac 0.7, page `?v=17`. Still untested on real Windows/Mac (NSIS PATH, profile line, AVIF HDR with aom 3.15.3/libavif 1.4.2, Homebrew dlopen).
+- **Mac M4 tested for real (2026-11-12, beta.10)**: install.sh (universal archive, SHA ok, libyaif-heif built, Qt plugin), Homebrew libs load (HEIC read), HEIC -> AVIF and -> HEIC both carry `tmap` and look identical, CR3 -> DNG works, JPEG round-trip identical. Uninstall step not done yet.
+- **Bug found on the Mac, FIXED `d4ec088` (not in a release, needs beta.11)**: Finder showed the DNG thumbnail landscape for a portrait photo. Cause: the PREV thumbnail is upright but IFD0 `Orientation` (6/8) is applied by Finder to the SubIFD preview too -> turned twice. `thumb_to_sensor` (yaif.li) now stores it in sensor orientation; confirmed portrait on the Mac (and by patching Orientation to 1 in a copy: thumbnail went portrait). Other DNG readers' behaviour untested.
 - Trap: a background `until s=...; case ... esac; do` loop exits at once (case status 0) -- use `while :; do ...; [ ... ] && break; done`.
 
 ### To do (details in the entries below)
