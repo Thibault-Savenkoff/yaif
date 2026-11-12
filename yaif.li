@@ -1008,6 +1008,8 @@ Public
   ( + np,e,lvl,q,lossless_lv:Int
     + animated,photo:Boolean
     + work,next:C_array Uint8
+    ((width > 65535) || {height > 65535}).if { fail "image too large: YAIF stores at most 65535 x 65535 pixels" }
+    (width * height > Yaif_par.max_pixels).if { fail "image too large for this system (over 500 Mpx)" }
     np := 3
     (has_alpha).if { np := 4 }
     animated := frames.count > 1
@@ -1072,7 +1074,7 @@ Public
     Yaif_par.status "Building the 512 px preview..."
     put_preview np
     // Before FDAT: the decoder has the gain map when it writes the frame (Ultra HDR JPEG).
-    ((! animated) && {Yaif_heic.gain_width > 0}).if { put_gain_map e }
+    ((! animated) && {Yaif_heic.gain_width > 0}).if { put_gain_map e level lvl }
     // A still image is coded in place (lossy overwrites it with the reconstruction, unused after).
     (animated).if { work := copy_frame (frames.first) } else { work := frames.first }
     begin_chunk t_fdat
@@ -1110,9 +1112,9 @@ Public
     // frame count, so a truncated file is still detected; IEND is accepted when present.
   )
 
-  - put_gain_map e:Int <-
+  - put_gain_map e:Int level lv:Int <-
   // GMAP chunk (HDR): [u16 w][u16 h][planes 3][u16 n][ISO 21496-1 metadata, n bytes][coded region].
-  // The frame's mode: lossless level 2 (e = 0), else wavelet at the frame's quality.
+  // The frame's mode: wavelet at the frame's quality (e) on level 5, else level 2 (e is then eps, 0 = lossless).
   // ponytail: a gray gain map is coded as RGB (equal planes cost next to nothing).
   ( + n:Int
     + m:C_array Uint8
@@ -1126,10 +1128,10 @@ Public
     0.to (n - 1) do { i:Int
       Yaif_codec.put_byte ((m.at i).to_int)
     }
-    (e = 0).if {
-      Yaif_codec.encode (Yaif_heic.gain_map) stride (Yaif_heic.gain_width) region (0, 0, Yaif_heic.gain_width, Yaif_heic.gain_height) planes 3 level 2 eps 0
-    } else {
+    (lv = 5).if {
       Yaif_codec.encode (Yaif_heic.gain_map) stride (Yaif_heic.gain_width) region (0, 0, Yaif_heic.gain_width, Yaif_heic.gain_height) planes 3 level 5 eps e
+    } else {
+      Yaif_codec.encode (Yaif_heic.gain_map) stride (Yaif_heic.gain_width) region (0, 0, Yaif_heic.gain_width, Yaif_heic.gain_height) planes 3 level 2 eps e
     }
     end_chunk
   )
@@ -1413,6 +1415,7 @@ Public
           ((np != 3) && {np != 4}).if { fail "bad plane count" }
         }
         ((width = 0) || {height = 0} || {width > 65535} || {height > 65535}).if { fail "bad size" }
+        (width * height > Yaif_par.max_pixels).if { fail "image too large for this system (over 500 Mpx)" }
         ((dst != NULL) && {! in_memory}).if {
           Yaif_par.clear
           ((short_name name) + ": " + width.to_string + "x" + height.to_string).print

@@ -207,6 +207,12 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
   libavif 1.3.0 -> 1.4.2 (avif.h diffed: only avifEncoder fields appended, offsets used hold), Actions checkout v7,
   cache v6, upload v7, download v8, setup-uv v10.3.3. Unchanged (current): libde265 1.1.3, kvazaar 2.3.2. LibRaw
   0.22.3 exists; Windows takes Fedora's package, left. PR libheif#1503 still open. If CI breaks: revert per piece.
+- **Lisaac 0.7 decodes JPEG differently from 0.6 (found 2026-11-12)**: on test/corpus/photo_like.jpg the 0.7 build matches PIL
+  (max diff 3, mean 0.09), the 0.6 build did not (max 96, mean 3.0): beta.9 and older mis-decoded some JPEG sources. So the
+  JPEG-sourced pixels of a 0.7 build are the right ones. Consequences: `test/img_probe` (gitignored, prebuilt) must be rebuilt
+  with the same compiler (`cd test && lisaac img_probe.li -add_path .. -boost`) or lossy.sh fails on JPEGs; the committed
+  docs/yaif_enc.wasm is still a 0.6 build (web converter + `test/replicas.sh` on JPEGs differ) -> rebuild it (docs/build.sh, bump `?v=`)
+  before beta.10. lossy.sh 0 fails after rebuilding img_probe; hdr.sh/replicas.sh keep failing HERE only for lack of ~/photos-yaif.
 - **Lisaac is 0.7** (user, 2026-11-12): README/build.sh pin it, CI reads the README. unit.sh 2768/0 with it
   locally; macOS/arm64 CI jobs untried. Local compiler: `/var/tmp/yaif-work/lc7/lisaac/bin` (the old
   `lisaac/bin` dir was empty). `test/install.sh` needs the sandbox off (`env -i` drops TMPDIR).

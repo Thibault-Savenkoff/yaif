@@ -135,7 +135,7 @@ static int np_count(void) {
     /* only the commands with parallel jobs: info and preview stay one quick process */
     if (np_rn == 1) {
       np_rid = 0;
-      if (__argc > 1 && (!strcmp(__argv[1], "encode") || !strcmp(__argv[1], "decode") || !strcmp(__argv[1], "bench"))) np_spawn();
+      if (__argc > 1 && (!strcmp(__argv[1], "encode") || !strcmp(__argv[1], "decode") || !strcmp(__argv[1], "bench") || !strcmp(__argv[1], "convert"))) np_spawn();
     }
     else {
       unsigned long long r, w;
@@ -164,9 +164,15 @@ static void *np_alloc(long n) {
 #endif
 static void *yaif_shared(long n) {
   void *p = np_alloc(n);
+  int k;
   if (np_count() > 1 && p) {
-    if (np_open || np_nreg == 256) np_fail("shared buffer allocated in a job");
-    np_reg[np_nreg].p = p; np_reg[np_nreg].n = n; np_reg[np_nreg++].snap = 0;
+    if (np_open) np_fail("shared buffer allocated in a job");
+    /* A freed slot first (a long animation allocates and frees one per frame): every replica makes
+       the same alloc/free calls, so they all pick the same index. */
+    for (k = 0; k < np_nreg && np_reg[k].p; k++) ;
+    if (k == 256) np_fail("too many shared buffers");
+    if (k == np_nreg) np_nreg++;
+    np_reg[k].p = p; np_reg[k].n = n; np_reg[k].snap = 0;
   }
   return p;
 }
@@ -340,14 +346,32 @@ static void np_status(const char *m) {
 #endif
   if (isatty(2)) np_line(m);
 }
+/* A child that failed (it printed why) or was killed leaves its region unwritten: the parent must not
+   go on to say "Done" over it. 1: exited with an error; 2: killed by a signal (out of memory...). */
+static int np_bad;
+static void np_reaped(int st) {
+#ifndef _WIN32   /* no children there (replicas): waitpid is a stub */
+  if (WIFSIGNALED(st)) np_bad = 2;
+  else if (WIFEXITED(st) && WEXITSTATUS(st) && !np_bad) np_bad = 1;
+#else
+  (void)st;
+#endif
+}
+static void np_check(void) {
+  if (!np_bad) return;
+  if (np_bad == 2) fprintf(stderr, "yaif: a worker process was killed (out of memory?)\n");
+  exit(1);
+}
 /* wait() for one child, showing the progress meanwhile. */
 static void np_wait(void) {
+  int st = 0, r;
   /* No progress line to refresh: block (polling costs up to 100 ms per job, a lot on small regions). */
-  if (!np_label || !isatty(2)) { waitpid(-1, 0, 0); return; }
-  while (waitpid(-1, 0, WNOHANG) == 0) {
+  if (!np_label || !isatty(2)) { if (waitpid(-1, &st, 0) > 0) np_reaped(st); return; }
+  while ((r = waitpid(-1, &st, WNOHANG)) == 0) {
     np_show();
     usleep(100000);
   }
+  if (r > 0) np_reaped(st);
 }
 static void np_end(void) {
   if (np_label && isatty(2)) { fprintf(stderr, "\r\033[K"); fflush(stderr); }
@@ -435,6 +459,10 @@ Public
   // Milliseconds since some fixed point (for the timings the CLI prints).
   - ms:Int <- `np_ms()`:Int
 
+  // Most pixels a platform's C helpers can handle: `long` is 32 bits on Windows, where a 4-byte-per-pixel
+  // buffer past 2 GB (500 Mpx) would wrap. 64-bit elsewhere: no practical limit.
+  - max_pixels:Int <- `(sizeof(long) < 8 ? 500000000LL : 100000000000LL)`:Int
+
   // A terminal on standard input: the command may ask the user a question.
   - interactive:Boolean <- `isatty(0)`:Int = 1
 
@@ -470,4 +498,5 @@ Public
     }
     active := False
     `np_end()`;
+    `np_check()`;
   )
