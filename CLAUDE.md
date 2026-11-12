@@ -159,7 +159,7 @@ BD-rate on mean curves, PSNR + SSIMULACRA2 built from libjxl v0.11.1 `jxlsrc/bui
   scratchpad: /tmp is RAM (tmpfs, 3.9 G on a 7 G host)** -- use /var/tmp/yaif-work.
 
 ### Pre-v2.0.0 review (2026-10-17): findings NOT fixed yet
-Diff main..v2 = 30.8k lines > ultrareview's 8k limit, so split into 4 local branch pairs
+(**review/* branches DELETED 2026-11-12**, local and remote.) Diff main..v2 = 30.8k lines > ultrareview's 8k limit, so split into 4 local branch pairs
 `review/N` (tree = v2) vs `review/N-base` (v2 minus the chunk's files): 1-codec, 2-io, 3-decoders,
 4-install (not pushed; delete when done). 3 free ultrareviews used on 1-3 (none left; the $100
 cloud-session credit does NOT pay for them). Chunk 4 (install/CI/web) reviewed 2026-10-17 in a
