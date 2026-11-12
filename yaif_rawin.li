@@ -36,6 +36,8 @@ static int nr_open(void) {
   nr_lib = dlopen("libraw_r.so.25", RTLD_NOW | RTLD_LOCAL);
   if (!nr_lib) nr_lib = dlopen("libraw_r.so", RTLD_NOW | RTLD_LOCAL);
   if (!nr_lib) nr_lib = dlopen("libraw_r.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!nr_lib) nr_lib = dlopen("/opt/homebrew/lib/libraw_r.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!nr_lib) nr_lib = dlopen("/usr/local/lib/libraw_r.dylib", RTLD_NOW | RTLD_LOCAL);
   if (!nr_lib) { nr_msg = "libraw not found (install LibRaw 0.22)"; return 0; }
 #define NR(v, s) if (!(*(void **)&v = dlsym(nr_lib, s))) { nr_msg = "libraw: missing " s; nr_lib = 0; return 0; }
   NR(nr_init, "libraw_init") NR(nr_open_file, "libraw_open_file") NR(nr_unpack, "libraw_unpack")

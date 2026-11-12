@@ -33,6 +33,8 @@ static int nw_open(void) {
   nw_lib = dlopen("libwebp.so.7", RTLD_NOW | RTLD_LOCAL);
   if (!nw_lib) nw_lib = dlopen("libwebp.so", RTLD_NOW | RTLD_LOCAL);
   if (!nw_lib) nw_lib = dlopen("libwebp.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!nw_lib) nw_lib = dlopen("/opt/homebrew/lib/libwebp.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!nw_lib) nw_lib = dlopen("/usr/local/lib/libwebp.dylib", RTLD_NOW | RTLD_LOCAL);
   if (!nw_lib) { nw_msg = "libwebp not found (install libwebp)"; return 0; }
 #define NW(v, s) if (!(*(void **)&v = dlsym(nw_lib, s))) { nw_msg = "libwebp: missing " s; nw_lib = 0; return 0; }
   NW(nw_cfg_init, "WebPConfigInitInternal") NW(nw_pic_init, "WebPPictureInitInternal")

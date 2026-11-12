@@ -56,6 +56,9 @@ static int nh_open(void) {
   nh_lib = dlopen("libheif.so.1", RTLD_NOW | RTLD_LOCAL);
   if (!nh_lib) nh_lib = dlopen("libheif.so", RTLD_NOW | RTLD_LOCAL);
   if (!nh_lib) nh_lib = dlopen("libheif.1.dylib", RTLD_NOW | RTLD_LOCAL);
+  /* macOS: dyld does not search Homebrew's directories for a bare name */
+  if (!nh_lib) nh_lib = dlopen("/opt/homebrew/lib/libheif.1.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!nh_lib) nh_lib = dlopen("/usr/local/lib/libheif.1.dylib", RTLD_NOW | RTLD_LOCAL);
   if (!nh_lib) return 0;
 #define NH(v, s) if (!(*(void **)&v = dlsym(nh_lib, s))) return 0;
   NH(nh_context_alloc, "heif_context_alloc") NH(nh_context_free, "heif_context_free")
@@ -675,6 +678,8 @@ static int na_open(void) {
   na_lib = dlopen("libavif.so.16", RTLD_NOW | RTLD_LOCAL);
   if (!na_lib) na_lib = dlopen("libavif.so", RTLD_NOW | RTLD_LOCAL);
   if (!na_lib) na_lib = dlopen("libavif.16.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!na_lib) na_lib = dlopen("/opt/homebrew/lib/libavif.16.dylib", RTLD_NOW | RTLD_LOCAL);
+  if (!na_lib) na_lib = dlopen("/usr/local/lib/libavif.16.dylib", RTLD_NOW | RTLD_LOCAL);
   if (!na_lib) return 0;
   /* avifEncoderGetGainMapSizeBytes: only in a libavif built with gain maps (1.2+) */
   if (!dlsym(na_lib, "avifEncoderGetGainMapSizeBytes")) return 0;

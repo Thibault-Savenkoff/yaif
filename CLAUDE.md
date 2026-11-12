@@ -165,7 +165,9 @@ Diff main..v2 = 30.8k lines > ultrareview's 8k limit, so split into 4 local bran
 cloud-session credit does NOT pay for them). Chunk 4 (install/CI/web) reviewed 2026-10-17 in a
 claude.ai/code session (its verify pass died on the limit; items 1-6 below re-read in the code and
 real). A local `/code-review max` had hit the user's 5h limit -- ask before any heavy local review.
-Chunk 4, worst first: (1) yaif.nsi:122/201 ReadRegStr on a PATH > NSIS_MAX_STRLEN returns EMPTY +
+**Chunk 4 items (1)-(6) FIXED 2026-11-12** (`2462fae`, `38e06a5`, and the macOS dlopen commit; NOT run on real
+Windows/Mac; Lisaac compiler rebuilt at /var/tmp/yaif-work/lc/lisaac/bin; `test/install.sh` must run
+unsandboxed: `env -i` drops TMPDIR). Chunk 4, worst first: (1) yaif.nsi:122/201 ReadRegStr on a PATH > NSIS_MAX_STRLEN returns EMPTY +
 error flag (not a cut string) -> install writes `;<InstDir>` as the whole PATH, uninstall an empty
 one (careful: a missing HKCU Path also sets the error flag); (2) the MSI never runs
 `yaif-profile.ps1 -Remove`, Active Setup lines for other users never removed -> every PowerShell

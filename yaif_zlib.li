@@ -25,6 +25,7 @@ typedef struct {
   const char *msg; void *state; void *zalloc, *zfree, *opaque;
   int data_type; unsigned long adler, reserved;
 } nz_stream;
+static int (*nz_uncompress)(unsigned char *, unsigned long *, const unsigned char *, unsigned long);
 static int (*nz_compress2)(unsigned char *, unsigned long *, const unsigned char *, unsigned long, int);
 static unsigned long (*nz_bound)(unsigned long);
 static int (*nz_init2)(nz_stream *, int, int, int, int, int, const char *, int);
@@ -44,7 +45,7 @@ static int nz_open(void) {
   if (!l) l = dlopen("libz.dylib", RTLD_NOW | RTLD_LOCAL);
   if (!l) return 0;
 #define NZ(v, s) if (!(*(void **)&v = dlsym(l, s))) return 0;
-  NZ(nz_compress2, "compress2") NZ(nz_bound, "compressBound") NZ(nz_init2, "deflateInit2_")
+  NZ(nz_uncompress, "uncompress") NZ(nz_compress2, "compress2") NZ(nz_bound, "compressBound") NZ(nz_init2, "deflateInit2_")
   NZ(nz_deflate_, "deflate") NZ(nz_end, "deflateEnd") NZ(nz_adler, "adler32") NZ(nz_adler_combine, "adler32_combine")
 #undef NZ
   nz_state = 1;
@@ -239,13 +240,11 @@ static int nz_tiff(const void *src, int bits, int w, int h, int spp, int big) {
 
 /* zlib stream src[0, n) -> nz_out / nz_n (at most cap bytes). */
 static int nz_inflate(const unsigned char *src, unsigned long n, unsigned long cap) {
-  static int (*unc)(unsigned char *, unsigned long *, const unsigned char *, unsigned long);
   if (!nz_open()) return 0;
-  if (!unc) *(void **)&unc = dlsym(dlopen("libz.so.1", RTLD_NOW | RTLD_LOCAL), "uncompress");
   free(nz_out);
   nz_n = cap;
   nz_out = malloc(cap);
-  return unc && nz_out && unc(nz_out, &nz_n, src, n) == 0;
+  return nz_out && nz_uncompress(nz_out, &nz_n, src, n) == 0;
 }
 `;
 
