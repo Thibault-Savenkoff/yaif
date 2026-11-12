@@ -180,7 +180,7 @@ What a codec cannot reach:
 
 ## Build
 
-You need the [Lisaac Ω](https://lisaac.org) compiler (0.6) and GCC.
+You need the [Lisaac Ω](https://lisaac.org) compiler (0.7) and GCC.
 
 ```sh
 ./build.sh          # compiles, then runs install.sh on the result (same options: --no-plugins, --system...)

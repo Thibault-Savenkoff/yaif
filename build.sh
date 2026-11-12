@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 
 if ! command -v lisaac >/dev/null 2>&1; then
   echo "build.sh: no 'lisaac' compiler found." >&2
-  echo "Get it from https://lisaac.org (0.6), or use install.sh instead for a prebuilt binary." >&2
+  echo "Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary." >&2
   exit 1
 fi
 
