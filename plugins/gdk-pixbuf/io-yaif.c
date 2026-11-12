@@ -29,13 +29,21 @@ static GdkPixbuf *decode(const guint8 *d, gsize n, YaifContext *ctx, GError **er
     return NULL;
   }
   w = info.width; h = info.height;
-  if (ctx && ctx->size_func) {
+  /* A RAW file has no pixels of the sensor's size to show: its preview is the picture, so the size
+     reported to the loader is the preview's (the sensor size would be wrong). */
+  if (ctx && ctx->size_func && !info.raw) {
     sw = w; sh = h;
     ctx->size_func(&sw, &sh, ctx->user_data);
     if (sw == 0 || sh == 0) return NULL;   /* only the size was wanted */
   }
-  if (info.raw) px = yaif_decode_preview(d, n, &w, &h);
-  else {
+  if (info.raw) {
+    px = yaif_decode_preview(d, n, &w, &h);
+    if (px && ctx && ctx->size_func) {
+      sw = w; sh = h;
+      ctx->size_func(&sw, &sh, ctx->user_data);
+      if (sw == 0 || sh == 0) { free(px); return NULL; }
+    }
+  } else {
     /* A small enough requested size (a thumbnail) is served from the PREV thumbnail: ~50x faster. */
     if (info.has_preview && info.frames == 1 && sw > 0 && (sw < w || sh < h)) {
       px = yaif_decode_preview(d, n, &w, &h);

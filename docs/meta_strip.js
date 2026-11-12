@@ -44,6 +44,27 @@
     }
   }
 
+  // Orientation (IFD0 tag 0x0112) of a TIFF (EXIF) block, 0 if none: without it a phone photo shows sideways.
+  function orientation(t) {
+    if (t.length < 8) return 0;
+    const le = t[0] === 0x49;
+    const g16 = p => le ? t[p] | t[p + 1] << 8 : t[p] << 8 | t[p + 1];
+    const ifd0 = le ? (t[4] | t[5] << 8 | t[6] << 16 | t[7] << 24) >>> 0 : u32(t, 4);
+    if (ifd0 + 2 > t.length) return 0;
+    const n = g16(ifd0);
+    for (let i = 0; i < n && ifd0 + 2 + i * 12 + 12 <= t.length; i++) {
+      const e = ifd0 + 2 + i * 12;
+      if (g16(e) === 0x0112 && g16(e + 2) === 3) return g16(e + 8);
+    }
+    return 0;
+  }
+
+  // An eXIf block holding the orientation and nothing else (big endian TIFF, one IFD0 entry).
+  function orientationOnly(o) {
+    return Uint8Array.of(EXIF >>> 24, EXIF >>> 16 & 255, EXIF >>> 8 & 255, EXIF & 255,
+      0x4D, 0x4D, 0, 42, 0, 0, 0, 8, 0, 1, 0x01, 0x12, 0, 3, 0, 0, 0, 1, 0, o, 0, 0, 0, 0, 0, 0);
+  }
+
   // XMP without its exif:GPS… properties (attributes or elements), or null if it has none.
   // ponytail: uncompressed XMP only (what yaif and cameras write).
   function xmpNoGps(b) {
@@ -57,12 +78,28 @@
     if (opts.keep && !opts.gps) return yaif;
     const parts = [yaif.subarray(0, 9)];
     const f = ND.parse(yaif);
+    let oriented = false;
+    // [type][length][body][crc] of one chunk
+    const frame = (type, body) => {
+      const h = new Uint8Array(12 + body.length), v = new DataView(h.buffer);
+      v.setUint32(0, type);
+      v.setUint32(4, body.length);
+      h.set(body, 8);
+      v.setUint32(8 + body.length, (ND.crc(ND.crc(0xFFFFFFFF, h, 0, 4), h, 8, 8 + body.length) ^ 0xFFFFFFFF) >>> 0);
+      return h;
+    };
     for (const c of f.chunks) {
       let body = yaif.subarray(c.pos, c.pos + c.len);
       if (c.type === MDAT && c.len >= 4) {
         const kind = u32(body, 0), raw = body.subarray(4);
         const colour = COLOUR.includes(kind) || (kind === APP2 && starts(raw, 'ICC_PROFILE'));
-        if (!opts.keep && !colour) continue;
+        if (!opts.keep && !colour) {
+          // Everything goes but the orientation: the pixels are stored as the sensor made them.
+          const t = kind === EXIF ? raw : kind === APP1 && starts(raw, 'Exif\0\0') ? raw.subarray(6) : null;
+          const o = !oriented && t ? orientation(t) : 0;
+          if (o > 1 && o <= 8) { oriented = true; parts.push(frame(c.type, orientationOnly(o))); }
+          continue;
+        }
         if (opts.gps && kind === CMT4) continue;   // CR3: CMT4 is the GPS IFD
         if (opts.gps) {
           body = body.slice();
@@ -79,12 +116,7 @@
           }
         }
       }
-      const h = new Uint8Array(12 + body.length), v = new DataView(h.buffer);
-      v.setUint32(0, c.type);
-      v.setUint32(4, body.length);
-      h.set(body, 8);
-      v.setUint32(8 + body.length, (ND.crc(ND.crc(0xFFFFFFFF, h, 0, 4), h, 8, 8 + body.length) ^ 0xFFFFFFFF) >>> 0);
-      parts.push(h);
+      parts.push(frame(c.type, body));
     }
     const out = new Uint8Array(parts.reduce((s, p) => s + p.length, 0));
     let o = 0;

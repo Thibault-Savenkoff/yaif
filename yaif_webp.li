@@ -10,6 +10,7 @@ Header
   // -fast (nw_fast): lossy method 2. Lossless unchanged (effort 25 on a screenshot: +53 %, same time).
   - include := `
 #include <dlfcn.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
@@ -51,7 +52,7 @@ static long nw_n, nw_cap;
 static void nw_put(const void *p, long n) {
   if (nw_n + n > nw_cap) {
     nw_cap = (nw_n + n) * 2 + 65536;
-    nw_out = realloc(nw_out, nw_cap);
+    { void *t_ = realloc(nw_out, nw_cap); if (!t_) { fputs("yaif: out of memory\n", stderr); exit(1); } nw_out = t_; }
   }
   memcpy(nw_out + nw_n, p, n);
   nw_n += n;

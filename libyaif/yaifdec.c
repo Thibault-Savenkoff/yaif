@@ -41,12 +41,13 @@ static int squash(int d) {
 }
 
 static int SQ[4096], STRETCH[4096], RATE[1024], QL[4096], QH[4096];
-/* ponytail: filled once; two threads racing on the first call write the same values. */
-static volatile int tables_ready;
+/* Filled once; two threads racing on the first call write the same values, and the release/acquire
+   pair makes the tables visible before the flag is (volatile alone orders nothing on ARM). */
+static int tables_ready;
 
 static void make_tables(void) {
   int j, x, v, n, pi = 0, a, r;
-  if (tables_ready) return;
+  if (__atomic_load_n(&tables_ready, __ATOMIC_ACQUIRE)) return;
   for (j = 0; j < 4096; j++) SQ[j] = squash(j - 2048);
   for (x = -2047; x <= 2047; x++) {
     v = squash(x);
@@ -69,7 +70,7 @@ static void make_tables(void) {
     }
     QH[v] = r;
   }
-  tables_ready = 1;
+  __atomic_store_n(&tables_ready, 1, __ATOMIC_RELEASE);
 }
 
 static int qlog(int v) { return v < 4096 ? QL[v] : 7; }
@@ -1286,16 +1287,16 @@ static int run_jobs(int n, job_fn fn, void *ctx, State *S) {
 
 static uint32_t crc(uint32_t c, const uint8_t *d, size_t lo, size_t hi) {
   static uint32_t T[256];
-  static volatile int ready;
+  static int ready;
   size_t i;
-  if (!ready) {
+  if (!__atomic_load_n(&ready, __ATOMIC_ACQUIRE)) {
     uint32_t n, k, v;
     for (n = 0; n < 256; n++) {
       v = n;
       for (k = 0; k < 8; k++) v = v & 1 ? 0xEDB88320u ^ (v >> 1) : v >> 1;
       T[n] = v;
     }
-    ready = 1;
+    __atomic_store_n(&ready, 1, __ATOMIC_RELEASE);
   }
   for (i = lo; i < hi; i++) c = T[(c ^ d[i]) & 255] ^ (c >> 8);
   return c;

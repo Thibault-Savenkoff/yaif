@@ -20,7 +20,7 @@ static long nx_n, nx_cap;
 static void nx_put(const void *p, long n) {
   if (nx_n + n > nx_cap) {
     nx_cap = (nx_n + n) * 2 + 4096;
-    nx_out = realloc(nx_out, nx_cap);
+    { void *t_ = realloc(nx_out, nx_cap); if (!t_) { fputs("yaif: out of memory\n", stderr); exit(1); } nx_out = t_; }
   }
   memcpy(nx_out + nx_n, p, n);
   nx_n += n;
@@ -155,7 +155,7 @@ static void nx_apply(const unsigned char *rgba, int w, int h, const unsigned cha
     lut[i] = pow(2, nx_min + (nx_max - nx_min) * pow(i / 255.0, 1 / nx_gamma));
   }
   nx_n = 0;
-  if (nx_cap < (long)h * (w * 6 + 1)) { nx_cap = (long)h * (w * 6 + 1); nx_out = realloc(nx_out, nx_cap); }
+  if (nx_cap < (long)h * (w * 6 + 1)) { nx_cap = (long)h * (w * 6 + 1); void *t_ = realloc(nx_out, nx_cap); if (!t_) { fputs("yaif: out of memory\n", stderr); exit(1); } nx_out = t_; }
   o = 0;
   for (y = 0; y < h; y++) {
     double fy = (y + 0.5) * gh / h - 0.5;

@@ -7,6 +7,7 @@ Header
   // ponytail: one thread (~1 s for 24 Mpx); restart intervals + fork per stripe if it matters.
   // Alpha is flattened on white; EXIF or XMP over 64 KB (one segment) is dropped.
   - include := `
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -18,7 +19,7 @@ static long nj_n, nj_cap;
 static void nj_put(const void *p, long n) {
   if (nj_n + n > nj_cap) {
     nj_cap = (nj_n + n) * 2 + 65536;
-    nj_out = realloc(nj_out, nj_cap);
+    { void *t_ = realloc(nj_out, nj_cap); if (!t_) { fputs("yaif: out of memory\n", stderr); exit(1); } nj_out = t_; }
   }
   memcpy(nj_out + nj_n, p, n);
   nj_n += n;

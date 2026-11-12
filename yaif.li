@@ -247,8 +247,9 @@ Public
         ((len < 0) || {len > data_size - pos - 12}).if {
           pos := data_size
         } else {
-          // Ancillary (lowercase first letter), except pixel structure: tRNS, acTL, fcTL, fdAT.
-          (((u8 (pos + 4)) >= 97) && {t != 74524E53h} && {t != 6163544Ch} && {t != 6663544Ch} && {t != 66644154h}).if {
+          // Ancillary (lowercase first letter), except pixel structure: tRNS, acTL, fcTL, fdAT, and Apple's
+          // iDOT (offsets of its parallel decoding: wrong for the pixels we write).
+          (((u8 (pos + 4)) >= 97) && {t != 74524E53h} && {t != 6163544Ch} && {t != 6663544Ch} && {t != 66644154h} && {t != 69444F54h}).if {
             put_meta t from (pos + 8) until (pos + 8 + len)
           }
           pos := pos + len + 12
@@ -844,6 +845,7 @@ Public
     + iw,ih:Int
     + f,src:C_array Uint8
     frames.clear
+    Yaif_heic.forget_gain   // the gain map of an earlier HEIC (bench) is not this image's
     first.to last do { i:Int
       name := Command_args.at i
       Yaif_par.status ("Reading " + (short_name name) + "...")

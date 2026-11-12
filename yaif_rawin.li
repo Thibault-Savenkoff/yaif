@@ -59,7 +59,7 @@ static long nr_n[2], nr_cap[2];
 static void nr_put(int k, const void *p, long n) {
   if (nr_n[k] + n > nr_cap[k]) {
     nr_cap[k] = (nr_n[k] + n) * 2 + 1024;
-    nr_buf[k] = realloc(nr_buf[k], nr_cap[k]);
+    { void *t_ = realloc(nr_buf[k], nr_cap[k]); if (!t_) { fputs("yaif: out of memory\n", stderr); exit(1); } nr_buf[k] = t_; }
   }
   memcpy(nr_buf[k] + nr_n[k], p, n);
   nr_n[k] += n;
