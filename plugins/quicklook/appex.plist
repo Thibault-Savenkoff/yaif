@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>CFBundleIdentifier</key><string>org.yaif.quicklook.thumbnail</string>
+  <key>CFBundleName</key><string>YaifThumb</string>
+  <key>CFBundleExecutable</key><string>YaifThumb</string>
+  <key>CFBundlePackageType</key><string>XPC!</string>
+  <key>CFBundleShortVersionString</key><string>VERSION</string>
+  <key>CFBundleVersion</key><string>1</string>
+  <key>NSExtension</key><dict>
+    <key>NSExtensionPointIdentifier</key><string>com.apple.quicklook.thumbnail</string>
+    <key>NSExtensionPrincipalClass</key><string>YaifThumb.ThumbnailProvider</string>
+    <key>NSExtensionAttributes</key><dict>
+      <key>QLSupportedContentTypes</key><array><string>org.yaif.image</string></array>
+      <key>QLThumbnailMinimumDimension</key><integer>0</integer>
+    </dict>
+  </dict>
+</dict></plist>
