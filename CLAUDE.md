@@ -193,7 +193,7 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
   reused (long animations); `convert` gets no replicas (slow).
 - Encoder: no 65535 check on non-RAW sources; child exit status never checked (corrupt file, "Done");
   put_gain_map uses near-lossless eps as wavelet quality on levels 1-4.
-- nu_cmp strcmp: beta.10 < beta.9 -- bites the very next release.
+- nu_cmp strcmp: beta.10 < beta.9 -- FIXED 2026-11-12 (semver pre-release order, `nu_pre`; test/update.sh covers it and no longer hard-codes the version).
 - Smaller: nz_inflate dlopens libz.so.1 only (macOS loses PNG iCCP); PNG iDOT copied (Apple);
   libheif error string used after free; stale HEIC gain map in bench; Qt canRead() true after last
   frame (no loop); gdk-pixbuf RAW reports sensor size; web strip drops EXIF orientation; unchecked

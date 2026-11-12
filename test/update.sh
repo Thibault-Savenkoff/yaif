@@ -26,6 +26,7 @@ cp "$T/list" "\$out"
 EOF
 chmod +x "$T/bin/curl"
 cache="$T/cache/yaif/releases.json"
+ver=$(./yaif --version | awk 'NR == 1 {print $2}')   # this build's own version, e.g. 2.0.0-beta.9
 
 # run [env...]: ./yaif --version in a terminal, with its stderr (the notice) in $T/out
 run() {
@@ -51,9 +52,9 @@ check "first run: cache written" grep -q v2.1.0 "$cache"
 
 # --- next run, same day: notice from the cache, no new refresh ---
 run
-check "same day: notice" grep -q 'yaif 2.1.0 is available (this is 2.0.0-beta)' "$T/out"
+check "same day: notice" grep -q "yaif 2.1.0 is available (this is $ver)" "$T/out"
 check "same day: no refresh" [ "$(calls)" = 1 ]
-check "same day: stdout untouched" grep -q '^yaif 2.0.0-beta' "$T/out"
+check "same day: stdout untouched" grep -q "^yaif $ver" "$T/out"
 
 # --- turned off ---
 run YAIF_NO_UPDATE_CHECK=1
@@ -65,7 +66,7 @@ touch -d '2 days ago' "$cache"
 run
 check "a day later: refresh" [ "$(calls)" = 2 ]
 run
-check "2.0.0 > 2.0.0-beta, other major ignored" grep -q 'yaif 2.0.0 is available' "$T/out"
+check "2.0.0 > any pre-release, other major ignored" grep -q 'yaif 2.0.0 is available' "$T/out"
 
 # --- nothing newer: no notice ---
 printf '[{"tag_name": "v2.0.0-alpha"}, {"tag_name": "v1.1.8"}]' > "$T/list"
@@ -73,11 +74,19 @@ touch -d '2 days ago' "$cache"
 run; run
 check "older only: no notice" no available "$T/out"
 
+# --- pre-releases order by number: beta.10 is newer than beta.9, not older (strcmp said so) ---
+printf '[{"tag_name": "v2.0.0-beta.10"}, {"tag_name": "v2.0.0-beta.9"}, {"tag_name": "v2.0.0-beta.2"}]' > "$T/list"
+touch -d '2 days ago' "$cache"
+run; run
+if [ "$ver" = 2.0.0-beta.9 ]; then
+  check "beta.10 is newer than beta.9" grep -q 'yaif 2.0.0-beta.10 is available' "$T/out"
+fi
+
 # --- a failed refresh keeps the old cache ---
 printf 'exit 22\n' > "$T/bin/curl"
 touch -d '2 days ago' "$cache"
 run
-check "failed refresh: cache kept" grep -q v2.0.0-alpha "$cache"
+check "failed refresh: cache kept" grep -q v2.0.0-beta.10 "$cache"
 
 [ $fail = 0 ] && echo "ALL OK"
 exit $fail
