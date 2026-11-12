@@ -203,7 +203,7 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
 - Chunk 4 items (1)-(6) fixed and committed on `v2` (`2462fae`, `38e06a5`, `b86d3ae`), NOT pushed, NOT run on
   real Windows/Mac. Chunk 1-3 findings (crafted-file memory bugs first, then nu_cmp before beta.10) still open.
 - **Dependencies bumped 2026-11-12 (user: "toutes les dépendances à jour"), UNTESTED until CI**: libheif 1.23.4 -> 1.23.7
-  (libheif-gainmap + win/deps.sh; pr1503.patch applies with fuzz 2 on two context.cc hunks), aom 3.13.1 -> 3.15.3,
+  (libheif-gainmap + win/deps.sh; first CI try FAILED: the patch's two READER hunks in context.cc landed wrong with fuzz 2, so they are dropped from pr1503.patch -- yaif only writes with this copy; built locally, tmap written), aom 3.13.1 -> 3.15.3,
   libavif 1.3.0 -> 1.4.2 (avif.h diffed: only avifEncoder fields appended, offsets used hold), Actions checkout v7,
   cache v6, upload v7, download v8, setup-uv v10.3.3. Unchanged (current): libde265 1.1.3, kvazaar 2.3.2. LibRaw
   0.22.3 exists; Windows takes Fedora's package, left. PR libheif#1503 still open. If CI breaks: revert per piece.
