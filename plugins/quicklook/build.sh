@@ -30,6 +30,7 @@ mkdir -p "$HOME/Applications"
 rm -rf "$APP"; cp -R "$B" "$APP"
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$APP"
 pluginkit -a "$APP/Contents/PlugIns/YaifThumb.appex"
+for i in 1 2 3 4 5 6 7 8 9 10 11 12; do pluginkit -mA | grep -q org.yaif.quicklook && break; sleep 2; done   # registration is asynchronous
 qlmanage -r >/dev/null 2>&1 || true
 echo "installed $APP"
 echo "if no thumbnail appears: System Settings > General > Login Items & Extensions > Quick Look, enable YAIF; then: killall Finder"
