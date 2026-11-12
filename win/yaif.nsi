@@ -247,7 +247,14 @@ Section "Uninstall"
   DeleteRegKey HKLM "${ACTIVESETUP}"
   ; Only this user's profile: Active Setup has no undo, so a line it added for another account
   ; stays until that user runs yaif-profile.ps1 -Remove. It loads nothing once the file is gone.
-  ExecWait '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File "$InstDir\yaif-profile.ps1" -Remove'
+  ; TEMPORARY diagnostic: the profile line stayed after an uninstall on a real PC although the same
+  ; command works by hand. Output and exit code go to %TEMP%\yaif-uninstall.log (remove once found).
+  nsExec::ExecToStack '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "whoami; $$PROFILE; Test-Path $$PROFILE; & \"$InstDir\yaif-profile.ps1\" -Remove; \"exit $$LASTEXITCODE\"; Test-Path $$PROFILE; Select-String yaif $$PROFILE"'
+  Pop $0
+  Pop $1
+  FileOpen $2 "$TEMP\yaif-uninstall.log" w
+  FileWrite $2 "nsExec: $0$\r$\n$1"
+  FileClose $2
   RMDir /r "$InstDir\samples"
   Delete "$InstDir\*.exe"
   Delete /REBOOTOK "$InstDir\*.dll"   ; Explorer may still hold the codec
