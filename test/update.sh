@@ -26,7 +26,7 @@ cp "$T/list" "\$out"
 EOF
 chmod +x "$T/bin/curl"
 cache="$T/cache/yaif/releases.json"
-ver=$(./yaif --version | awk 'NR == 1 {print $2}')   # this build's own version, e.g. 2.0.0-beta.11
+ver=$(./yaif --version | awk 'NR == 1 {print $2}')   # this build's own version, e.g. 2.0.0-beta.12
 
 # run [env...]: ./yaif --version in a terminal, with its stderr (the notice) in $T/out
 run() {
