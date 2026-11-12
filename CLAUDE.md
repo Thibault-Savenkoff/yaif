@@ -219,6 +219,12 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
 - Model setup (user): default Sonnet 5.5 medium; Opus 5.5 may be consulted as advisor, Haiku 5.5 for sub-agents.
   The October free reset and the $100 cloud credit have expired.
 
+### Review follow-up (2026-11-12, `8fd7e57`, pushed)
+- Smaller review findings fixed: install.sh (failed install_file aborts plugin step, multiarch gdk-pixbuf-query-loaders, Dolphin uninstall removes only libyaifthumb), bash completion `_filedir`, web page (same file re-picked, iPad/phone), test/install.sh reports "stopped early" and keeps logs.
+- Trap: every `env -i` step of test/install.sh needs `TMPDIR` (uninstall's mktemp died on read-only /tmp, silently).
+- Skipped on purpose: web "Save image" drops EXIF, Qt canRead() after last frame, TIFF maker-note offsets, LibRaw bump.
+- Next: beta.10 = rebuild docs/yaif_enc.wasm with Lisaac 0.7 (docs/build.sh), bump `?v=`, version bump + release/NOTES-v2.0.0-beta.10.md; user pushes the tag.
+
 ### To do (details in the entries below)
 Next up, in order:
 1. **Mac test on real hardware** (user has no Mac access right now): `install.sh`, `yaif convert`
