@@ -515,7 +515,7 @@ class Codec {
     this.ccd.fill(0);
     this.matchReset();
     const cur = this.cur, sp = this.sp, level = this.level, eps = this.eps;
-    for (let y = 0; y < h; y++) {
+    for (let y = 0; y < h && !this.m.overrun; y++) {
       if (this.onRow) this.onRow(y);
       for (let x = 0; x < w; x++) {
         this.matchStep(np, x, y);
@@ -842,7 +842,7 @@ class Lossy {
       if (this.zb.length < w) this.zb = new Uint8Array(w);
       this.zb.fill(1);
     }
-    for (let y = this.ytop + this.by; y < this.ybot; y += bs) {
+    for (let y = this.ytop + this.by; y < this.ybot && !this.m.overrun; y += bs) {
       if (fine && Math.trunc((y - this.ytop - this.by) / bs) % 2 === 0) this.codeFlags(y);
       for (let x = bx; x < w; x += bs) {
         if (fine && this.zb[Math.trunc((x - bx) / (2 * bs))] === 1) {

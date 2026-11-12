@@ -54,9 +54,25 @@ Public
   - ext:C_array Uint8 := C_array Uint8.create 4
 
   - ext_n:Int
+  - ext_cap:Int := 4
+
+  - reserve n:Int <-
+  // ext holds at least n bytes: the size given to start is only a guess, a source's EXIF can bring more.
+  ( + b:C_array Uint8
+    + c:Int
+    (n > ext_cap).if {
+      c := ext_cap * 2
+      (c < n).if { c := n }
+      b := C_array Uint8.create c
+      0.to (ext_cap - 1) do { i:Int b.at i put (ext.at i) }
+      ext := b
+      ext_cap := c
+    }
+  )
 
   - e8 v:Int <-
   (
+    reserve (ext_n + 1)
     ext.at ext_n put ((v & 255).to_uint8)
     ext_n := ext_n + 1
   )
@@ -142,6 +158,7 @@ Public
   // Data written at ext[pos, ext_n): moved into the entry when it fits in 4 bytes.
   ( + v:Int
     (c * (tsize ty) <= 4).if {
+      reserve (pos + 4)
       ext_n.to (pos + 3) do { i:Int ext.at i put 0 }
       v := (xb pos) | ((xb (pos + 1)) << 8) | ((xb (pos + 2)) << 16) | ((xb (pos + 3)) << 24)
       ext_n := pos
@@ -257,9 +274,11 @@ Public
         c := r16 (p + o)
         0.to (c - 1) do { i:Int
           e := p + o + 2 + i * 12
-          t := r16 e
-          ((((t = 34665) || {t = 34853})) && {o + 2 + i * 12 + 12 <= n} && {! (has t)}).if {
-            add t type 4 count 1 value (pos + (r32 (e + 8))) kind 1
+          (o + 2 + i * 12 + 12 <= n).if {
+            t := r16 e
+            (((t = 34665) || {t = 34853}) && {! (has t)}).if {
+              add t type 4 count 1 value (pos + (r32 (e + 8))) kind 1
+            }
           }
         }
       }
@@ -275,6 +294,7 @@ Public
     ent.clear
     blocks.clear
     ext := C_array Uint8.create cap
+    ext_cap := cap
     ext_n := 0
     thumb_n := 0
   )

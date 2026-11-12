@@ -182,7 +182,7 @@ Debian's PATH, plugin installs "ok" after a failed sudo, Dolphin uninstall resto
 plugin list, bash completion breaks on spaces, web: same file re-picked ignored, iPad seen as
 desktop, "Save image" drops EXIF; test/install.sh dies silently.
 To fix, worst first (full text in the session transcript, 2026-10-17):
-- Crafted-file memory bugs: libyaifdec.c level-5 RGBA `n > len - 8` size_t underflow (len 6/7);
+- **Crafted-file memory bugs: ALL FIXED 2026-11-12 (this commit; unit/libyaif/js tests green, WIC C++ not compiled locally -- no MinGW g++ here, CI will).** Was: libyaifdec.c level-5 RGBA `n > len - 8` size_t underflow (len 6/7);
   int pixel offsets in sample()/store() (> 536 Mpx); no early stop on `overrun` (tiny file, huge
   IHDR = minutes of CPU, same in JS); yaif.li collect_meta iCCP + APP2 ICC heap overflow (reset
   iccp_n); second IHDR accepted after frames (FDLT over-read); RAWH cblack count unchecked

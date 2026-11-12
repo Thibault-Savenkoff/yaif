@@ -89,7 +89,8 @@
       p += 2;
       const cnt = v < 2 ? u16(d, p) : u32(d, p);
       p += v < 2 ? 2 : 4;
-      for (let i = 0; i < cnt; i++) {
+      // every count below is the file's: stop at the box end, not after cnt * ne empty rounds
+      for (let i = 0; i < cnt && p <= iloc.hi; i++) {
         const iid = v < 2 ? u16(d, p) : u32(d, p);
         p += v < 2 ? 2 : 4;
         const cm = v ? u16(d, p) & 15 : 0;
@@ -100,12 +101,13 @@
         const ne = u16(d, p);
         p += 2;
         const parts = [];
-        for (let k = 0; k < ne; k++) {
+        for (let k = 0; k < ne && p <= iloc.hi; k++) {
           p += is;
           const off = un(d, p, os), len = un(d, p + os, ls);
           p += os + ls;
           parts.push([base + off, len]);
         }
+        if (p > iloc.hi) return null;
         if (iid !== id) continue;
         const src = cm === 1 && idat ? d.subarray(idat.lo, idat.hi) : cm === 0 ? d : null;
         if (!src) return null;
@@ -135,11 +137,11 @@
       let p = ipma.lo + 4;
       const cnt = u32(d, p);
       p += 4;
-      for (let i = 0; i < cnt; i++) {
+      for (let i = 0; i < cnt && p < ipma.hi; i++) {
         const id = v ? u32(d, p) : u16(d, p);
         p += v ? 4 : 2;
         const n = d[p++];
-        for (let k = 0; k < n; k++) {
+        for (let k = 0; k < n && p < ipma.hi; k++) {
           const x = (big ? u16(d, p) & 0x7FFF : d[p] & 0x7F) - 1;
           p += big ? 2 : 1;
           const c = props[x];

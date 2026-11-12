@@ -457,6 +457,7 @@ Public
       }
     }
     (n > 0).if {
+      iccp_n := 0   // an iCCP above may have set it: the fill below starts at 0 in an array of n
       iccp := C_array Uint8.create n
       0.to (meta_pos.upper) do { i:Int
         p := meta_pos.at i + 4
@@ -1357,8 +1358,8 @@ Public
 
   - read_yaif name:String decode_to dst:String <-
   // dst = NULL: print the chunk list (info). Else write each frame as PNG.
-  ( + pos,t,len,c,np,x0,y0,dw,dh,count,flags,nframes,live_pos,live_len,rawh,n,tw,th,tn:Int
-    + done,animated,raw,have_thumb:Boolean
+  ( + pos,t,len,c,np,x0,y0,dw,dh,count,flags,nframes,live_pos,live_len,rawh,n,tw,th,tn,rn,rs:Int
+    + done,animated,raw,have_thumb,have_ihdr:Boolean
     + cur,next,tb:C_array Uint8
     + base:String
     meta_pos.clear
@@ -1395,6 +1396,9 @@ Public
       pos := pos + 8
       (t = t_ihdr).if {
         (len < 12).if { fail "bad IHDR" }
+        // a second one after frames would change the size the frame buffers were made for
+        (have_ihdr).if { fail "second IHDR" }
+        have_ihdr := True
         width := u32 pos
         height := u32 (pos + 4)
         np := u8 (pos + 9)
@@ -1535,6 +1539,12 @@ Public
         }
       }.elseif {t = t_rawh} then {
         ((len < 45) || {(u8 pos) != 1}).if { fail "unsupported RAWH version" }
+        // The readers (nr_restore, write_dng) index by the cblack count and read the make/model
+        // strings at the end: check that they all lie inside the chunk.
+        rn := u32 (pos + 37)
+        ((rn > 4102) || {len < 41 + 4 * rn + 150}).if { fail "bad RAWH" }
+        rs := pos + 41 + 4 * rn + 148
+        (((rs + 2 + (u8 rs)) > (pos + len)) || {(rs + 2 + (u8 rs) + (u8 (rs + 1 + (u8 rs)))) > (pos + len)}).if { fail "bad RAWH" }
         rawh := pos
       }.elseif {(t = t_mdat) && {len >= 4}} then {
         meta_pos.add_last pos

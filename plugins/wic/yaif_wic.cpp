@@ -62,7 +62,8 @@ struct Image {
     }
     if (!rgba) return decoded = WINCODEC_ERR_BADIMAGE;
     size_t size = size_t(sw) * sh * 4;
-    px.resize(size * n);
+    // an exception must not cross the COM boundary: a huge frame count x size is a failure, not a crash
+    try { px.resize(size * n); } catch (const std::bad_alloc &) { free(rgba); return decoded = E_OUTOFMEMORY; }
     for (int i = 0; i < n; i++) yaif_upright_bgra(rgba + size * i, sw, sh, info.orientation, px.data() + size * i, &w, &h);
     free(rgba);
     return decoded = S_OK;
@@ -113,9 +114,9 @@ struct YaifFrame : IWICBitmapFrameDecode {
     if (FAILED(hr)) return hr;
     WICRect all = {0, 0, img->w, img->h};
     if (!r) r = &all;
-    if (r->X < 0 || r->Y < 0 || r->Width < 0 || r->Height < 0 || r->X + r->Width > img->w || r->Y + r->Height > img->h) return E_INVALIDARG;
+    if (r->X < 0 || r->Y < 0 || r->Width < 0 || r->Height < 0 || INT64(r->X) + r->Width > img->w || INT64(r->Y) + r->Height > img->h) return E_INVALIDARG;
     UINT row = UINT(r->Width) * 4;
-    if (stride < row || (r->Height && size < stride * UINT(r->Height - 1) + row)) return WINCODEC_ERR_INSUFFICIENTBUFFER;
+    if (stride < row || (r->Height && UINT64(size) < UINT64(stride) * UINT64(r->Height - 1) + row)) return WINCODEC_ERR_INSUFFICIENTBUFFER;
     const uint8_t *src = img->px.data() + size_t(img->w) * img->h * 4 * index;
     for (int y = 0; y < r->Height; y++) memcpy(out + size_t(stride) * y, src + (size_t(r->Y + y) * img->w + r->X) * 4, row);
     return S_OK;

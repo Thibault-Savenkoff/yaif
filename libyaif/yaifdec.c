@@ -290,9 +290,10 @@ typedef struct {
 
 static int sample(Codec *c, int p, int x, int y) {
   const uint8_t *px;
-  int i, g;
-  if (c->pmode) return c->ibuf[y * c->w + x];
-  i = ((c->oy + y) * c->stride + c->ox + x) * 4;
+  size_t i;
+  int g;
+  if (c->pmode) return c->ibuf[(size_t)y * c->w + x];
+  i = ((size_t)(c->oy + y) * c->stride + c->ox + x) * 4;
   px = c->px;
   g = px[i + 1];
   if (p == 0) return g;
@@ -303,9 +304,9 @@ static int sample(Codec *c, int p, int x, int y) {
 
 static void store(Codec *c, int v, int p, int x, int y) {
   uint8_t *px;
-  int i;
-  if (c->pmode) { c->ibuf[y * c->w + x] = v; return; }
-  i = ((c->oy + y) * c->stride + c->ox + x) * 4;
+  size_t i;
+  if (c->pmode) { c->ibuf[(size_t)y * c->w + x] = v; return; }
+  i = ((size_t)(c->oy + y) * c->stride + c->ox + x) * 4;
   px = c->px;
   if (p == 0) px[i + 1] = (uint8_t)v;
   else if (p == 1) px[i] = (uint8_t)((v - 255 + px[i + 1]) & 255);
@@ -552,7 +553,7 @@ static int code_region(Codec *c, int np) {
   c->npred = level >= 4 ? 6 : 5;
   memset(c->ccn, 0, sizeof c->ccn);
   memset(c->ccd, 0, sizeof c->ccd);
-  for (y = 0; y < h; y++) {
+  for (y = 0; y < h && !c->m->overrun; y++) {   /* a truncated stream: stop, the caller fails on overrun */
     for (x = 0; x < w; x++) {
       match_step(c, np, x, y);
       for (p = 0; p < np; p++) {
@@ -623,7 +624,7 @@ static int decode_palette(Codec *c, const uint8_t *data, size_t pos, size_t len,
   /* ponytail: np 1 (alpha region) at level 0 writes the palette's first byte to G, as the C does. */
   for (y = 0; y < h; y++) {
     for (x = 0; x < w; x++) {
-      int ci = c->ibuf[y * w + x];
+      int ci = c->ibuf[(size_t)y * w + x];
       size_t i = ((size_t)(c->oy + y) * c->stride + c->ox + x) * 4;
       if (ci >= n) ci = n - 1;
       c->px[i] = pal[ci * 4]; c->px[i + 1] = pal[ci * 4 + 1]; c->px[i + 2] = pal[ci * 4 + 2]; c->px[i + 3] = pal[ci * 4 + 3];
@@ -905,7 +906,7 @@ static int code_band(Lossy *L) {
     }
     memset(L->zb, 1, (size_t)w);
   }
-  for (y = L->ytop + L->by; y < L->ybot; y += bs) {
+  for (y = L->ytop + L->by; y < L->ybot && !L->m->overrun; y += bs) {
     if (fine && ((y - L->ytop - L->by) / bs) % 2 == 0) code_flags(L, y);
     for (x = bx; x < w; x += bs) {
       if (fine && L->zb[(x - bx) / (2 * bs)] == 1) {
@@ -1141,7 +1142,7 @@ static int decode_region(State *S, const uint8_t *data, size_t pos, size_t len, 
     memset(&J, 0, sizeof J);
     if (np == 4) {
       n = u32(data, pos + 2);
-      if (n > len - 8 || data[pos + 6 + n] < 1 || data[pos + 6 + n] > 4) return 0;
+      if (len < 8 || n > len - 8 || data[pos + 6 + n] < 1 || data[pos + 6 + n] > 4) return 0;
       p = pos + 6;
     }
     if (!stripe_table(&J, data, p, p + n)) return 0;
