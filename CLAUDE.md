@@ -271,6 +271,7 @@ Open, no date:
   no paid Apple account needed; downloaded binaries would show "unidentified developer" -- same accepted trade-off
   as SmartScreen). Unverified: do the Xcode command-line tools alone build an appex, and does Quick Look register one
   outside /Applications (pluginkit). Each trial must be run by the user on the Mac. Until then Finder shows a generic icon.
+  **Prototype `plugins/quicklook/` (`2e1b802`)**: Thumb.swift (QLThumbnailProvider, PREV chunk, orientation via CIImage), host app + appex built by `build.sh` (swiftc + clang on libyaif, ad-hoc signed, installs to ~/Applications, `pluginkit -a`). Compiles and signs on the user's M4 (Xcode installed there; CLT-only still untested). `pluginkit` listed the appex only seconds AFTER `-a` (async: build.sh should wait/retry). **Thumbnails do NOT show yet** (2026-11-12): checking whether the UTI `org.yaif.image` is known (`mdls -name kMDItemContentType`) or the appex crashes (`log show`).
 - GNOME: re-verify the glycin install fix on the VM; Nautilus thumbnails still fail (not chased);
   `plugins/gdk-pixbuf` untested.
 - libheif PR #1503: once in a libheif release, drop `libheif-gainmap/` for the system libheif.
