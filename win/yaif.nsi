@@ -6,6 +6,8 @@ Unicode true
 !include x64.nsh
 !include WinMessages.nsh
 !include StrFunc.nsh
+!include FileFunc.nsh
+!insertmacro GetSize
 ${UnStrRep}
 
 !define UNINST "Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF"
@@ -170,6 +172,9 @@ Section "YAIF" SecCore
   WriteRegStr ShCtx "${UNINST}" "InstallLocation" "$InstDir"
   WriteRegStr ShCtx "${UNINST}" "DisplayIcon" "$InstDir\yaif.exe,0"
   WriteRegStr ShCtx "${UNINST}" "UninstallString" '"$InstDir\uninstall.exe"'
+  ; size shown in Settings > Apps (KB)
+  ${GetSize} "$InstDir" "/S=0K" $0 $1 $2
+  WriteRegDWORD ShCtx "${UNINST}" "EstimatedSize" "$0"
   WriteRegDWORD ShCtx "${UNINST}" "NoModify" 1
   WriteRegDWORD ShCtx "${UNINST}" "NoRepair" 1
   WriteRegStr ShCtx "${UNINST}" "InstallMode" "$MultiUser.InstallMode"
