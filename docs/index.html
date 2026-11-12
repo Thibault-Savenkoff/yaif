@@ -248,7 +248,7 @@ function workers() {
       const hc = navigator.hardwareConcurrency || 4;
       // ?w=N in the address forces N workers (1-32), to measure.
       const force = Math.min(+new URLSearchParams(location.search).get('w') || 0, 32);
-      const nw = force || (/iPhone|iPad/.test(navigator.userAgent) ? Math.max(hc, 6) : Math.min(hc, 16));
+      const nw = force || (IOS ? Math.max(hc, 6) : Math.min(hc, 16));
       for (let i = 0; i < nw; i++) pool.push(new Worker('worker.js' + V));
     } catch (e) { pool = []; }
   }
@@ -566,7 +566,8 @@ async function sample(k) {
 document.querySelectorAll('[data-k]').forEach(b => b.onclick = () => sample(b.dataset.k));
 
 function dropZone(zone, input, fn) {
-  $(input).onchange = e => e.target.files.length && fn(e.target.files);
+  // The input is emptied once read: picking the same file again must fire `change` again.
+  $(input).onchange = e => { const f = [...e.target.files]; e.target.value = ''; f.length && fn(f); };
   const d = $(zone);
   d.ondragover = e => { e.preventDefault(); d.classList.add('over'); };
   d.ondragleave = () => d.classList.remove('over');
@@ -579,7 +580,9 @@ function fail(msg) {
   info.replaceChildren(s);
 }
 // One place to open anything: a .yaif is decoded; an image is converted to .yaif first, then shown.
-const PHONE = /iPhone|iPad|Android/.test(navigator.userAgent);
+// iPadOS Safari presents itself as a Mac with a touch screen.
+const IOS = /iPhone|iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+const PHONE = IOS || /Android/.test(navigator.userAgent);
 // Pop-up: resolves true for the main button. cancel: text of the second button (none: OK only).
 function ask(title, text, okText, cancel, warn = false) {
   const d = $('dlg');
@@ -722,7 +725,7 @@ const RAW = /\.(3fr|arw|cr2|cr3|crw|dcr|dng|erf|iiq|k25|kdc|mef|mos|mrw|nef|nrw|
 // core if the replicas fail (out of memory with n copies).
 // Phones: one replica (each holds a whole copy of the image, up to ~1 GB for a 24 Mpx RAW, and iOS
 // closes the tab beyond its memory limit); 8 elsewhere.
-const CORES = /iPhone|iPad|Android/.test(navigator.userAgent) ? 1 : Math.min(navigator.hardwareConcurrency || 1, 8);
+const CORES = PHONE ? 1 : Math.min(navigator.hardwareConcurrency || 1, 8);
 // onStep({pc, label} or {step}): pc adds up the replicas' shares of the work.
 async function yaif(name, data, argv, out, n = CORES, onStep = () => {}) {
   const pcs = new Array(n).fill(0);

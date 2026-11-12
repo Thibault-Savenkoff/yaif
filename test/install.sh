@@ -17,7 +17,10 @@ case $T in "${TMPDIR:-/tmp}"/*) ;; *) echo "test/install.sh: unsafe mktemp path:
 srv_pid=
 fail=0
 cleanup() {
+  local rc=$?
   [ -n "$srv_pid" ] && kill "$srv_pid" >/dev/null 2>&1 || true
+  # set -e stops the script without a FAIL line (a command died, a port was busy...): say so, keep the logs.
+  [ $rc != 0 ] && [ "$fail" = 0 ] && { echo "test/install.sh: stopped early (exit $rc)"; fail=1; }
   if [ "$fail" = 0 ]; then
     case $T in "${TMPDIR:-/tmp}"/*) rm -rf -- "$T" ;; esac
   else
@@ -62,6 +65,7 @@ run_install() {  # run_install <home> <install.sh args...>
   env -i \
     HOME="$home" \
     PATH="/usr/bin:/bin:$home/.cargo/bin${extra_path:-}" \
+    TMPDIR="${TMPDIR:-/tmp}" \
     SHELL=/bin/zsh \
     YAIF_TEST_ROOT="$T/root" \
     YAIF_RELEASE_BASE="http://127.0.0.1:$port/download" \
@@ -102,7 +106,7 @@ check "re-run: no duplicate zshrc lines" [ "$(yaif_lines "$h1/.zshrc")" = 2 ]
 
 # --- 3: uninstall, with the copy of install.sh the install left, removes everything it installed ---
 check "install: prints the local uninstall command" grep -qF 'bash ~/.local/share/yaif/install.sh --uninstall' "$T/1.log"
-env -i HOME="$h1" PATH=/usr/bin:/bin SHELL=/bin/zsh YAIF_TEST_ROOT="$T/root" \
+env -i HOME="$h1" PATH=/usr/bin:/bin TMPDIR="${TMPDIR:-/tmp}" SHELL=/bin/zsh YAIF_TEST_ROOT="$T/root" \
   bash "$h1/.local/share/yaif/install.sh" --uninstall > "$T/3.log" 2>&1
 check "uninstall: its own script gone" [ ! -e "$h1/.local/share/yaif/install.sh" ]
 check "uninstall: binary gone"   [ ! -e "$h1/.local/bin/yaif" ]

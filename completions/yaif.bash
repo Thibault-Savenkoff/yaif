@@ -1,7 +1,7 @@
 # bash completion for yaif. Install: copy into a bash-completion completions
 # directory (e.g. ~/.local/share/bash-completion/completions/yaif, no
 # extension) -- sourced automatically by the bash-completion package, no
-# ~/.bashrc edit needed.
+# ~/.bashrc edit needed. File names go through its _filedir, which quotes spaces.
 _yaif() {
   local cur prev
   _init_completion || return
@@ -17,21 +17,21 @@ _yaif() {
       case $prev in
         -m) COMPREPLY=($(compgen -W "adaptive lossless lossy" -- "$cur")); return ;;
         -l) COMPREPLY=($(compgen -W "0 1 2 3 4 5" -- "$cur")); return ;;
-        -live) COMPREPLY=($(compgen -f -X '!*.@(mov|MOV)' -- "$cur")); return ;;
+        -live) _filedir mov; return ;;
       esac
-      COMPREPLY=($(compgen -f -- "$cur")) ;;
+      _filedir ;;
     decode|convert)
       case $prev in
         -m) COMPREPLY=($(compgen -W "lossy lossless" -- "$cur")); return ;;
         -look) COMPREPLY=($(compgen -W "canon darktable" -- "$cur")); return ;;
       esac
-      COMPREPLY=($(compgen -f -- "$cur")) ;;
+      _filedir ;;
     preview|info)
-      COMPREPLY=($(compgen -f -X '!*.yaif' -- "$cur")) ;;
+      _filedir yaif ;;
     bench)
-      COMPREPLY=($(compgen -f -X '!*.@(png|PNG|jpg|JPG|jpeg|JPEG)' -- "$cur")) ;;
+      _filedir '@(png|jpg|jpeg)' ;;
     *)
-      COMPREPLY=($(compgen -f -- "$cur")) ;;
+      _filedir ;;
   esac
 }
 complete -F _yaif yaif

@@ -160,8 +160,9 @@ record() {
 install_file() {  # install_file user|root <source> <destination> <mode>
   local dest=$3
   [ "$1" = root ] && dest=$TEST_ROOT$3
-  run "$1" mkdir -p "$(dirname "$dest")"
-  run "$1" install -m "$4" "$2" "$dest"
+  # A failed mkdir/install (sudo refused...) must not be recorded, nor reported as done by the caller.
+  run "$1" mkdir -p "$(dirname "$dest")" || return 1
+  run "$1" install -m "$4" "$2" "$dest" || return 1
   record "$1" "$dest"
 }
 
@@ -224,10 +225,16 @@ enable_dolphin_thumbnailer() {
   esac
 }
 
-remove_dolphin_thumbnailer() {  # $rest: the pre-install Plugins= value, read by do_uninstall's caller
-  command -v kwriteconfig6 >/dev/null 2>&1 || return 0
-  if [ -n "$rest" ]; then
-    run user kwriteconfig6 --file dolphinrc --group PreviewSettings --key Plugins "$rest" || return 0
+remove_dolphin_thumbnailer() {
+  # Takes our entry out of the CURRENT list: restoring the list from before the install would also
+  # undo any thumbnailer the user ticked since.
+  local cur new
+  command -v kwriteconfig6 >/dev/null 2>&1 && command -v kreadconfig6 >/dev/null 2>&1 || return 0
+  cur=$(kreadconfig6 --file dolphinrc --group PreviewSettings --key Plugins 2>/dev/null) || cur=
+  case ",$cur," in *,libyaifthumb,*) ;; *) return 0 ;; esac
+  new=$(printf ',%s,' "$cur" | sed -e 's/,libyaifthumb,/,/g' -e 's/^,*//' -e 's/,*$//')
+  if [ -n "$new" ]; then
+    run user kwriteconfig6 --file dolphinrc --group PreviewSettings --key Plugins "$new" || return 0
   else
     run user kwriteconfig6 --file dolphinrc --group PreviewSettings --key Plugins --delete || return 0
   fi
@@ -462,15 +469,21 @@ make_gdk_pixbuf_plugin() {
     $(pkg-config --cflags --libs gdk-pixbuf-2.0) -lpthread \
     > "$tmp/gdk-pixbuf.log" 2>&1 ||
     { tail -20 "$tmp/gdk-pixbuf.log" >&2; warn "gdk-pixbuf loader: build failed (log above)"; return 1; }
-  install_file root "$so" "$moduledir/libpixbufloader-yaif.so" 644
+  install_file root "$so" "$moduledir/libpixbufloader-yaif.so" 644 ||
+    { warn "gdk-pixbuf loader: could not install it (see above)"; return 1; }
   # Dolphin lists freedesktop .thumbnailer files next to its own plugins: with the KDE thumbnailer
   # installed, this one would show as a second "YAIF" entry. It is for Nautilus/older GNOME only.
-  [ $kde_thumb = 1 ] || install_file root "$src/plugins/gdk-pixbuf/yaif.thumbnailer" "/usr/share/thumbnailers/yaif.thumbnailer" 644
-  if command -v gdk-pixbuf-query-loaders-64 >/dev/null 2>&1; then
-    run root gdk-pixbuf-query-loaders-64 --update-cache
-  elif command -v gdk-pixbuf-query-loaders >/dev/null 2>&1; then
-    run root gdk-pixbuf-query-loaders --update-cache
-  fi
+  [ $kde_thumb = 1 ] || install_file root "$src/plugins/gdk-pixbuf/yaif.thumbnailer" "/usr/share/thumbnailers/yaif.thumbnailer" 644 || return 1
+  # Debian/Ubuntu keep the tool in a multiarch directory that is not on the PATH: next to the modules' parent.
+  local q cache=0
+  for q in gdk-pixbuf-query-loaders-64 gdk-pixbuf-query-loaders \
+      "$(dirname "$(pkg-config --variable=gdk_pixbuf_binarydir gdk-pixbuf-2.0 2>/dev/null)")/gdk-pixbuf-query-loaders"; do
+    if command -v "$q" >/dev/null 2>&1; then
+      run root "$q" --update-cache && cache=1
+      break
+    fi
+  done
+  [ $cache = 1 ] || warn "gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache"
   ok "gdk-pixbuf loader installed"
 }
 
@@ -490,9 +503,9 @@ cargo_glycin_plugin() {
   bin_out=$(find "$tmp/glycin/release" -maxdepth 1 -type f -name 'glycin-yaif*' ! -name '*.d' | head -1)
   [ -n "$bin_out" ] || { warn "glycin loader: build produced no binary, skipped"; return 1; }
   name=$(basename "$bin_out")
-  install_file root "$bin_out" "$execdir/$name" 755
+  install_file root "$bin_out" "$execdir/$name" 755 || return 1
   printf '[loader:image/x-yaif]\nExec=%s/%s\n' "$execdir" "$name" > "$tmp/glycin-yaif.conf"
-  install_file root "$tmp/glycin-yaif.conf" "$confdir/glycin-yaif.conf" 644
+  install_file root "$tmp/glycin-yaif.conf" "$confdir/glycin-yaif.conf" 644 || return 1
   # Nautilus thumbnails: glycin-thumbnailer is a generic tool that thumbnails whatever glycin can
   # load, so registering the loader above is enough to make it work for .yaif too, in principle.
   # Newer GNOME (glycin-loaders' era) ships this instead of the older gdk-pixbuf-thumbnailer, which
@@ -505,7 +518,7 @@ cargo_glycin_plugin() {
   if [ -n "$gt_path" ]; then
     printf '[Thumbnailer Entry]\nTryExec=%s\nExec=%s --input %%u --output %%o --size %%s\nMimeType=image/x-yaif;\n' \
       "$gt_path" "$gt_path" > "$tmp/yaif-glycin.thumbnailer"
-    install_file root "$tmp/yaif-glycin.thumbnailer" "/usr/share/thumbnailers/yaif-glycin.thumbnailer" 644
+    install_file root "$tmp/yaif-glycin.thumbnailer" "/usr/share/thumbnailers/yaif-glycin.thumbnailer" 644 || return 1
   fi
   # A working loader is not enough for double-click-to-open: GNOME resolves the default app for a
   # MIME type from mimeapps.list, not from which loader can technically decode it, so Loupe (which
