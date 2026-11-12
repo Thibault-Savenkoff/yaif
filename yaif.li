@@ -575,6 +575,45 @@ Public
     result
   )
 
+  - thumb_to_sensor src:C_array Uint8 wh (w,h:Int) orient o:Int :C_array Uint8 <-
+  // RGBA thumbnail (upright) turned back into the sensor's orientation: a DNG reader applies the
+  // IFD0 Orientation (o: 3, 6 or 8) to the thumbnail too (Finder does), so an upright one comes out
+  // turned twice. 6 and 8 swap the size: the caller swaps w and h.
+  ( + result:C_array Uint8
+    + sw,sh,sx,sy,dx,dy,k:Int
+    result := C_array Uint8.create (w * h * 4 + 1)
+    ((o = 6) || {o = 8}).if {
+      sw := h
+      sh := w
+    } else {
+      sw := w
+      sh := h
+    }
+    0.to (sh - 1) do { y:Int
+      0.to (sw - 1) do { x:Int
+        sx := x
+        sy := y
+        (o = 6).if {
+          dx := sh - 1 - sy
+          dy := sx
+        }
+        (o = 8).if {
+          dx := sy
+          dy := sw - 1 - sx
+        }
+        (o = 3).if {
+          dx := w - 1 - sx
+          dy := h - 1 - sy
+        }
+        0.to 3 do { c:Int
+          k := c
+          result.at ((sy * sw + sx) * 4 + k) put (src.at ((dy * w + dx) * 4 + k))
+        }
+      }
+    }
+    result
+  )
+
   - write_ultrahdr buf:C_array Uint8 to name:String <-
   // Ultra HDR JPEG: the SDR image (quality opt_q) whose XMP points to the gain map JPEG (q 85)
   // appended after it, both indexed by an MPF segment. SDR viewers show the SDR image.
@@ -1363,6 +1402,7 @@ Public
   - read_yaif name:String decode_to dst:String <-
   // dst = NULL: print the chunk list (info). Else write each frame as PNG.
   ( + pos,t,len,c,np,x0,y0,dw,dh,count,flags,nframes,live_pos,live_len,rawh,n,tw,th,tn,rn,rs:Int
+    + fo,kk:Int
     + done,animated,raw,have_thumb,have_ihdr:Boolean
     + cur,next,tb:C_array Uint8
     + base:String
@@ -1447,6 +1487,17 @@ Public
           }.elseif {dst.as_lower.has_suffix ".dng"} then {
             tn := 0
             (have_thumb).if {
+              fo := u32 (rawh + 25)
+              ((fo = 3) || {fo = 5} || {fo = 6}).if {
+                // LibRaw flip -> the TIFF Orientation write_dng stores: 3, 8, 6
+                (fo = 5).if { fo := 8 }
+                next := thumb_to_sensor next wh (tw, th) orient fo
+                (fo != 3).if {
+                  kk := tw
+                  tw := th
+                  th := kk
+                }
+              }
               (Yaif_jpeg.encode next size (tw, th) quality 85 exif (next, 0, 0) icc (next, 0, 0) xmp (next, 0, 0)).if {
                 tn := Yaif_jpeg.size
                 tb := copy_bytes (Yaif_jpeg.data) size tn
