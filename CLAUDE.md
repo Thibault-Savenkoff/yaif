@@ -1,6 +1,6 @@
 ## Current state
 
-_Updated 2026-09-25._
+_Updated 2026-11-12._
 
 ### NOVA is now YAIF (2026-09-24)
 **Renamed NOVA -> YAIF ("Yet Another Image Format", user's pick for its self-deprecation).** Every
@@ -198,6 +198,15 @@ To fix, worst first (full text in the session transcript, 2026-10-17):
   libheif error string used after free; stale HEIC gain map in bench; Qt canRead() true after last
   frame (no loop); gdk-pixbuf RAW reports sensor size; web strip drops EXIF orientation; unchecked
   realloc x4; tables init without memory barrier; TIFF maker-note offsets.
+
+### Since the pre-v2.0.0 review (2026-11-12)
+- Chunk 4 items (1)-(6) fixed and committed on `v2` (`2462fae`, `38e06a5`, `b86d3ae`), NOT pushed, NOT run on
+  real Windows/Mac. Chunk 1-3 findings (crafted-file memory bugs first, then nu_cmp before beta.10) still open.
+- **Lisaac is 0.7** (user, 2026-11-12): README/build.sh pin it, CI reads the README. unit.sh 2768/0 with it
+  locally; macOS/arm64 CI jobs untried. Local compiler: `/var/tmp/yaif-work/lc7/lisaac/bin` (the old
+  `lisaac/bin` dir was empty). `test/install.sh` needs the sandbox off (`env -i` drops TMPDIR).
+- Model setup (user): default Sonnet 5.5 medium; Opus 5.5 may be consulted as advisor, Haiku 5.5 for sub-agents.
+  The October free reset and the $100 cloud credit have expired.
 
 ### To do (details in the entries below)
 Next up, in order:
