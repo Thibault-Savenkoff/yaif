@@ -18,6 +18,7 @@ set -eu
 repo=Thibault-Savenkoff/yaif
 prefix=$HOME/.local
 system=0
+nova_removed=0   # set once the former NOVA install has been removed
 plugins=1
 heic_hdr=1
 deps=1
@@ -263,7 +264,7 @@ do_uninstall() {
     esac
   done < "$tmp/manifest"
   refresh_caches
-  rm -f -- "$manifest"
+  run "$owner" rm -f -- "$manifest"
   ok "YAIF is uninstalled."
 }
 
@@ -323,13 +324,14 @@ install_bin() {
   # A copy of this script, so uninstalling needs neither the network nor the archive.
   install_file "$owner" "$src/install.sh" "$prefix/share/yaif/install.sh" 755
   ok "yaif $version -> $(pretty "$prefix/bin/yaif")"
+  # NOVA's uninstaller just took its PATH line out of ~/.zshrc: this shell's PATH still has the
+  # directory, but new terminals will not, so the line is needed whatever $PATH says now.
   case ":$PATH:" in
-    *":$prefix/bin:"*) ;;
-    *)
-      warn "$(pretty "$prefix/bin") is not in PATH"
-      add_rc_line "export PATH=\"$prefix/bin:\$PATH\"   # YAIF" \
-        "Add it to ~/.zshrc?" "(open a new terminal)" ;;
+    *":$prefix/bin:"*) [ $nova_removed = 1 ] || return 0 ;;
+    *) warn "$(pretty "$prefix/bin") is not in PATH" ;;
   esac
+  add_rc_line "export PATH=\"$prefix/bin:\$PATH\"   # YAIF" \
+    "Add it to ~/.zshrc?" "(open a new terminal)"
 }
 
 install_completion() {
@@ -584,19 +586,6 @@ fi
 
 printf 'YAIF installer  (%s %s, into %s)\n' "$os" "$arch" "$(pretty "$prefix")"
 
-# YAIF was called NOVA up to v2.0.0-beta.6: that install's own manifest-only uninstaller removes it.
-old_nova="$prefix/share/nova/install.sh"
-if [ -f "$old_nova" ]; then
-  step "Removing NOVA, the former name of YAIF ($(pretty "$prefix"))"
-  if [ $system = 1 ]; then old_flag=--system; else old_flag="--prefix $prefix"; fi
-  # shellcheck disable=SC2086
-  NOVA_TEST_ROOT=$TEST_ROOT bash "$old_nova" --uninstall $old_flag ||
-    warn "NOVA's uninstaller failed; run it yourself: bash $(pretty "$old_nova") --uninstall"
-  # zsh keeps its completion cache while the count of completion files is unchanged: _nova out and
-  # _yaif in leaves it the same, so `yaif` would never complete. It is only a cache, rebuilt at start.
-  rm -f "${ZDOTDIR:-$HOME}"/.zcompdump*
-fi
-
 if [ -n "$from" ]; then
   [ -f "$from" ] || die "no such file: $from"
   archive=$(basename "$from")
@@ -616,6 +605,21 @@ else
   verify
   unpack
 fi
+# YAIF was called NOVA up to v2.0.0-beta.6: that install's own manifest-only uninstaller removes it.
+# Done only once the new archive is downloaded and verified, so a failed download leaves NOVA in place.
+old_nova="$prefix/share/nova/install.sh"
+if [ -f "$old_nova" ]; then
+  step "Removing NOVA, the former name of YAIF ($(pretty "$prefix"))"
+  if [ $system = 1 ]; then old_flag=--system; else old_flag="--prefix $prefix"; fi
+  # shellcheck disable=SC2086
+  NOVA_TEST_ROOT=$TEST_ROOT bash "$old_nova" --uninstall $old_flag ||
+    warn "NOVA's uninstaller failed; run it yourself: bash $(pretty "$old_nova") --uninstall"
+  # zsh keeps its completion cache while the count of completion files is unchanged: _nova out and
+  # _yaif in leaves it the same, so `yaif` would never complete. It is only a cache, rebuilt at start.
+  rm -f "${ZDOTDIR:-$HOME}"/.zcompdump*
+  nova_removed=1
+fi
+
 install_bin
 install_completion
 install_mime

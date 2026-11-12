@@ -61,7 +61,7 @@ run_install() {  # run_install <home> <install.sh args...>
   mkdir -p "$home"
   env -i \
     HOME="$home" \
-    PATH="/usr/bin:/bin:$home/.cargo/bin" \
+    PATH="/usr/bin:/bin:$home/.cargo/bin${extra_path:-}" \
     SHELL=/bin/zsh \
     YAIF_TEST_ROOT="$T/root" \
     YAIF_RELEASE_BASE="http://127.0.0.1:$port/download" \
@@ -142,11 +142,23 @@ h5c="$T/home5c"
 mkdir -p "$h5c/.local/bin" "$h5c/.local/share/nova"
 : > "$h5c/.local/bin/nova"
 # A stand-in for NOVA's install.sh (CI checkouts have no old tags): logs its arguments, removes its files.
-printf '#!/bin/bash\necho "$@" > "%s/args"\nrm -f "%s/.local/bin/nova" "%s/.local/share/nova/installed.txt"\n' \
-  "$h5c" "$h5c" "$h5c" > "$h5c/.local/share/nova/install.sh"
+printf '#!/bin/bash\necho "$@" > "%s/args"\nrm -f "%s/.local/bin/nova" "%s/.local/share/nova/installed.txt"\ngrep -v "# NOVA" "%s/.zshrc" > "%s/zrc"; cat "%s/zrc" > "%s/.zshrc"\n' \
+  "$h5c" "$h5c" "$h5c" "$h5c" "$h5c" "$h5c" "$h5c" "$h5c" > "$h5c/.local/share/nova/install.sh"
 : > "$h5c/.local/share/nova/installed.txt"
 : > "$h5c/.zcompdump"
+printf 'export PATH="%s/.local/bin:$PATH"   # NOVA\n' "$h5c" > "$h5c/.zshrc"
+# the shell running install.sh still has the directory in its PATH (NOVA put it there)
+extra_path=":$h5c/.local/bin"
+h5d="$T/home5d"   # same NOVA, but the release cannot be found: NOVA must stay
+cp -R "$h5c" "$h5d"
+sed -i "s|$h5c|$h5d|g" "$h5d/.local/share/nova/install.sh"
+ok5d=1
+run_install "$h5d" --yes --no-plugins --no-heic-hdr --version 9.9.9 > "$T/5d.log" 2>&1 || ok5d=0
+check "failed download: install refused" [ "$ok5d" = 0 ]
+check "failed download: NOVA left in place" [ -e "$h5d/.local/bin/nova" ]
 run_install "$h5c" --yes --no-plugins --no-heic-hdr > "$T/5c.log" 2>&1
+extra_path=''
+check "old NOVA: new terminals still get YAIF on PATH" grep -qxF 'export PATH="'"$h5c"'/.local/bin:$PATH"   # YAIF' "$h5c/.zshrc"
 check "old NOVA: its binary removed"    [ ! -e "$h5c/.local/bin/nova" ]
 check "old NOVA: its manifest removed"  [ ! -e "$h5c/.local/share/nova/installed.txt" ]
 check "old NOVA: zsh completion cache dropped" [ ! -e "$h5c/.zcompdump" ]
