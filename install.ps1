@@ -2,8 +2,8 @@
 #   irm https://raw.githubusercontent.com/Thibault-Savenkoff/yaif/v2/install.ps1 | iex
 # Downloads the latest v2 release's .zip, checks its SHA-256, unpacks it to
 # %LOCALAPPDATA%\Programs\YAIF, puts that folder on your PATH, adds the Tab-completion line to your
-# PowerShell profile and an entry in Settings > Apps. Uninstall from there. It does NOT register the
-# Explorer thumbnail codec (that needs administrator): use the -setup.exe for it.
+# PowerShell profile and an entry in Settings > Apps. Uninstall from there. The Explorer thumbnail codec is
+# registered for your account only (HKCU), so no administrator is needed anywhere.
 # A script run this way is not SmartScreen- or Defender-checked like a downloaded .exe.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'   # Windows PowerShell 5.1 downloads 10x slower with the bar
@@ -58,6 +58,12 @@ $env_.Close()
 # Setting then deleting a user variable makes Windows broadcast "environment changed" (new terminals see the PATH).
 [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', '1', 'User'); [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', $null, 'User')
 
+# Explorer thumbnails and the viewer codec, for this user only (HKCU\Software\Classes: no administrator).
+# regsvr32 calls DllInstall(TRUE, "user") with /n /i:user. The 64-bit one: this process may be a 32-bit one.
+$rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnative\regsvr32.exe" } else { "$env:windir\System32\regsvr32.exe" }
+& $rs /s /n /i:user "$dir\yaif_wic.dll"
+if ($LASTEXITCODE -ne 0) { Write-Warning "The Explorer thumbnail codec could not be registered (regsvr32 exit $LASTEXITCODE)." }
+
 # Tab completion: the profile script runs under this same host, with the policy bypassed (a
 # default Windows PowerShell refuses unsigned scripts).
 $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
@@ -66,6 +72,8 @@ $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $
 # Uninstaller, kept next to yaif.exe so that Settings > Apps works offline.
 @'
 $dir = $PSScriptRoot
+$rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnative\regsvr32.exe" } else { "$env:windir\System32\regsvr32.exe" }
+& $rs /s /u /n /i:user "$dir\yaif_wic.dll"
 $ps = (Get-Process -Id $PID).Path
 $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
 & $ps -NoProfile -ExecutionPolicy Bypass -File "$sd\yaif-profile.ps1" -Remove
@@ -91,4 +99,4 @@ New-ItemProperty $unkey EstimatedSize -Value $kb -PropertyType DWord -Force | Ou
 New-ItemProperty $unkey NoModify -Value 1 -PropertyType DWord -Force | Out-Null
 
 Write-Host "YAIF $ver installed in $dir. Open a new terminal and run: yaif --version"
-Write-Host 'Uninstall: Settings > Apps > YAIF. Explorer thumbnails need the -setup.exe (administrator).'
+Write-Host 'Uninstall: Settings > Apps > YAIF.'

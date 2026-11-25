@@ -14,6 +14,9 @@ ${UnStrRep}
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "${UNINST}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 !define MULTIUSER_INSTALLMODE_INSTDIR "YAIF"
+; Highest: an administrator account gets the UAC prompt at launch, even for "only for me". NSIS's MultiUser
+; refuses the all-users / current-user page with Standard ("mixed mode needs Admin, Power or Highest"), and
+; ALLOW_ELEVATION only helps without that page. A standard account gets no prompt. install.ps1 never asks.
 !define MULTIUSER_EXECUTIONLEVEL Highest
 ; The installer is 32-bit, so MultiUser.nsh would pick $PROGRAMFILES, i.e. "Program Files (x86)",
 ; for a 64-bit yaif.exe. The MSI already installs to ProgramFiles64Folder.
@@ -137,7 +140,12 @@ Section "YAIF" SecCore
 
   ; the installer is 32-bit: run the 64-bit regsvr32 for the 64-bit codec
   ${DisableX64FSRedirection}
-  ExecWait '"$SYSDIR\regsvr32.exe" /s "$InstDir\yaif_wic.dll"' $0
+  ${if} $MultiUser.InstallMode == "AllUsers"
+    ExecWait '"$SYSDIR\regsvr32.exe" /s "$InstDir\yaif_wic.dll"' $0
+  ${else}
+    ; this user only: HKCU\Software\Classes, no administrator rights needed (DllInstall in yaif_wic.cpp)
+    ExecWait '"$SYSDIR\regsvr32.exe" /s /n /i:user "$InstDir\yaif_wic.dll"' $0
+  ${endif}
   ${EnableX64FSRedirection}
   StrCmp $0 0 +2
     MessageBox MB_OK|MB_ICONEXCLAMATION "$(REGSVR)"
@@ -247,7 +255,11 @@ FunctionEnd
 
 Section "Uninstall"
   ${DisableX64FSRedirection}
-  ExecWait '"$SYSDIR\regsvr32.exe" /s /u "$InstDir\yaif_wic.dll"'
+  ${if} $MultiUser.InstallMode == "AllUsers"
+    ExecWait '"$SYSDIR\regsvr32.exe" /s /u "$InstDir\yaif_wic.dll"'
+  ${else}
+    ExecWait '"$SYSDIR\regsvr32.exe" /s /u /n /i:user "$InstDir\yaif_wic.dll"'
+  ${endif}
   ${EnableX64FSRedirection}
   ClearErrors
   ${if} $MultiUser.InstallMode == "AllUsers"

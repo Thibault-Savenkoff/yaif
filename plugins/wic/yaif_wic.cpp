@@ -290,6 +290,10 @@ STDAPI DllCanUnloadNow() { return g_objects ? S_FALSE : S_OK; }
 
 // Registry: a WIC decoder (HKCR\CLSID\{decoder} + the decoders category) and the .yaif type,
 // with Windows' photo thumbnail provider (which then uses this decoder).
+// Where the keys go: HKEY_CLASSES_ROOT (all users, needs administrator) or, after DllInstall(.., "user"),
+// HKCU\Software\Classes -- the same tree for the current user only, which Windows merges into HKCR.
+static HKEY g_root = HKEY_CLASSES_ROOT;
+static bool g_user = false;
 static bool set(HKEY root, const wchar_t *path, const wchar_t *name, DWORD type, const void *data, DWORD n) {
   HKEY k;
   if (RegCreateKeyExW(root, path, 0, nullptr, 0, KEY_WRITE, nullptr, &k, nullptr) != ERROR_SUCCESS) return false;
@@ -298,9 +302,9 @@ static bool set(HKEY root, const wchar_t *path, const wchar_t *name, DWORD type,
   return ok;
 }
 static bool str(const wchar_t *path, const wchar_t *name, const wchar_t *v) {
-  return set(HKEY_CLASSES_ROOT, path, name, REG_SZ, v, DWORD((wcslen(v) + 1) * sizeof(wchar_t)));
+  return set(g_root, path, name, REG_SZ, v, DWORD((wcslen(v) + 1) * sizeof(wchar_t)));
 }
-static bool dword(const wchar_t *path, const wchar_t *name, DWORD v) { return set(HKEY_CLASSES_ROOT, path, name, REG_DWORD, &v, 4); }
+static bool dword(const wchar_t *path, const wchar_t *name, DWORD v) { return set(g_root, path, name, REG_DWORD, &v, 4); }
 
 STDAPI DllRegisterServer() {
   wchar_t dll[MAX_PATH], k[256], cat[256];
@@ -319,8 +323,8 @@ STDAPI DllRegisterServer() {
   ok = ok && str(sub, nullptr, L"");
   wsprintfW(sub, L"%s\\Patterns\\0", k);
   static const uint8_t mask[9] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-  ok = ok && dword(sub, L"Position", 0) && dword(sub, L"Length", 9) && set(HKEY_CLASSES_ROOT, sub, L"Pattern", REG_BINARY, SIG, 9) &&
-       set(HKEY_CLASSES_ROOT, sub, L"Mask", REG_BINARY, mask, 9);
+  ok = ok && dword(sub, L"Position", 0) && dword(sub, L"Length", 9) && set(g_root, sub, L"Pattern", REG_BINARY, SIG, 9) &&
+       set(g_root, sub, L"Mask", REG_BINARY, mask, 9);
   ok = ok && str(cat, L"CLSID", DECODER) && str(cat, L"FriendlyName", L"YAIF Decoder");
   wsprintfW(sub, L".yaif\\ShellEx\\%s", THUMBS);
   ok = ok && str(L".yaif", L"Content Type", L"image/x-yaif") && str(L".yaif", L"PerceivedType", L"image") && str(sub, nullptr, PHOTO_THUMBS);
@@ -328,11 +332,11 @@ STDAPI DllRegisterServer() {
   wchar_t icon[MAX_PATH + 4];
   wsprintfW(icon, L"%s,0", dll);
   ok = ok && str(L"YAIF.Image", nullptr, L"YAIF image") && str(L"YAIF.Image\\DefaultIcon", nullptr, icon) &&
-       set(HKEY_CLASSES_ROOT, L"YAIF.Image\\shell\\open\\command", nullptr, REG_EXPAND_SZ, VIEW, DWORD((wcslen(VIEW) + 1) * sizeof(wchar_t))) &&
+       set(g_root, L"YAIF.Image\\shell\\open\\command", nullptr, REG_EXPAND_SZ, VIEW, DWORD((wcslen(VIEW) + 1) * sizeof(wchar_t))) &&
        str(L".yaif", nullptr, L"YAIF.Image") && str(L".yaif\\OpenWithProgids", L"YAIF.Image", L"");
   // Explorer lists .yaif as a picture (search, "Kind" column, photo views)
   const wchar_t *kind = L"picture";
-  set(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\KindMap", L".yaif", REG_SZ, kind,
+  set(g_user ? HKEY_CURRENT_USER : HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\KindMap", L".yaif", REG_SZ, kind,
       DWORD((wcslen(kind) + 1) * sizeof(wchar_t)));
   SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
   return ok ? S_OK : SELFREG_E_CLASS;
@@ -353,10 +357,22 @@ STDAPI DllUnregisterServer() {
   RegDeleteTreeW(HKEY_CLASSES_ROOT, L".yaif");
   RegDeleteTreeW(HKEY_CLASSES_ROOT, L"YAIF.Image");
   HKEY m;
-  if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\KindMap", 0, KEY_WRITE, &m) == ERROR_SUCCESS) {
+  if (RegOpenKeyExW(g_user ? HKEY_CURRENT_USER : HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\KindMap", 0, KEY_WRITE, &m) == ERROR_SUCCESS) {
     RegDeleteValueW(m, L".yaif");
     RegCloseKey(m);
   }
   SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
   return S_OK;
+}
+
+// regsvr32 /n /i:user yaif_wic.dll (add /u to remove): the same registration for the current user only, in
+// HKCU\Software\Classes, so that no administrator is needed. Without "user" it is the all-users one.
+STDAPI DllInstall(BOOL install, PCWSTR cmd) {
+  if (cmd && lstrcmpiW(cmd, L"user") == 0) {
+    if (RegCreateKeyExW(HKEY_CURRENT_USER, L"Software\\Classes", 0, nullptr, 0, KEY_ALL_ACCESS, nullptr, &g_root, nullptr) != ERROR_SUCCESS) return SELFREG_E_CLASS;
+    g_user = true;
+  }
+  HRESULT r = install ? DllRegisterServer() : DllUnregisterServer();
+  if (g_user) RegCloseKey(g_root);
+  return r;
 }
