@@ -111,7 +111,7 @@ There is no package yet.
 `yaif.exe`, put it on the `PATH` and register the codec, so the Explorer shows thumbnails and previews.
 The `.zip` is the same files without an installer. Uninstall from Settings > Apps. Either
 installer sets up PowerShell tab completion by itself, for Windows PowerShell and PowerShell 7 both; from
-the zip, run `yaif-profile.ps1` once (its `README.txt` has the details). The completion script is named
+the zip, run `scripts\yaif-profile.ps1` once (its `README.txt` has the details). The completion script is named
 `yaif-completion.ps1`, not `yaif.ps1`, because PowerShell resolves a bare `yaif` to a `.ps1` on the `PATH`
 in preference to `yaif.exe`. cmd.exe has no such hook for a third-party program's arguments.
 

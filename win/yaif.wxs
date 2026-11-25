@@ -42,8 +42,6 @@
             <File Id="libkvazaar.dll" Source="dist/yaif-windows/libkvazaar.dll"/>
             <!-- Writing .heic with an HDR gain map: libheif + its gain-map PR (libheif-gainmap/). -->
             <File Id="libyaif.heif.dll" Source="dist/yaif-windows/libyaif-heif.dll"/>
-            <File Id="yaif.completion.ps1" Source="dist/yaif-windows/yaif-completion.ps1"/>
-            <File Id="yaif.profile.ps1" Source="dist/yaif-windows/yaif-profile.ps1"/>
             <File Id="readme.txt" Source="dist/yaif-windows/README.txt"/>
             <!-- Tab completion needs a line in the user's PowerShell profile. RunCompletion below
                  writes the installing user's right away; this covers every *other* user of a
@@ -55,7 +53,7 @@
             <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Active Setup\Installed Components\{C041617A-3C51-4727-8351-E0BDF68C733B}">
               <RegistryValue Type="string" Value="YAIF tab completion"/>
               <RegistryValue Name="Version" Type="string" Value="1"/>
-              <RegistryValue Name="StubPath" Type="expandable" Value='"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "[INSTALLDIR]yaif-profile.ps1" -Script "[INSTALLDIR]yaif-completion.ps1"'/>
+              <RegistryValue Name="StubPath" Type="expandable" Value='"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "[INSTALLDIR]scripts\yaif-profile.ps1" -Script "[INSTALLDIR]scripts\yaif-completion.ps1"'/>
             </RegistryKey>
             <File Id="lic.yaif" Source="dist/yaif-windows/LICENSE-yaif.txt"/>
             <File Id="lic.zlib" Source="dist/yaif-windows/LICENSE-zlib.txt"/>
@@ -127,6 +125,14 @@
               <RegistryValue Name=".yaif" Type="string" Value="picture"/>
             </RegistryKey>
           </Component>
+          <!-- Not next to yaif.exe: this folder is on the PATH, where PowerShell would offer both scripts
+               as commands when completing `yaif`. -->
+          <Directory Id="SCRIPTS" Name="scripts">
+            <Component Id="Scripts" Guid="5E6F7081-92A3-4B4C-8D5E-6F7A8B9C0D1E" Win64="yes">
+              <File Id="yaif.completion.ps1" Source="dist/yaif-windows/scripts/yaif-completion.ps1" KeyPath="yes"/>
+              <File Id="yaif.profile.ps1" Source="dist/yaif-windows/scripts/yaif-profile.ps1"/>
+            </Component>
+          </Directory>
           <Directory Id="SAMPLES" Name="samples">
             <Component Id="Samples" Guid="9B0C1D2E-3F4A-4B5C-8D6E-7F8091A2B3C4" Win64="yes">
               <File Id="photo.yaif" Source="dist/yaif-windows/photo.yaif" KeyPath="yes"/>
@@ -149,7 +155,7 @@
          the line. -->
     <Property Id="PSEXE" Value="powershell.exe"/>
     <CustomAction Id="RunCompletion" Property="PSEXE" Execute="immediate" Return="ignore"
-                  ExeCommand='-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "[INSTALLDIR]yaif-profile.ps1" -Script "[INSTALLDIR]yaif-completion.ps1"'/>
+                  ExeCommand='-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "[INSTALLDIR]scripts\yaif-profile.ps1" -Script "[INSTALLDIR]scripts\yaif-completion.ps1"'/>
     <!-- Immediate, not deferred: wixl ignores After= and numbers these in document order, so this
          lands after InstallFinalize whatever it claims to follow, and a deferred action outside
          the install transaction is error 2762 ("cannot write script record"). That is the dialog
@@ -165,6 +171,7 @@
     <Feature Id="All" Level="1">
       <ComponentRef Id="Program"/>
       <ComponentRef Id="Codec"/>
+      <ComponentRef Id="Scripts"/>
       <ComponentRef Id="Samples"/>
     </Feature>
   </Product>

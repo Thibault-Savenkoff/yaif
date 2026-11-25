@@ -9,8 +9,10 @@ bash win/build.sh && bash plugins/wic/build.sh || exit 1
 rm -rf $D dist/yaif-windows.zip && mkdir -p $D
 cp yaif.exe plugins/wic/yaif_wic.dll $M/bin/{zlib1,libwebp-7,libsharpyuv-0}.dll docs/samples/{photo,screenshot,animation}.yaif $D/
 # Not "yaif.ps1": this folder goes on the PATH, and PowerShell resolves a bare `yaif` to a .ps1
-# there in preference to yaif.exe -- the command then silently does nothing at all.
-cp completions/yaif.ps1 $D/yaif-completion.ps1
+# there in preference to yaif.exe -- the command then silently does nothing at all. And in scripts/, not
+# next to yaif.exe: on the PATH, `yaif<Tab>` would offer both .ps1 files as commands.
+mkdir -p $D/scripts
+cp completions/yaif.ps1 $D/scripts/yaif-completion.ps1
 # Camera RAW: yaif dlopens libraw_r.so.25, which win/yaif_win.h turns into libraw_r-25.dll.
 # The other three are LibRaw's own DLL dependencies inside the MinGW sysroot, from
 # `objdump -p` on it: without them LoadLibrary fails and RAW is silently unavailable.
@@ -49,7 +51,7 @@ cat > $D/README.txt <<'EOF'
 YAIF for Windows (test build)
 
 0. Windows marks everything extracted from a downloaded zip, which makes PowerShell refuse to run
-   yaif-completion.ps1. Clear it once, in PowerShell, from this folder:
+   scripts\yaif-completion.ps1. Clear it once, in PowerShell, from this folder:
        Get-ChildItem -Recurse | Unblock-File
    Ticking "Unblock" in the zip's Properties before extracting does the same for every file at once.
 
@@ -76,8 +78,8 @@ a photo's HDR. The change and the build recipe: libheif-gainmap/ in yaif's sourc
 https://github.com/Thibault-Savenkoff/yaif/tree/v2/libheif-gainmap
 
 4. Tab completion, PowerShell only (cmd.exe has no such hook for a third-party program). Run once:
-       .\yaif-profile.ps1
-   It adds one line to your PowerShell profile; .\yaif-profile.ps1 -Remove takes it back out.
+       .\scripts\yaif-profile.ps1
+   It adds one line to your PowerShell profile; .\scripts\yaif-profile.ps1 -Remove takes it back out.
 EOF
 # DllRegisterServer writes to HKEY_CLASSES_ROOT and HKLM, so without elevation regsvr32 fails with
 # 0x80040201 (SELFREG_E_CLASS) and nothing says why. `net session` is the usual test: it needs
@@ -99,9 +101,9 @@ done
 # completion permanent is a line in the user's $PROFILE. PowerShell edits its own file here:
 # doing it from NSIS would mean guessing the profile's encoding. Idempotent both ways, so a
 # reinstall cannot double the line, and it never rewrites the file just to add to it.
-cat > $D/yaif-profile.ps1 <<'EOF'
+cat > $D/scripts/yaif-profile.ps1 <<'EOF'
 # Adds (or, with -Remove, takes out) the line that loads YAIF's tab completion, in your PowerShell
-# profile. Run it once: .\yaif-profile.ps1
+# profile. Run it once: .\scripts\yaif-profile.ps1
 param([switch]$Remove, [string]$Script = "$PSScriptRoot\yaif-completion.ps1", [switch]$ThisHostOnly)
 # Guarded: once the install is gone the line must load nothing, not print an error in every new window.
 $line = "if (Test-Path `"$Script`") { . `"$Script`" }"
@@ -138,7 +140,7 @@ if (-not $ThisHostOnly) {
     }
 }
 EOF
-sed -i 's/$/\r/' $D/README.txt $D/LICENSE-*.txt $D/yaif-completion.ps1 $D/yaif-profile.ps1 $D/install.bat $D/uninstall.bat
+sed -i 's/$/\r/' $D/README.txt $D/LICENSE-*.txt $D/scripts/yaif-completion.ps1 $D/scripts/yaif-profile.ps1 $D/install.bat $D/uninstall.bat
 (cd dist && zip -qr yaif-windows.zip yaif-windows) && ls -l dist/yaif-windows.zip || exit 1
 # Both installers show yaif.li's version in Settings > Apps. An MSI ProductVersion is numbers only,
 # so the MSI gets 2.0.0 where NSIS shows the whole 2.0.0-beta.2.

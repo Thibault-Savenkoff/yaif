@@ -118,11 +118,17 @@ Section "YAIF" SecCore
   SectionIn RO
   SetOutPath "$InstDir"
   File "..\dist\yaif-windows\yaif.exe"
-  File "..\dist\yaif-windows\yaif-profile.ps1"
   ; Every DLL win/dist.sh staged: the codec, zlib/libwebp, and LibRaw with its own dependencies.
   ; A glob so that adding one to dist.sh does not silently leave it out of the installer.
   File "..\dist\yaif-windows\*.dll"
-  File "..\dist\yaif-windows\yaif-completion.ps1"
+  ; The two PowerShell scripts live in scripts\, not next to yaif.exe: $InstDir is on the PATH, where PowerShell
+  ; would offer them as commands when completing `yaif`. Earlier betas put them next to it: tidy those up.
+  Delete "$InstDir\yaif-completion.ps1"
+  Delete "$InstDir\yaif-profile.ps1"
+  SetOutPath "$InstDir\scripts"
+  File "..\dist\yaif-windows\scripts\yaif-profile.ps1"
+  File "..\dist\yaif-windows\scripts\yaif-completion.ps1"
+  SetOutPath "$InstDir"
   File "..\dist\yaif-windows\LICENSE-*.txt"
   File "..\dist\yaif-windows\README.txt"
   SetOutPath "$InstDir\samples"
@@ -205,11 +211,11 @@ Section -Completion
   ; Now, for whoever is installing: UAC elevates the same account on a personal machine, so the
   ; profile written is the right one. Active Setup then covers the case that breaks -- another
   ; account's credentials at the UAC prompt -- and every other user of a per-machine install.
-  ExecWait '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "$InstDir\yaif-profile.ps1" -Script "$InstDir\yaif-completion.ps1"'
+  ExecWait '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "$InstDir\scripts\yaif-profile.ps1" -Script "$InstDir\scripts\yaif-completion.ps1"'
   ${if} $MultiUser.InstallMode == "AllUsers"
     WriteRegStr HKLM "${ACTIVESETUP}" "" "YAIF tab completion"
     WriteRegStr HKLM "${ACTIVESETUP}" "Version" "1"
-    WriteRegStr HKLM "${ACTIVESETUP}" "StubPath" '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "$InstDir\yaif-profile.ps1" -Script "$InstDir\yaif-completion.ps1"'
+    WriteRegStr HKLM "${ACTIVESETUP}" "StubPath" '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "$InstDir\scripts\yaif-profile.ps1" -Script "$InstDir\scripts\yaif-completion.ps1"'
   ${endif}
 SectionEnd
 
@@ -267,13 +273,16 @@ Section "Uninstall"
   ; stays until that user runs yaif-profile.ps1 -Remove. It loads nothing once the file is gone.
   ; nsExec + -Command, not ExecWait + -File: the latter left the profile line behind on a real PC
   ; (the same command run by hand worked), this form removed it from both PowerShell profiles.
-  nsExec::Exec '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "& \"$InstDir\yaif-profile.ps1\" -Remove"'
+  nsExec::Exec '"$SYSDIR\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -Command "& \"$InstDir\scripts\yaif-profile.ps1\" -Remove"'
   Pop $0
   RMDir /r "$InstDir\samples"
   Delete "$InstDir\*.exe"
   Delete /REBOOTOK "$InstDir\*.dll"   ; Explorer may still hold the codec
   Delete "$InstDir\LICENSE-*.txt"
   Delete "$InstDir\README.txt"
+  Delete "$InstDir\scripts\yaif-completion.ps1"
+  Delete "$InstDir\scripts\yaif-profile.ps1"
+  RMDir "$InstDir\scripts"
   Delete "$InstDir\yaif-completion.ps1"
   Delete "$InstDir\yaif-profile.ps1"
   RMDir "$InstDir"

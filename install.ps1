@@ -40,6 +40,7 @@ try {
     # yaif.exe or a DLL in use (a terminal still running yaif, Explorer holding a codec) fails here:
     # Stop = nothing half-copied is reported as done.
     New-Item -ItemType Directory $dir -Force | Out-Null
+    Remove-Item "$dir\yaif-completion.ps1", "$dir\yaif-profile.ps1" -ErrorAction SilentlyContinue   # where the betas before 13 put them
     Copy-Item "$tmp\x\yaif-windows\*" $dir -Recurse -Force
 } finally { Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue }
 
@@ -56,13 +57,13 @@ $env_.Close()
 
 # Tab completion: the profile script runs under this same host, with the policy bypassed (a
 # default Windows PowerShell refuses unsigned scripts).
-& (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File "$dir\yaif-profile.ps1" -Script "$dir\yaif-completion.ps1"
+& (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File "$dir\scripts\yaif-profile.ps1" -Script "$dir\scripts\yaif-completion.ps1"
 
 # Uninstaller, kept next to yaif.exe so that Settings > Apps works offline.
 @'
 $dir = $PSScriptRoot
 $ps = (Get-Process -Id $PID).Path
-& $ps -NoProfile -ExecutionPolicy Bypass -File "$dir\yaif-profile.ps1" -Remove
+& $ps -NoProfile -ExecutionPolicy Bypass -File "$dir\scripts\yaif-profile.ps1" -Remove
 $e = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true)
 $p = $e.GetValue('Path', '', 'DoNotExpandEnvironmentNames')
 $e.SetValue('Path', (($p -split ';' | Where-Object { $_ -and $_ -ne $dir }) -join ';'), 'ExpandString')
