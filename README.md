@@ -119,6 +119,11 @@ Camera RAW works, and HEIC and AVIF both ways: the package carries LibRaw, libhe
 kvazaar, and aom with libavif, cross-compiled by `win/deps.sh` because Fedora packages none of them for
 MinGW. Neither installer is signed yet, so SmartScreen shows "unknown publisher".
 
+No administrator, and no SmartScreen warning (a script is not a downloaded `.exe`): in PowerShell,
+`irm https://raw.githubusercontent.com/Thibault-Savenkoff/yaif/v2/install.ps1 | iex` installs the latest release for
+your account only (PATH, tab completion, Settings > Apps entry; checksum verified). It leaves out the Explorer
+thumbnail codec, which needs administrator: use the `-setup.exe` for that.
+
 **Browser:** nothing to install, the [web page](https://thibault-savenkoff.github.io/yaif/) runs YAIF on your device.
 
 Once a day, in a terminal, `yaif` checks in the background for a newer version and prints one line if there
