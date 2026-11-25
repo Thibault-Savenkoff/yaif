@@ -56,27 +56,25 @@ ManifestDPIAware true
 ; language from the Windows display language, so there is no language dialog.
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "French"
-
-LangString WELCOME ${LANG_ENGLISH} "This installs YAIF ${VERSION} and changes, for this computer or for your account:$\r$\n$\r$\n\
-  - adds yaif to the PATH;$\r$\n\
-  - registers the .yaif file type and its codec, so Explorer shows thumbnails;$\r$\n\
-  - adds one line to your PowerShell profile (Windows PowerShell and PowerShell 7), for Tab completion.$\r$\n$\r$\n\
-  Uninstalling it from Settings > Apps undoes all of it.$\r$\n$\r$\nClick Next to continue."
-LangString WELCOME ${LANG_FRENCH} "Ceci installe YAIF ${VERSION} et modifie, pour cet ordinateur ou pour votre compte :$\r$\n$\r$\n\
-  - ajoute yaif au PATH ;$\r$\n\
-  - enregistre le type de fichier .yaif et son codec, pour que l'Explorateur affiche les miniatures ;$\r$\n\
-  - ajoute une ligne à votre profil PowerShell (Windows PowerShell et PowerShell 7), pour la complétion avec Tab.$\r$\n$\r$\n\
-  La désinstallation depuis Paramètres > Applications annule tout cela.$\r$\n$\r$\nCliquez sur Suivant pour continuer."
-LangString NEED64 ${LANG_ENGLISH} "YAIF needs 64-bit Windows."
-LangString NEED64 ${LANG_FRENCH} "YAIF nécessite Windows 64 bits."
-LangString REMOVING_NOVA ${LANG_ENGLISH} "Removing NOVA, the former name of YAIF, from"
-LangString REMOVING_NOVA ${LANG_FRENCH} "Suppression de NOVA, l'ancien nom de YAIF, dans"
-LangString REGSVR ${LANG_ENGLISH} "The viewer codec could not be registered (regsvr32 error"
-LangString REGSVR ${LANG_FRENCH} "Le codec d'affichage n'a pas pu être enregistré (erreur regsvr32"
-LangString PATH_LONG1 ${LANG_ENGLISH} "Your PATH is too long to edit safely: add"
-LangString PATH_LONG1 ${LANG_FRENCH} "Votre PATH est trop long pour être modifié sans risque : ajoutez"
-LangString PATH_LONG2 ${LANG_ENGLISH} "to it yourself to run yaif from a terminal."
-LangString PATH_LONG2 ${LANG_FRENCH} "vous-même pour lancer yaif depuis un terminal."
+!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Italian"
+!insertmacro MUI_LANGUAGE "PortugueseBR"
+!insertmacro MUI_LANGUAGE "Portuguese"
+!insertmacro MUI_LANGUAGE "Dutch"
+!insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "Polish"
+!insertmacro MUI_LANGUAGE "Turkish"
+!insertmacro MUI_LANGUAGE "Japanese"
+!insertmacro MUI_LANGUAGE "Korean"
+!insertmacro MUI_LANGUAGE "SimpChinese"
+!insertmacro MUI_LANGUAGE "TradChinese"
+!insertmacro MUI_LANGUAGE "Arabic"
+!insertmacro MUI_LANGUAGE "Hindi"
+!insertmacro MUI_LANGUAGE "Indonesian"
+!insertmacro MUI_LANGUAGE "Vietnamese"
+!insertmacro MUI_LANGUAGE "Ukrainian"
+!include lang.nsh
 
 Function .onInit
   ${IfNot} ${RunningX64}
@@ -104,7 +102,7 @@ FunctionEnd
   ReadRegStr $R0 ${ROOT} "Software\Microsoft\Windows\CurrentVersion\Uninstall\NOVA" "InstallLocation"
   ${If} $R0 != ""
   ${AndIf} ${FileExists} "$R0\uninstall.exe"
-    DetailPrint "$(REMOVING_NOVA) $R0"
+    DetailPrint "$(REMOVING_NOVA)"
     ExecWait '"$R0\uninstall.exe" /S _?=$R0'
     Delete "$R0\uninstall.exe"
     RMDir "$R0"
@@ -136,7 +134,7 @@ Section "YAIF" SecCore
   ExecWait '"$SYSDIR\regsvr32.exe" /s "$InstDir\yaif_wic.dll"' $0
   ${EnableX64FSRedirection}
   StrCmp $0 0 +2
-    MessageBox MB_OK|MB_ICONEXCLAMATION "$(REGSVR) $0)."
+    MessageBox MB_OK|MB_ICONEXCLAMATION "$(REGSVR)"
 
   ; yaif.exe on the PATH (new terminals): HKLM for an all-users install, HKCU for the current user only
   ; ReadRegStr on a value longer than ${NSIS_MAX_STRLEN} comes back EMPTY with the error flag set, the same
@@ -182,7 +180,7 @@ Section "YAIF" SecCore
     ${endif}
     Goto pathdone
   pathlong:
-    MessageBox MB_OK "$(PATH_LONG1) $InstDir $(PATH_LONG2)"
+    MessageBox MB_OK "$(PATH_LONG)"
   pathdone:
   SendMessage ${HWND_BROADCAST} ${WM_SETTINGCHANGE} 0 "STR:Environment" /TIMEOUT=2000
 
