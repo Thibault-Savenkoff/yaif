@@ -3,7 +3,7 @@
 #pragma magic [ 89 59 41 49 46 0D 0A 1A 0A ] @ 0x00
 #pragma endian big
 
-#include <std/mem.pf>
+#include <std/mem.pat>
 
 // ImHex pattern for YAIF: signature, then chunks (type, length, data, CRC-32) until the end of the file.
 // Chunk order differs from PNG: the TYPE comes first, then the length. FORMAT.md describes every field.
