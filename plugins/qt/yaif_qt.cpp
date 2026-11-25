@@ -15,6 +15,9 @@ public:
   bool canRead() const override {
     if (!device()) return false;
     if (!YaifHandler::canRead(device())) return false;
+    // Past the last frame of an animation there is nothing left to read: a "while (canRead()) read()"
+    // loop would otherwise never end (frame stays at the last index + 1 and read() fails forever).
+    if (frame > 0 && frame >= imageCount()) return false;
     setFormat("yaif");
     return true;
   }
@@ -53,7 +56,8 @@ public:
   }
 
   int imageCount() const override { return const_cast<YaifHandler *>(this)->readInfo() ? info.frames : 0; }
-  int loopCount() const override { return -1; }   // forever (ANIM loop count is 0 in every file yaif writes)
+  // forever for an animation (ANIM loop count is 0 in every file yaif writes); a still image does not loop
+  int loopCount() const override { return imageCount() > 1 ? -1 : 0; }
   int nextImageDelay() const override { return const_cast<YaifHandler *>(this)->readInfo() ? info.delay : 0; }
   int currentImageNumber() const override { return frame; }
   bool jumpToImage(int n) override { if (n < 0 || n >= imageCount()) return false; frame = n; return true; }
