@@ -131,13 +131,14 @@ fi
 
 # Camera RAW: LibRaw's own release instead of Fedora's package, which is a patch release or two behind.
 # Autotools, thread-safe library (libraw_r-25.dll, what yaif_win.h turns "libraw_r.so.25" into). No OpenMP:
-# yaif does its own parallelism and a libgomp DLL would be one more to ship.
-if ! built "libraw-$LIBRAW"; then
+# yaif does its own parallelism and a libgomp DLL would be one more to ship. No JPEG either (lossy DNG): the
+# autodetected build wanted libjpeg-62.dll, and Fedora's package never had it.
+if ! built "libraw-$LIBRAW-nojpeg"; then
   get "https://www.libraw.org/data/LibRaw-$LIBRAW.tar.gz"
-  (cd "$work/LibRaw-$LIBRAW" && mingw64-configure --enable-shared --disable-static --disable-openmp --disable-examples && make -j"${JOBS:-2}" && make DESTDIR="$stage" install)
+  (cd "$work/LibRaw-$LIBRAW" && mingw64-configure --enable-shared --disable-static --disable-openmp --disable-examples --disable-jpeg && make -j"${JOBS:-2}" && make DESTDIR="$stage" install)
   sync
   license libraw "$work/LibRaw-$LIBRAW"/{COPYRIGHT,LICENSE.LGPL,LICENSE.CDDL}
-  mark "libraw-$LIBRAW"
+  mark "libraw-$LIBRAW-nojpeg"
 fi
 
 echo "win/deps.sh: installed into $M"
