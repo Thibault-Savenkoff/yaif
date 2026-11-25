@@ -109,6 +109,7 @@ check "install: prints the local uninstall command" grep -qF 'bash ~/.local/shar
 env -i HOME="$h1" PATH=/usr/bin:/bin TMPDIR="${TMPDIR:-/tmp}" SHELL=/bin/zsh YAIF_TEST_ROOT="$T/root" \
   bash "$h1/.local/share/yaif/install.sh" --uninstall > "$T/3.log" 2>&1
 check "uninstall: its own script gone" [ ! -e "$h1/.local/share/yaif/install.sh" ]
+check "uninstall: its empty folders gone" [ ! -e "$h1/.local/share/yaif" ]
 check "uninstall: binary gone"   [ ! -e "$h1/.local/bin/yaif" ]
 check "uninstall: manifest gone" [ ! -e "$h1/.local/share/yaif/installed.txt" ]
 check "uninstall: rc lines gone" [ "$(yaif_lines "$h1/.zshrc")" = 0 ]

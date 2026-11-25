@@ -272,6 +272,11 @@ do_uninstall() {
   done < "$tmp/manifest"
   refresh_caches
   run "$owner" rm -f -- "$manifest"
+  # Our own folders, only when empty (rmdir never removes content).
+  local d
+  for d in "$prefix/share/yaif" "$prefix/lib/yaif"; do
+    [ -d "$d" ] && run "$owner" rmdir -- "$d" 2>/dev/null || true
+  done
   ok "YAIF is uninstalled."
 }
 
