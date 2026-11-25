@@ -33,6 +33,8 @@ New-Item -ItemType Directory $tmp | Out-Null
 try {
     Invoke-WebRequest "$base/$tag/$zip" -OutFile "$tmp\$zip" -UseBasicParsing
     $sums = (Invoke-WebRequest "$base/$tag/SHA256SUMS" -UseBasicParsing).Content
+    # GitHub serves it as application/octet-stream: PowerShell then hands back bytes, not text.
+    if ($sums -is [byte[]]) { $sums = [Text.Encoding]::UTF8.GetString($sums) }
     $want = [regex]::Match($sums, "(?m)^([0-9a-fA-F]{64})\s+\*?$([regex]::Escape($zip))\s*$").Groups[1].Value
     if (-not $want) { throw "$zip is not in SHA256SUMS" }
     if ((Get-FileHash "$tmp\$zip" -Algorithm SHA256).Hash -ne $want) { throw "${zip}: checksum mismatch, nothing installed" }
@@ -40,7 +42,8 @@ try {
     # yaif.exe or a DLL in use (a terminal still running yaif, Explorer holding a codec) fails here:
     # Stop = nothing half-copied is reported as done.
     New-Item -ItemType Directory $dir -Force | Out-Null
-    Remove-Item "$dir\yaif-completion.ps1", "$dir\yaif-profile.ps1" -ErrorAction SilentlyContinue   # where the betas before 13 put them
+    # The helper scripts are in scripts\ from the release after beta.13 on, next to yaif.exe before.
+    if (Test-Path "$tmp\x\yaif-windows\scripts") { Remove-Item "$dir\yaif-completion.ps1", "$dir\yaif-profile.ps1" -ErrorAction SilentlyContinue }
     Copy-Item "$tmp\x\yaif-windows\*" $dir -Recurse -Force
 } finally { Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue }
 
@@ -57,13 +60,15 @@ $env_.Close()
 
 # Tab completion: the profile script runs under this same host, with the policy bypassed (a
 # default Windows PowerShell refuses unsigned scripts).
-& (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File "$dir\scripts\yaif-profile.ps1" -Script "$dir\scripts\yaif-completion.ps1"
+$sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
+& (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File "$sd\yaif-profile.ps1" -Script "$sd\yaif-completion.ps1"
 
 # Uninstaller, kept next to yaif.exe so that Settings > Apps works offline.
 @'
 $dir = $PSScriptRoot
 $ps = (Get-Process -Id $PID).Path
-& $ps -NoProfile -ExecutionPolicy Bypass -File "$dir\scripts\yaif-profile.ps1" -Remove
+$sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
+& $ps -NoProfile -ExecutionPolicy Bypass -File "$sd\yaif-profile.ps1" -Remove
 $e = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true)
 $p = $e.GetValue('Path', '', 'DoNotExpandEnvironmentNames')
 $e.SetValue('Path', (($p -split ';' | Where-Object { $_ -and $_ -ne $dir }) -join ';'), 'ExpandString')
