@@ -139,4 +139,4 @@ struct Yaif {
     chunk_t chunks[while(!std::mem::eof())] [[name("Chunks")]];
 };
 
-Yaif yaif @ 0x00;
+Yaif YAIF @ 0x00;
