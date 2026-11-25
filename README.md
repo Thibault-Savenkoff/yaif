@@ -236,9 +236,9 @@ It is a prototype-based language, compiled to C: the first compiled one. YAIF v2
 In Safari only, which decodes HEIC itself. Other browsers do not ship an HEVC decoder, and this site does not either.
 
 **Does it run on macOS?**
-It builds: GitHub Actions compiles and packages Intel and Apple Silicon binaries on every release. Running it
-has not been verified on a real Mac yet, and there is no ImageIO or Quick Look plugin, so Finder and Preview
-will not show `.yaif` files.
+It builds: GitHub Actions compiles and packages Intel and Apple Silicon binaries on every release. It runs on a real Mac (Apple Silicon):
+the command line, the Homebrew libraries and the Finder thumbnails (a small extension that `install.sh` offers to
+build). There is no ImageIO plugin, so Preview does not open `.yaif` files.
 
 **What does the browser version leave out?**
 Animations and Live Photos are created with the program only, and export is limited to PNG, JPEG and WebP. The page lists the rest.

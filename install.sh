@@ -268,6 +268,8 @@ do_uninstall() {
         fi ;;
       dolphin)
         remove_dolphin_thumbnailer ;;
+      quicklook)
+        remove_quicklook ;;
     esac
   done < "$tmp/manifest"
   refresh_caches
@@ -278,6 +280,15 @@ do_uninstall() {
     [ -d "$d" ] && run "$owner" rmdir -- "$d" 2>/dev/null || true
   done
   ok "YAIF is uninstalled."
+}
+
+remove_quicklook() {
+  local app="$HOME/Applications/YaifQuickLook.app"
+  [ -d "$app" ] || return 0
+  pluginkit -r "$app/Contents/PlugIns/YaifThumb.appex" 2>/dev/null || true
+  rm -rf -- "$HOME/Applications/YaifQuickLook.app"   # our own app bundle, a fixed path
+  qlmanage -r >/dev/null 2>&1 || true
+  ok "removed the Finder thumbnail extension"
 }
 
 # ---- download / verify / unpack ----
@@ -575,6 +586,21 @@ install_plugins() {
     if ask "Build and install the gdk-pixbuf loader?"; then make_gdk_pixbuf_plugin || true; fi
   else
     info "gdk-pixbuf not found, GTK loader skipped."
+  fi
+
+  if [ $os = macos ]; then
+    echo
+    info "Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc)."
+    if ! command -v swiftc >/dev/null 2>&1 || ! command -v clang >/dev/null 2>&1; then
+      info "swiftc not found (xcode-select --install), Finder thumbnails skipped."
+    elif ask "Build and install the Finder thumbnail extension?"; then
+      if run user bash "$src/plugins/quicklook/build.sh"; then
+        record quicklook ""
+        ok "Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)"
+      else
+        warn "the Finder thumbnail extension could not be built"
+      fi
+    fi
   fi
 }
 

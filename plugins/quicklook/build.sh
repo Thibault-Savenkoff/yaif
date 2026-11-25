@@ -9,7 +9,7 @@ if [ "${1:-}" = --uninstall ]; then
   pluginkit -r "$APP/Contents/PlugIns/YaifThumb.appex" 2>/dev/null || true
   rm -rf "$APP"; qlmanage -r >/dev/null 2>&1 || true; echo "removed $APP"; exit 0
 fi
-VER=$(../../yaif --version 2>/dev/null | awk 'NR==1{print $2}' || true)
+VER=$( (../../yaif --version || ../../bin/yaif --version) 2>/dev/null | awk 'NR==1{print $2}' || true)
 [ -n "$VER" ] || VER=$(sed -n 's/.*version:String := "\(.*\)"/\1/p' ../../yaif.li | head -1)
 ARCH=$(uname -m)
 T=$(mktemp -d)
