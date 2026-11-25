@@ -1700,6 +1700,10 @@ Public
     ((i > 2) && {((Command_args.at (i - 1)).as_lower.has_suffix ".yaif") || {! (File_utils.file_exists (Command_args.at (i - 1)))}}).if {
       last_src := i - 2
       dst_name := Command_args.at (i - 1)
+      (! (dst_name.as_lower.has_suffix ".yaif")).if {
+        // encode only writes .yaif: a .dng/.png here used to get a .yaif under that name.
+        fail (dst_name + " is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)")
+      }
     } else {
       last_src := i - 1
       dst_name := default_dst (Command_args.at 2)
