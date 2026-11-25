@@ -191,7 +191,7 @@
   <section id="create" aria-labelledby="create-h">
     <div class="intro">
       <h2 id="create-h">Conversion settings</h2>
-      <p>Used when you open an image that is not a .yaif. It is converted in this browser, then shown above with a button to save the .yaif. EXIF, XMP and the colour profile are kept for PNG, JPEG, HEIC and CR3 files.</p>
+      <p>Used when you open an image that is not a .yaif. It is converted in this browser, then shown above with a button to save the .yaif. EXIF, XMP and the colour profile are kept for PNG, JPEG, HEIC and CR3 files. Saving an image as PNG or JPEG keeps its EXIF (orientation already applied) and, in PNG, its colour profile; WebP and Ultra HDR JPEG exports carry none.</p>
     </div>
     <div class="settings">
       <div class="row">
@@ -224,15 +224,15 @@
   <span>YAIF v2. Images never leave your device.</span>
   <a href="https://github.com/Thibault-Savenkoff/yaif">Source on GitHub</a>
 </footer>
-<script defer src="yaif_decode.js?v=17"></script>
-<script defer src="heif_meta.js?v=17"></script>
-<script defer src="meta_strip.js?v=17"></script>
+<script defer src="yaif_decode.js?v=18"></script>
+<script defer src="heif_meta.js?v=18"></script>
+<script defer src="meta_strip.js?v=18"></script>
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
 // Cache buster of the scripts and workers: bump it with the ?v= of the script tags above at each
 // release, or a browser can mix a cached worker with a new decoder.
-const V = '?v=17';
+const V = '?v=18';
 let cv = $('cv'), ctx = cv.getContext('2d');
 const info = $('info'), bar = $('bar'), fill = bar.firstElementChild;
 let name = 'image', timer = null, token = 0;
@@ -320,7 +320,7 @@ function showHdr(blob) {
 // Colour: a .yaif with a Display P3 profile (iPhone photos) is shown in P3 where the browser can,
 // on a canvas created for it (a canvas keeps its colour space); icc goes into the PNG export.
 const P3 = (() => { try { return document.createElement('canvas').getContext('2d', { colorSpace: 'display-p3' }).getContextAttributes().colorSpace === 'display-p3'; } catch (e) { return false; } })();
-let space = 'srgb', icc = null;
+let space = 'srgb', icc = null, exif = null;   // exif: see exifUpright
 function useSpace(s) {
   space = s;
   if (((ctx.getContextAttributes && ctx.getContextAttributes().colorSpace) || 'srgb') === s) return;
@@ -364,6 +364,38 @@ function orientationOf(data, f) {
     return 1;
   }
   return 1;
+}
+// The EXIF kept in a .yaif, as TIFF bytes with Orientation set to 1: the exported pixels are already
+// upright (show() turned them), so a viewer must not turn them again. null when there is none.
+function exifUpright(data, f) {
+  for (const c of f.chunks) {
+    if (c.type !== 0x4D444154 || c.len < 12) continue;
+    const kind = String.fromCharCode(...data.subarray(c.pos, c.pos + 4));
+    let t = data.subarray(c.pos + 4, c.pos + c.len);
+    if (kind === 'APP1' && String.fromCharCode(...t.subarray(0, 6)) === 'Exif\0\0') t = t.subarray(6);
+    else if (kind !== 'eXIf') continue;
+    if (t.length < 8) return null;
+    t = t.slice();
+    const le = t[0] === 0x49, u16 = i => le ? t[i] | t[i + 1] << 8 : t[i] << 8 | t[i + 1];
+    const ifd = le ? t[4] | t[5] << 8 | t[6] << 16 | t[7] << 24 : t[4] << 24 | t[5] << 16 | t[6] << 8 | t[7];
+    if (ifd < 0 || ifd + 2 > t.length) return t;
+    for (let i = 0, n = u16(ifd); i < n && ifd + 14 + i * 12 <= t.length; i++) {
+      const e = ifd + 2 + i * 12;
+      if (u16(e) === 0x0112) { t[e + 8] = le ? 1 : 0; t[e + 9] = le ? 0 : 1; break; }
+    }
+    return t;
+  }
+  return null;
+}
+// JPEG bytes with an Exif APP1 segment right after SOI (the browser's canvas encoder writes none).
+function jpegWithExif(jpg, tiff) {
+  const n = 8 + tiff.length;   // segment length: 2 (itself) + "Exif\0\0" + TIFF
+  if (n > 65535 || jpg[0] !== 0xFF || jpg[1] !== 0xD8) return jpg;
+  const r = new Uint8Array(jpg.length + n + 2);
+  r.set([0xFF, 0xD8, 0xFF, 0xE1, n >> 8, n & 255, 0x45, 0x78, 0x69, 0x66, 0, 0], 0);
+  r.set(tiff, 12);
+  r.set(jpg.subarray(2), 12 + tiff.length);
+  return r;
 }
 // RGBA turned upright for EXIF orientation o (2-8: mirror and/or turn; 5-8 swap width and height).
 function upright(w, h, rgba, o) {
@@ -458,6 +490,7 @@ async function open(file) {
   try {
     const f = YaifDecode.parse(data);
     icc = f.raw ? null : await iccOf(data, f);   // a developed RAW is sRGB
+    exif = f.raw ? null : exifUpright(data, f);
     orient = f.raw ? 1 : orientationOf(data, f);   // LibRaw turns a developed RAW itself
     if (my !== token) return;
     useSpace(P3 && isP3(icc) ? 'display-p3' : 'srgb');
@@ -856,7 +889,7 @@ function download(b, file) {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 $('save').onclick = async () => {
-  if (fmt.value === 'image/png' && cur && self.CompressionStream) return download(await png(cur.w, cur.h, cur.rgba, icc ? { icc } : {}));
+  if (fmt.value === 'image/png' && cur && self.CompressionStream) return download(await png(cur.w, cur.h, cur.rgba, { ...(icc && { icc }), ...(exif && { exif }) }));
   let src = cv;
   if (fmt.value === 'image/jpeg') {   // no alpha in JPEG: flatten on white
     src = document.createElement('canvas');
@@ -872,7 +905,8 @@ $('save').onclick = async () => {
   src.toBlob(b => {
     if (!b) { info.textContent = 'Export failed.'; return; }
     if (b.type !== fmt.value) { info.textContent = `This browser cannot write ${fmt.selectedOptions[0].text}: choose PNG or JPEG.`; return; }
-    download(b);
+    if (b.type === 'image/jpeg' && exif) b.arrayBuffer().then(a => download(new Blob([jpegWithExif(new Uint8Array(a), exif)], { type: 'image/jpeg' })));
+    else download(b);
   }, fmt.value, q.value / 100);
 };
 </script>
