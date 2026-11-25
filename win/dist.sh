@@ -7,7 +7,9 @@ M=/usr/x86_64-w64-mingw32/sys-root/mingw
 D=dist/yaif-windows
 bash win/build.sh && bash plugins/wic/build.sh || exit 1
 rm -rf $D dist/yaif-windows.zip && mkdir -p $D
-cp yaif.exe plugins/wic/yaif_wic.dll $M/bin/{zlib1,libwebp-7,libsharpyuv-0}.dll docs/samples/{photo,screenshot,animation}.yaif $D/
+cp yaif.exe plugins/wic/yaif_wic.dll $M/bin/{zlib1,libwebp-7,libsharpyuv-0}.dll $D/
+# The samples go in samples/ in the zip, the setup and the MSI alike (they used to sit next to yaif.exe in the zip).
+mkdir -p $D/samples && cp docs/samples/{photo,screenshot,animation}.yaif $D/samples/
 # Not "yaif.ps1": this folder goes on the PATH, and PowerShell resolves a bare `yaif` to a .ps1
 # there in preference to yaif.exe -- the command then silently does nothing at all. And in scripts/, not
 # next to yaif.exe: on the PATH, `yaif<Tab>` would offer both .ps1 files as commands.
@@ -57,7 +59,7 @@ YAIF for Windows (test build)
 
 1. yaif.exe: open a terminal here, then: yaif encode photo.jpg photo.yaif / yaif decode photo.yaif photo.jpg
 2. Viewer support: double-click install.bat (it asks for administrator rights itself).
-   Then open the .yaif files here in Explorer (thumbnails) and Windows Photo Viewer. The modern
+   Then open the .yaif files of the samples folder in Explorer (thumbnails) and Windows Photo Viewer. The modern
    Photos app takes no third-party codec, whatever the format -- it will not open .yaif.
 3. Remove: double-click uninstall.bat.
 

@@ -135,7 +135,7 @@ Section "YAIF" SecCore
   File "..\dist\yaif-windows\LICENSE-*.txt"
   File "..\dist\yaif-windows\README.txt"
   SetOutPath "$InstDir\samples"
-  File "..\dist\yaif-windows\*.yaif"
+  File "..\dist\yaif-windows\samples\*.yaif"
   WriteUninstaller "$InstDir\uninstall.exe"
 
   ; the installer is 32-bit: run the 64-bit regsvr32 for the 64-bit codec

@@ -135,9 +135,9 @@
           </Directory>
           <Directory Id="SAMPLES" Name="samples">
             <Component Id="Samples" Guid="9B0C1D2E-3F4A-4B5C-8D6E-7F8091A2B3C4" Win64="yes">
-              <File Id="photo.yaif" Source="dist/yaif-windows/photo.yaif" KeyPath="yes"/>
-              <File Id="screenshot.yaif" Source="dist/yaif-windows/screenshot.yaif"/>
-              <File Id="animation.yaif" Source="dist/yaif-windows/animation.yaif"/>
+              <File Id="photo.yaif" Source="dist/yaif-windows/samples/photo.yaif" KeyPath="yes"/>
+              <File Id="screenshot.yaif" Source="dist/yaif-windows/samples/screenshot.yaif"/>
+              <File Id="animation.yaif" Source="dist/yaif-windows/samples/animation.yaif"/>
             </Component>
           </Directory>
         </Directory>
