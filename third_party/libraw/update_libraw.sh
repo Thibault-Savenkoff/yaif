@@ -1,5 +1,6 @@
 #!/bin/bash
-# Replaces the headers with those of the LibRaw-devel package of this Fedora release.
+# Replaces the headers with those of the LibRaw-devel package of this Fedora release (or, by hand, those of
+# the LibRaw release tarball: libraw/*.h).
 # Then update the version in README, rebuild yaif and run test/raw.sh.
 set -e
 cd "$(dirname "$0")"

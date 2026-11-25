@@ -14,7 +14,7 @@
 # carries the version and nothing else: **changing a library's cmake flags needs a new marker
 # name too**, or a restored tree keeps the old build.
 #
-# Fedora: sudo dnf install mingw64-gcc-c++ mingw64-filesystem mingw64-pkg-config cmake yasm perl
+# Fedora: sudo dnf install mingw64-gcc-c++ mingw64-filesystem mingw64-pkg-config mingw64-lcms2 mingw64-zlib cmake yasm perl
 set -eu
 
 AOM=3.15.3
@@ -22,6 +22,7 @@ AVIF=1.4.2
 DE265=1.1.3
 HEIF=1.23.7
 KVAZAAR=2.3.2
+LIBRAW=0.22.3   # Fedora's mingw64-LibRaw lags behind (0.22.1 when this was written)
 
 stage=${1:?usage: win/deps.sh <staging-dir>}
 M=/usr/x86_64-w64-mingw32/sys-root/mingw
@@ -126,6 +127,17 @@ if ! built "$yaifheif"; then
   CMAKE=mingw64-cmake sh "$(dirname "$0")/../libheif-gainmap/build.sh" "$work/yaifheif" "$stage$M/bin/libyaif-heif.dll"
   sync
   mark "$yaifheif"
+fi
+
+# Camera RAW: LibRaw's own release instead of Fedora's package, which is a patch release or two behind.
+# Autotools, thread-safe library (libraw_r-25.dll, what yaif_win.h turns "libraw_r.so.25" into). No OpenMP:
+# yaif does its own parallelism and a libgomp DLL would be one more to ship.
+if ! built "libraw-$LIBRAW"; then
+  get "https://www.libraw.org/data/LibRaw-$LIBRAW.tar.gz"
+  (cd "$work/LibRaw-$LIBRAW" && mingw64-configure --enable-shared --disable-static --disable-openmp --disable-examples && make -j"${JOBS:-2}" && make DESTDIR="$stage" install)
+  sync
+  license libraw "$work/LibRaw-$LIBRAW"/{COPYRIGHT,LICENSE.LGPL,LICENSE.CDDL}
+  mark "libraw-$LIBRAW"
 fi
 
 echo "win/deps.sh: installed into $M"

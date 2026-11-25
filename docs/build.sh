@@ -1,15 +1,15 @@
 #!/bin/bash
 # Builds docs/yaif_enc.js + yaif_enc.wasm (yaif for enc_worker.js) from yaif.c, with LibRaw and zlib
-# linked in (dl_static.c stands in for dlopen). LibRaw 0.22.2 is fetched and built once into docs/.build;
+# linked in (dl_static.c stands in for dlopen). LibRaw 0.22.3 is fetched and built once into docs/.build;
 # it reports errors with C++ exceptions, hence wasm exceptions (Safari 15.2+); SIMD needs Safari 16.4+.
 set -e
 cd "$(dirname "$0")/.."
 source "${EMSDK:-$HOME/emsdk}/emsdk_env.sh" >/dev/null 2>&1
 B=docs/.build
-LR=$B/LibRaw-0.22.2
+LR=$B/LibRaw-0.22.3
 if [ ! -f $B/libraw.a ]; then
   mkdir -p $B
-  [ -d $LR ] || curl -sfL https://github.com/LibRaw/LibRaw/archive/refs/tags/0.22.2.tar.gz | tar xz -C $B
+  [ -d $LR ] || curl -sfL https://github.com/LibRaw/LibRaw/archive/refs/tags/0.22.3.tar.gz | tar xz -C $B
   mkdir -p $B/o
   ls $LR/src/*.cpp $LR/src/*/*.cpp | grep -v integration | xargs -P "${JOBS:-2}" -I{} sh -c \
     'em++ -O3 -msimd128 -w -fwasm-exceptions -DLIBRAW_NOTHREADS -DUSE_ZLIB -sUSE_ZLIB=1 -I'$LR' -c {} -o '$B'/o/$(echo {} | tr / _).o'

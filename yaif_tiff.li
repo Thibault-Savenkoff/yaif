@@ -204,11 +204,49 @@ Public
             move_ifd v in (q, len) by delta depth (dp + 1)
             set32 (v + delta) at (e + 8)
           }.elseif {(x32 (e + 4)) * (tsize (x16 (e + 2))) > 4} then {
+            (t = 37500).if { move_maker v in (q, len) size ((x32 (e + 4)) * (tsize (x16 (e + 2)))) by delta }
             set32 (v + delta) at (e + 8)
           }
         }
         e := q + o + 2 + n * 12
         ((x32 e) != 0).if { set32 ((x32 e) + delta) at e }
+      }
+    }
+  )
+
+  - move_maker v:Int in (q,len:Int) size sz:Int by delta:Int <-
+  // MakerNote (EXIF tag 37500) at q + v: many makers (Canon, Sony, Panasonic, old Nikon, Samsung...) write
+  // its data offsets from the start of the EXIF TIFF stream, which is now at delta in the file, so they
+  // move like the tags'. Notes with their own base (Nikon "Nikon\0", Olympus, Fujifilm, Apple...) begin
+  // with letters, so their first 16 bits are no plausible entry count: left as they are. Nothing is moved
+  // unless every entry of the note's IFD checks out (known type, data inside the block).
+  ( + i0,n,e,ty,c,off:Int
+    + ok:Boolean
+    i0 := q + v
+    ok := (v >= 8) && {v + sz <= len} && {sz >= 20}
+    ok.if {
+      (((xb i0) = 53h) && {(xb (i0 + 1)) = 4Fh} && {(xb (i0 + 2)) = 4Eh} && {(xb (i0 + 3)) = 59h}).if {
+        i0 := i0 + 12
+      }.elseif {((xb i0) = 50h) && {(xb (i0 + 1)) = 61h} && {(xb (i0 + 2)) = 6Eh} && {(xb (i0 + 3)) = 61h}} then {
+        i0 := i0 + 12
+      }
+      n := x16 i0
+      ok := (n >= 1) && {n <= 500} && {i0 + 2 + n * 12 + 4 <= q + v + sz}
+    }
+    ok.if {
+      0.to (n - 1) do { k:Int
+        e := i0 + 2 + k * 12
+        ty := x16 (e + 2)
+        c := x32 (e + 4)
+        off := x32 (e + 8)
+        ((ty < 1) || {ty > 12}).if { ok := FALSE }
+        ((c * (tsize ty) > 4) && {(off < 8) || {off + c * (tsize ty) > len}}).if { ok := FALSE }
+      }
+    }
+    ok.if {
+      0.to (n - 1) do { k:Int
+        e := i0 + 2 + k * 12
+        (((x32 (e + 4)) * (tsize (x16 (e + 2)))) > 4).if { set32 ((x32 (e + 8)) + delta) at (e + 8) }
       }
     }
   )

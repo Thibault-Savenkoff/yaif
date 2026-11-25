@@ -37,7 +37,7 @@ missing=$(for d in $D/*.dll; do x86_64-w64-mingw32-objdump -p "$d" | sed -n 's/.
 unlisted=$(for d in $D/*.dll; do grep -q "yaif-windows/$(basename $d)\"" win/yaif.wxs || basename $d; done)
 [ -z "$unlisted" ] || { echo "win/dist.sh: DLLs packaged but absent from win/yaif.wxs:" $unlisted >&2; exit 1; }
 cp /usr/share/licenses/mingw64-libwebp/COPYING $D/LICENSE-libwebp.txt
-cat /usr/share/licenses/mingw64-LibRaw/{COPYRIGHT,LICENSE.LGPL} > $D/LICENSE-libraw.txt
+cat $M/share/licenses/libraw/{COPYRIGHT,LICENSE.LGPL} > $D/LICENSE-libraw.txt
 cp $M/share/licenses/libheif/COPYING $D/LICENSE-libheif.txt
 cp $M/share/licenses/libde265/COPYING $D/LICENSE-libde265.txt
 cat $M/share/licenses/libaom/{LICENSE,PATENTS} > $D/LICENSE-libaom.txt
