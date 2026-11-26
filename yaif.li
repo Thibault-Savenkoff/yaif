@@ -13,50 +13,57 @@ Public
   // Program version (install.sh, build.sh and the update check compare it with the release tags "v" + version).
   - version:String := "2.0.0-beta.16"
 
+  // One translated line of text (the key has no newline).
+  - say en:String <-
+  (
+    (Yaif_i18n.t en).print
+    '\n'.print
+  )
+
   - usage <-
   (
     ("YAIF " + version + "\n").print
-    "Usage:\n".print
+    say "Usage:"
     // ponytail: lines <= 72 columns, so a small terminal does not wrap them
     "  yaif encode <src...> [dst.yaif] [options]\n".print
-    "    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)\n".print
-    "    without dst: the first source with .yaif, next to it\n".print
-    "    several sources = animation\n".print
-    "    -m adaptive|lossless|lossy  default adaptive: lossless for\n".print
-    "                                graphics, wavelet q 90 for photos\n".print
-    "    -l 0-5    method (default: the encoder tries them): 0 palette,\n".print
-    "              1-4 predictive (4 strongest), 5 lossy wavelet\n".print
-    "    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;\n".print
-    "              a JPEG source keeps its own quality, 50 + Q/2 up to 90)\n".print
-    "    -e 1-64   lossy max error per sample (default 2)\n".print
-    "    -d ms     frame delay (animation)\n".print
-    "    -live f.mov  adds the Live Photo video\n".print
-    "    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept\n".print
-    "    RAW: sensor frame kept losslessly (level 6)\n".print
+    say "    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)"
+    say "    without dst: the first source with .yaif, next to it"
+    say "    several sources = animation"
+    say "    -m adaptive|lossless|lossy  default adaptive: lossless for"
+    say "                                graphics, wavelet q 90 for photos"
+    say "    -l 0-5    method (default: the encoder tries them): 0 palette,"
+    say "              1-4 predictive (4 strongest), 5 lossy wavelet"
+    say "    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;"
+    say "              a JPEG source keeps its own quality, 50 + Q/2 up to 90)"
+    say "    -e 1-64   lossy max error per sample (default 2)"
+    say "    -d ms     frame delay (animation)"
+    say "    -live f.mov  adds the Live Photo video"
+    say "    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept"
+    say "    RAW: sensor frame kept losslessly (level 6)"
     "\n".print
     "  yaif decode <src.yaif> <dst> [options]\n".print
-    "    dst: .png .tif .jpg .webp .avif .heic (format from the extension)\n".print
-    "    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)\n".print
-    "    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the\n".print
-    "                       .yaif is)\n".print
-    "    -fast     WebP: about 4x faster, files 2-6 % larger\n".print
-    "    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),\n".print
-    "              TIFF 16-bit float (linear)\n".print
-    "    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy\n".print
-    "    .avif with the gain map (libavif)\n".print
-    "    animation: dst_000.png, dst_001.png...\n".print
+    say "    dst: .png .tif .jpg .webp .avif .heic (format from the extension)"
+    say "    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)"
+    say "    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the"
+    say "                       .yaif is)"
+    say "    -fast     WebP: about 4x faster, files 2-6 % larger"
+    say "    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),"
+    say "              TIFF 16-bit float (linear)"
+    say "    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy"
+    say "    .avif with the gain map (libavif)"
+    say "    animation: dst_000.png, dst_001.png..."
     "\n".print
     "  yaif decode <raw.yaif> <dst> [-look canon|darktable]\n".print
-    "    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw\n".print
-    "    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame\n".print
-    "    -look  camera's look (canon, default) or darktable's\n".print
+    say "    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw"
+    say "    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame"
+    say "    -look  camera's look (canon, default) or darktable's"
     "\n".print
     "  yaif convert <src> <dst> [options]\n".print
-    "    any source encode reads -> any dst decode writes, in one step,\n".print
-    "    with its metadata and HDR gain map; decode's options.\n".print
-    "    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)\n".print
+    say "    any source encode reads -> any dst decode writes, in one step,"
+    say "    with its metadata and HDR gain map; decode's options."
+    say "    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)"
     "\n".print
-    "  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant\n".print
+    say "  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant"
     "  yaif info    <src.yaif>\n".print
     "  yaif bench   <src.png|jpg...>\n".print
     "  yaif --version\n".print
@@ -173,7 +180,7 @@ Public
   - save_buffer buf:C_array Uint8 size n:Int to name:String <-
   ( + f:Pointer
     f := File_utils.open_write name
-    (f = NULL).if { fail ("cannot write " + name) }
+    (f = NULL).if { fail (Yaif_i18n.t1 ("cannot write %1", name)) }
     File_utils.write f buffer buf size n
     File_utils.close f
   )
@@ -181,7 +188,7 @@ Public
   - save_out name:String <-
   ( + f:Pointer
     f := File_utils.open_write name
-    (f = NULL).if { fail ("cannot write " + name) }
+    (f = NULL).if { fail (Yaif_i18n.t1 ("cannot write %1", name)) }
     File_utils.write f buffer (Yaif_codec.out) size (Yaif_codec.out_count)
     File_utils.close f
   )
@@ -503,10 +510,10 @@ Public
       av := name.as_lower.has_suffix ".avif"
       q := opt_q
       (opt_q_set).if { }.elseif {av} then { q := 85 } else { q := 60 }
-      Yaif_par.status ("Applying the gain map (" + width.to_string + "x" + height.to_string + ")...")
+      Yaif_par.status (Yaif_i18n.t2 ("Applying the gain map (%1x%2)...", width.to_string, height.to_string))
       Yaif_hdr.apply buf size (width, height) gain_map gm gain_size (gm_w, gm_h) png False
       ok := Yaif_heic.export_hdr name pq (Yaif_hdr.data) size (width, height) primaries icc_primaries avif av quality q meta (data, exif_pos, exif_len, data, xmp_pos, xmp_len)
-      (ok).if { } else { fail ("HEIF: " + Yaif_heic.message) }
+      (ok).if { } else { fail (Yaif_i18n.t1 ("HEIF: %1", Yaif_heic.message)) }
     }.elseif {(name.as_lower.has_suffix ".jpg") || {name.as_lower.has_suffix ".jpeg"}} then {
       (raw_exif_n > 0).if {
         // Developed RAW: EXIF built from the CMT blocks, no ICC (sRGB) or XMP.
@@ -515,7 +522,7 @@ Public
         collect_meta
         ok := Yaif_jpeg.encode buf size (width, height) quality opt_q exif (data, exif_pos, exif_len) icc (iccp, 0, iccp_n) xmp (data, xmp_pos, xmp_len)
       }
-      (ok).if { } else { fail "JPEG encoding failed (out of memory)" }
+      (ok).if { } else { fail (Yaif_i18n.t "JPEG encoding failed (out of memory)") }
       save_buffer (Yaif_jpeg.data) size (Yaif_jpeg.size) to name
     }.elseif {name.as_lower.has_suffix ".webp"} then {
       // Default: lossless when the .yaif frame is (graphics), lossy for photos and developed RAWs.
@@ -526,7 +533,7 @@ Public
         collect_meta
         ok := Yaif_webp.encode buf size (width, height) planes np lossless ll quality opt_q exif (data, exif_pos, exif_len) icc (iccp, 0, iccp_n) xmp (data, xmp_pos, xmp_len)
       }
-      (ok).if { } else { fail ("WebP: " + Yaif_webp.message) }
+      (ok).if { } else { fail (Yaif_i18n.t1 ("WebP: %1", Yaif_webp.message)) }
       save_buffer (Yaif_webp.data) size (Yaif_webp.size) to name
     }.elseif {heif_ext name} then {
       // Default quality: about the fidelity of JPEG q 90 (~44 dB on a 24 Mpx photo): AVIF 85, HEIC 60.
@@ -539,7 +546,7 @@ Public
         // Lossy: SDR + HDR gain map, as the Ultra HDR JPEG -- AVIF through libavif, HEIC through
         // libyaif-heif; a plain AVIF/HEIC when that library is missing.
         collect_meta
-        Yaif_par.status ("Writing " + (short_name name) + " with its gain map...")
+        Yaif_par.status (Yaif_i18n.t1 ("Writing %1 with its gain map...", (short_name name)))
         (av).if {
           gain := Yaif_heic.export_gain_map name px buf size (width, height) gain (gm, gm_w, gm_h) iso (data, gm_meta_pos, gm_meta_n) prim icc_primaries q q meta (data, exif_pos, exif_len, iccp, iccp_n, data, xmp_pos, xmp_len)
         } else {
@@ -554,13 +561,13 @@ Public
         collect_meta
         ok := Yaif_heic.export name pixels buf size (width, height) planes np avif av lossless ll quality q meta (data, exif_pos, exif_len, iccp, iccp_n, data, xmp_pos, xmp_len)
       }
-      (ok).if { } else { fail ("HEIF: " + Yaif_heic.message) }
+      (ok).if { } else { fail (Yaif_i18n.t1 ("HEIF: %1", Yaif_heic.message)) }
     }.elseif {name.as_lower.has_suffix ".pam"} then {
       write_pam buf to name
     }.elseif {name.as_lower.has_suffix ".png"} then {
       write_png buf planes np to name
     } else {
-      fail ("unsupported output extension: " + name + " (.png .tif .jpg .webp .avif .heic .heif .pam)")
+      fail (Yaif_i18n.t1 ("unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)", name))
     }
   )
 
@@ -624,13 +631,13 @@ Public
     Yaif_hdr.gain_map_xmp
     xn := Yaif_hdr.size
     x := copy_bytes (Yaif_hdr.data) size xn
-    (Yaif_jpeg.encode gm size (gm_w, gm_h) quality 85 exif (x, 0, 0) icc (x, 0, 0) xmp (x, 0, xn)).if { } else { fail "JPEG encoding failed (out of memory)" }
+    (Yaif_jpeg.encode gm size (gm_w, gm_h) quality 85 exif (x, 0, 0) icc (x, 0, 0) xmp (x, 0, xn)).if { } else { fail (Yaif_i18n.t "JPEG encoding failed (out of memory)") }
     gn := Yaif_jpeg.size
     g := copy_bytes (Yaif_jpeg.data) size gn
     Yaif_hdr.primary_xmp gn source (data, xmp_pos, xmp_len)
     xn := Yaif_hdr.size
     x := copy_bytes (Yaif_hdr.data) size xn
-    (Yaif_jpeg.encode buf size (width, height) quality opt_q exif (data, exif_pos, exif_len) icc (iccp, 0, iccp_n) xmp (x, 0, xn)).if { } else { fail "JPEG encoding failed (out of memory)" }
+    (Yaif_jpeg.encode buf size (width, height) quality opt_q exif (data, exif_pos, exif_len) icc (iccp, 0, iccp_n) xmp (x, 0, xn)).if { } else { fail (Yaif_i18n.t "JPEG encoding failed (out of memory)") }
     Yaif_hdr.ultrahdr (Yaif_jpeg.data, Yaif_jpeg.size) gain_map (g, gn)
     save_buffer (Yaif_hdr.data) size (Yaif_hdr.size) to name
   )
@@ -652,7 +659,7 @@ Public
   // (the source's one describes the SDR pixels).
   (
     collect_meta
-    Yaif_par.status ("Applying the gain map (" + width.to_string + "x" + height.to_string + ")...")
+    Yaif_par.status (Yaif_i18n.t2 ("Applying the gain map (%1x%2)...", width.to_string, height.to_string))
     Yaif_hdr.apply_linear buf size (width, height) gain_map gm gain_size (gm_w, gm_h) p3 (icc_primaries = 12)
     Yaif_tiff.set_float True
     Yaif_tiff.write_image name pixels (Yaif_hdr.data) bits 16 planes 3 size (width, height) data data exif (exif_pos, exif_len) icc (iccp, 0) xmp (xmp_pos, xmp_len)
@@ -665,7 +672,7 @@ Public
   ( + p:Int
     collect_meta
     p := icc_primaries
-    Yaif_par.status ("Applying the gain map (" + width.to_string + "x" + height.to_string + ")...")
+    Yaif_par.status (Yaif_i18n.t2 ("Applying the gain map (%1x%2)...", width.to_string, height.to_string))
     Yaif_hdr.apply buf size (width, height) gain_map gm gain_size (gm_w, gm_h) png True
     Yaif_codec.reset_out
     Yaif_codec.put_u32 89504E47h
@@ -721,12 +728,12 @@ Public
   // Sensor frame as is (level 6, lossless), RAWH (CFA pattern, levels, colour), EXIF blocks as MDAT.
   ( + b:C_array Uint8
     + n,pos,len:Int
-    (Yaif_rawin.load name).if { } else { fail ("cannot read RAW " + name + ": " + Yaif_rawin.message) }
+    (Yaif_rawin.load name).if { } else { fail (Yaif_i18n.t2 ("cannot read RAW %1: %2", name, Yaif_rawin.message)) }
     width := Yaif_rawin.width
     height := Yaif_rawin.height
     Yaif_par.clear
     ((short_name name) + ": " + (raw_camera (Yaif_rawin.head)) + ", " + width.to_string + "x" + height.to_string + " sensor frame (" + (raw_u32 9 of (Yaif_rawin.head)).to_string + "x" + (raw_u32 13 of (Yaif_rawin.head)).to_string + " visible)\n").print
-    ((width > 65535) || {height > 65535}).if { fail "RAW frame too large" }
+    ((width > 65535) || {height > 65535}).if { fail (Yaif_i18n.t "RAW frame too large") }
     Yaif_codec.reset_out
     put_magic
     begin_chunk t_ihdr
@@ -842,11 +849,11 @@ Public
     bits := 8
     (tif).if { bits := 16 }
     (opt_look = 0).if { look := "camera look" } else { look := "darktable look" }
-    Yaif_par.status ("Developing the RAW with LibRaw (" + bits.to_string + " bits, camera white balance, " + look + ")...")
-    (Yaif_rawin.develop_buffer (Yaif_codec.out) size (Yaif_codec.out_count) rawh (data, rh) bits bits look opt_look).if { } else { fail ("RAW development failed: " + Yaif_rawin.message) }
+    Yaif_par.status (Yaif_i18n.t2 ("Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...", bits.to_string, look))
+    (Yaif_rawin.develop_buffer (Yaif_codec.out) size (Yaif_codec.out_count) rawh (data, rh) bits bits look opt_look).if { } else { fail (Yaif_i18n.t1 ("RAW development failed: %1", Yaif_rawin.message)) }
     width := Yaif_rawin.image_width
     height := Yaif_rawin.image_height
-    Yaif_par.status ("Writing " + (short_name name) + " (" + width.to_string + "x" + height.to_string + ")...")
+    Yaif_par.status (Yaif_i18n.t3 ("Writing %1 (%2x%3)...", (short_name name), width.to_string, height.to_string))
     (tif).if {
       Yaif_tiff.write_image name pixels (Yaif_rawin.image) bits 16 planes 3 size (width, height) data raw_exif exif (0, n) icc (raw_exif, 0) xmp (0, 0)
     } else {
@@ -861,7 +868,7 @@ Public
     Yaif_codec.reset_out
     put_str ("P7\nWIDTH " + width.to_string + "\nHEIGHT " + height.to_string + "\nDEPTH 4\nMAXVAL 255\nTUPLTYPE RGB_ALPHA\nENDHDR\n")
     f := File_utils.open_write name
-    (f = NULL).if { fail ("cannot write " + name) }
+    (f = NULL).if { fail (Yaif_i18n.t1 ("cannot write %1", name)) }
     File_utils.write f buffer (Yaif_codec.out) size (Yaif_codec.out_count)
     File_utils.write f buffer buf size (width * height * 4)
     File_utils.close f
@@ -887,11 +894,11 @@ Public
     Yaif_heic.forget_gain   // the gain map of an earlier HEIC (bench) is not this image's
     first.to last do { i:Int
       name := Command_args.at i
-      Yaif_par.status ("Reading " + (short_name name) + "...")
+      Yaif_par.status (Yaif_i18n.t1 ("Reading %1...", (short_name name)))
       // Image.init crashes on a missing file.
-      (File_utils.file_exists name).if { } else { fail ("cannot read " + name) }
+      (File_utils.file_exists name).if { } else { fail (Yaif_i18n.t1 ("cannot read %1", name)) }
       (is_heif name).if {
-        (Yaif_heic.load name pixels True).if { } else { fail ("cannot read HEIC " + name + ": " + Yaif_heic.message) }
+        (Yaif_heic.load name pixels True).if { } else { fail (Yaif_i18n.t2 ("cannot read HEIC %1: %2", name, Yaif_heic.message)) }
         iw := Yaif_heic.width
         ih := Yaif_heic.height
         src := Yaif_heic.rgba
@@ -912,13 +919,13 @@ Public
         }
         frames.add_last f
       } else {
-        fail ("cannot read image " + name)
+        fail (Yaif_i18n.t1 ("cannot read image %1", name))
       }
       (i = first).if {
         width := iw
         height := ih
       }.elseif {(iw != width) || {ih != height}} then {
-        fail ("all frames must have the same size: " + name)
+        fail (Yaif_i18n.t1 ("all frames must have the same size: %1", name))
       }
     }
   )
@@ -1049,8 +1056,8 @@ Public
   ( + np,e,lvl,q,lossless_lv:Int
     + animated,photo:Boolean
     + work,next:C_array Uint8
-    ((width > 65535) || {height > 65535}).if { fail "image too large: YAIF stores at most 65535 x 65535 pixels" }
-    (width * height > Yaif_par.max_pixels).if { fail "image too large for this system (over 500 Mpx)" }
+    ((width > 65535) || {height > 65535}).if { fail (Yaif_i18n.t "image too large: YAIF stores at most 65535 x 65535 pixels") }
+    (width * height > Yaif_par.max_pixels).if { fail (Yaif_i18n.t "image too large for this system (over 500 Mpx)") }
     np := 3
     (has_alpha).if { np := 4 }
     animated := frames.count > 1
@@ -1067,7 +1074,7 @@ Public
     ((md = 0) && {photo} && {lvl >= 1} && {lvl <= 4}).if { e := 1 }
     // Level 5 carries a quality instead of eps.
     (lvl = 5).if {
-      (md = 1).if { fail "level 5 is lossy only (-m lossy or adaptive)" }
+      (md = 1).if { fail (Yaif_i18n.t "level 5 is lossy only (-m lossy or adaptive)") }
       e := opt_q
       // JPEG source without -q: a quality matching the JPEG's, so the .yaif does not spend bits on its
       // artefacts (50 + Q / 2, at most 90: JPEG q 50 -> 75, q 70 -> 85, measured to add <= 0.6 dB of
@@ -1091,7 +1098,7 @@ Public
     }
     (lvl = -1).if {
       lvl := 0
-      (Yaif_codec.palette_fits (frames.first) stride width region (0, 0, width, height)).if { } else { fail "level 0 needs an image of 256 colours or less" }
+      (Yaif_codec.palette_fits (frames.first) stride width region (0, 0, width, height)).if { } else { fail (Yaif_i18n.t "level 0 needs an image of 256 colours or less") }
     }
     mode_name := method lvl param e
     Yaif_codec.reset_out
@@ -1363,7 +1370,7 @@ Public
   - load_file name:String <-
   ( + f:Pointer
     f := File_utils.open_read name
-    (f = NULL).if { fail ("cannot read " + name) }
+    (f = NULL).if { fail (Yaif_i18n.t1 ("cannot read %1", name)) }
     data_size := File_utils.size f
     data := C_array Uint8.create (data_size + 1)
     File_utils.read_raw f in data size data_size
@@ -1408,19 +1415,19 @@ Public
     + base:String
     meta_pos.clear
     meta_len.clear
-    (dst != NULL).if { Yaif_par.status ("Reading " + (short_name name) + "...") }
+    (dst != NULL).if { Yaif_par.status (Yaif_i18n.t1 ("Reading %1...", (short_name name))) }
     (in_memory).if { } else { load_file name }
-    (data_size < 9).if { fail "not a YAIF file" }
-    (((u32 0) != 89594149h) || {(u32 4) != 460D0A1Ah} || {(u8 8) != 0Ah}).if { fail "not a YAIF file" }
+    (data_size < 9).if { fail (Yaif_i18n.t "not a YAIF file") }
+    (((u32 0) != 89594149h) || {(u32 4) != 460D0A1Ah} || {(u8 8) != 0Ah}).if { fail (Yaif_i18n.t "not a YAIF file") }
     pos := 9
     {(! done) && {pos < data_size}}.while_do {
-      (pos + 12 > data_size).if { fail "truncated file" }
+      (pos + 12 > data_size).if { fail (Yaif_i18n.t "truncated file") }
       t := u32 pos
       len := u32 (pos + 4)
-      (len > data_size - pos - 12).if { fail "truncated file" }
+      (len > data_size - pos - 12).if { fail (Yaif_i18n.t "truncated file") }
       c := crc (0FFFFFFFFh) of data from pos until (pos + 4)
       c := crc c of data from (pos + 8) until (pos + 8 + len)
-      ((c ^ 0FFFFFFFFh) != (u32 (pos + 8 + len))).if { fail "CRC mismatch" }
+      ((c ^ 0FFFFFFFFh) != (u32 (pos + 8 + len))).if { fail (Yaif_i18n.t "CRC mismatch") }
       (dst = NULL).if {
         "  ".print
         0.to 3 do { i:Int
@@ -1439,9 +1446,9 @@ Public
       }
       pos := pos + 8
       (t = t_ihdr).if {
-        (len < 12).if { fail "bad IHDR" }
+        (len < 12).if { fail (Yaif_i18n.t "bad IHDR") }
         // a second one after frames would change the size the frame buffers were made for
-        (have_ihdr).if { fail "second IHDR" }
+        (have_ihdr).if { fail (Yaif_i18n.t "second IHDR") }
         have_ihdr := True
         width := u32 pos
         height := u32 (pos + 4)
@@ -1449,15 +1456,15 @@ Public
         flags := u8 (pos + 11)
         animated := (flags & 4) != 0
         raw := (flags & 8) != 0
-        ((u8 (pos + 10)) != 2).if { fail "unsupported YAIF version (only v2)" }
+        ((u8 (pos + 10)) != 2).if { fail (Yaif_i18n.t "unsupported YAIF version (only v2)") }
         (raw).if {
-          (((u8 (pos + 8)) != 16) || {np != 1} || {animated}).if { fail "bad RAW frame header" }
+          (((u8 (pos + 8)) != 16) || {np != 1} || {animated}).if { fail (Yaif_i18n.t "bad RAW frame header") }
         } else {
-          ((u8 (pos + 8)) != 8).if { fail "unsupported bit depth" }
-          ((np != 3) && {np != 4}).if { fail "bad plane count" }
+          ((u8 (pos + 8)) != 8).if { fail (Yaif_i18n.t "unsupported bit depth") }
+          ((np != 3) && {np != 4}).if { fail (Yaif_i18n.t "bad plane count") }
         }
-        ((width = 0) || {height = 0} || {width > 65535} || {height > 65535}).if { fail "bad size" }
-        (width * height > Yaif_par.max_pixels).if { fail "image too large for this system (over 500 Mpx)" }
+        ((width = 0) || {height = 0} || {width > 65535} || {height > 65535}).if { fail (Yaif_i18n.t "bad size") }
+        (width * height > Yaif_par.max_pixels).if { fail (Yaif_i18n.t "image too large for this system (over 500 Mpx)") }
         ((dst != NULL) && {! in_memory}).if {
           Yaif_par.clear
           ((short_name name) + ": " + width.to_string + "x" + height.to_string).print
@@ -1473,16 +1480,16 @@ Public
           '\n'.print
         }
       }.elseif {(t = t_fdat) || {t = t_fdlt}} then {
-        (width = 0).if { fail "frame before IHDR" }
+        (width = 0).if { fail (Yaif_i18n.t "frame before IHDR") }
         (raw && {dst != NULL}).if {
-          (t != t_fdat).if { fail "RAW files have one frame" }
-          (rawh = 0).if { fail "RAW frame without RAWH" }
-          ((dst.as_lower.has_suffix ".dng") || {dst.as_lower.has_suffix ".pgm"} || {image_ext dst}).if { } else { fail "a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)" }
+          (t != t_fdat).if { fail (Yaif_i18n.t "RAW files have one frame") }
+          (rawh = 0).if { fail (Yaif_i18n.t "RAW frame without RAWH") }
+          ((dst.as_lower.has_suffix ".dng") || {dst.as_lower.has_suffix ".pgm"} || {image_ext dst}).if { } else { fail (Yaif_i18n.t "a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)") }
           Yaif_raw.setup (width, height) black (raw_black_at rawh)
-          ((in_memory && {len = 0}) || {Yaif_raw.decode data from pos size len}).if { } else { fail "corrupt frame" }
+          ((in_memory && {len = 0}) || {Yaif_raw.decode data from pos size len}).if { } else { fail (Yaif_i18n.t "corrupt frame") }
           // MDAT blocks after FDAT are not seen; the encoder writes them before.
           (dst.as_lower.has_suffix ".pgm").if {
-            Yaif_par.status ("Writing " + (short_name dst) + "...")
+            Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name dst)))
             write_pgm dst
           }.elseif {dst.as_lower.has_suffix ".dng"} then {
             tn := 0
@@ -1503,7 +1510,7 @@ Public
                 tb := copy_bytes (Yaif_jpeg.data) size tn
               }
             }
-            Yaif_par.status ("Writing " + (short_name dst) + "...")
+            Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name dst)))
             Yaif_tiff.write_dng dst data data rawh rawh metas (meta_pos, meta_len) size (width, height) thumb (tb, tn, tw, th)
           } else {
             develop_raw dst rawh rawh
@@ -1515,11 +1522,11 @@ Public
             0.to (width * height - 1) do { i:Int next.at (i * 4 + 3) put 255 }
             (Yaif_codec.decode data from pos size len into next stride width region (0, 0, width, height) planes np).if {
             } else {
-              fail "corrupt frame"
+              fail (Yaif_i18n.t "corrupt frame")
             }
           } else {
-            (cur = NULL).if { fail "delta frame before full frame" }
-            (len < 16).if { fail "bad FDLT" }
+            (cur = NULL).if { fail (Yaif_i18n.t "delta frame before full frame") }
+            (len < 16).if { fail (Yaif_i18n.t "bad FDLT") }
             next := C_array Uint8.create (width * height * 4)
             0.to (width * height * 4 - 1) do { i:Int next.at i put (cur.at i) }
             x0 := u32 pos
@@ -1527,10 +1534,10 @@ Public
             dw := u32 (pos + 8)
             dh := u32 (pos + 12)
             ((dw > 0) && {dh > 0}).if {
-              ((x0 + dw > width) || {y0 + dh > height}).if { fail "bad FDLT region" }
+              ((x0 + dw > width) || {y0 + dh > height}).if { fail (Yaif_i18n.t "bad FDLT region") }
               (Yaif_codec.decode data from (pos + 16) size (len - 16) into next stride width region (x0, y0, dw, dh) planes np).if {
               } else {
-                fail "corrupt frame"
+                fail (Yaif_i18n.t "corrupt frame")
               }
             }
           }
@@ -1539,7 +1546,7 @@ Public
             done := True
             nframes := 0
           } else {
-            Yaif_par.status ("Writing " + (short_name (frame_name (dst, count, animated))) + "...")
+            Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name (frame_name (dst, count, animated)))))
             write_image next planes np to (frame_name (dst, count, animated))
           }
           cur := next
@@ -1552,10 +1559,10 @@ Public
           width := u16 pos
           height := u16 (pos + 2)
           np := u8 (pos + 4)
-          ((width = 0) || {height = 0} || {(np != 3) && {np != 4}}).if { fail "bad PREV" }
+          ((width = 0) || {height = 0} || {(np != 3) && {np != 4}}).if { fail (Yaif_i18n.t "bad PREV") }
           next := C_array Uint8.create (width * height * 4)
           0.to (width * height - 1) do { i:Int next.at (i * 4 + 3) put 255 }
-          (Yaif_codec.decode data from (pos + 5) size (len - 5) into next stride width region (0, 0, width, height) planes np).if { } else { fail "corrupt PREV" }
+          (Yaif_codec.decode data from (pos + 5) size (len - 5) into next stride width region (0, 0, width, height) planes np).if { } else { fail (Yaif_i18n.t "corrupt PREV") }
           write_image next planes np to dst
           count := 1
           nframes := 0
@@ -1577,7 +1584,7 @@ Public
         gm_h := u16 (pos + 2)
         gm_meta_n := u16 (pos + 5)
         gm_meta_pos := pos + 7
-        ((gm_w = 0) || {gm_h = 0} || {(u8 (pos + 4)) != 3} || {7 + gm_meta_n > len}).if { fail "bad GMAP" }
+        ((gm_w = 0) || {gm_h = 0} || {(u8 (pos + 4)) != 3} || {7 + gm_meta_n > len}).if { fail (Yaif_i18n.t "bad GMAP") }
         (dst = NULL).if {
           ("        " + gm_w.to_string + "x" + gm_h.to_string + " HDR gain map").print
           (Yaif_hdr.parse data from gm_meta_pos size gm_meta_n).if {
@@ -1591,16 +1598,16 @@ Public
         } else {
           gm := C_array Uint8.create (gm_w * gm_h * 4)
           0.to (gm_w * gm_h - 1) do { i:Int gm.at (i * 4 + 3) put 255 }
-          (Yaif_codec.decode data from (pos + 7 + gm_meta_n) size (len - 7 - gm_meta_n) into gm stride gm_w region (0, 0, gm_w, gm_h) planes 3).if { } else { fail "corrupt GMAP" }
+          (Yaif_codec.decode data from (pos + 7 + gm_meta_n) size (len - 7 - gm_meta_n) into gm stride gm_w region (0, 0, gm_w, gm_h) planes 3).if { } else { fail (Yaif_i18n.t "corrupt GMAP") }
         }
       }.elseif {t = t_rawh} then {
-        ((len < 45) || {(u8 pos) != 1}).if { fail "unsupported RAWH version" }
+        ((len < 45) || {(u8 pos) != 1}).if { fail (Yaif_i18n.t "unsupported RAWH version") }
         // The readers (nr_restore, write_dng) index by the cblack count and read the make/model
         // strings at the end: check that they all lie inside the chunk.
         rn := u32 (pos + 37)
-        ((rn > 4102) || {len < 41 + 4 * rn + 150}).if { fail "bad RAWH" }
+        ((rn > 4102) || {len < 41 + 4 * rn + 150}).if { fail (Yaif_i18n.t "bad RAWH") }
         rs := pos + 41 + 4 * rn + 148
-        (((rs + 2 + (u8 rs)) > (pos + len)) || {(rs + 2 + (u8 rs) + (u8 (rs + 1 + (u8 rs)))) > (pos + len)}).if { fail "bad RAWH" }
+        (((rs + 2 + (u8 rs)) > (pos + len)) || {(rs + 2 + (u8 rs) + (u8 (rs + 1 + (u8 rs)))) > (pos + len)}).if { fail (Yaif_i18n.t "bad RAWH") }
         rawh := pos
       }.elseif {(t = t_mdat) && {len >= 4}} then {
         meta_pos.add_last pos
@@ -1622,16 +1629,16 @@ Public
       }
       pos := pos + len + 4
     }
-    ((count = 0) || {(nframes > 0) && {count < nframes}}).if { fail "truncated file (missing frames)" }
-    (width = 0).if { fail "no IHDR" }
+    ((count = 0) || {(nframes > 0) && {count < nframes}}).if { fail (Yaif_i18n.t "truncated file (missing frames)") }
+    (width = 0).if { fail (Yaif_i18n.t "no IHDR") }
     (dst = NULL).if {
       ("  " + count.to_string + " frame(s), " + data_size.to_string + " bytes, " + ((data_size * 8 * 1000) / (width * height)).to_string + " mbit/pixel\n").print
     } else {
       Yaif_par.clear
       (count = 1).if {
-        ("Done: wrote " + (short_name dst) + " in " + elapsed).print
+        (Yaif_i18n.t2 ("Done: wrote %1 in %2", (short_name dst), elapsed)).print
       } else {
-        ("Done: wrote " + count.to_string + " frames (" + (short_name (frame_name (dst, 0, True))) + "...) in " + elapsed).print
+        (Yaif_i18n.t3 ("Done: wrote %1 frames (%2...) in %3", count.to_string, (short_name (frame_name (dst, 0, True))), elapsed)).print
       }
       ((live_len > 0) && {! preview_only}).if {
         base := no_ext dst
@@ -1702,38 +1709,38 @@ Public
       dst_name := Command_args.at (i - 1)
       (! (dst_name.as_lower.has_suffix ".yaif")).if {
         // encode only writes .yaif: a .dng/.png here used to get a .yaif under that name.
-        fail (dst_name + " is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)")
+        fail (Yaif_i18n.t1 ("%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)", dst_name))
       }
     } else {
       last_src := i - 1
       dst_name := default_dst (Command_args.at 2)
     }
-    (last_src < 2).if { fail "encode needs at least one source" }
+    (last_src < 2).if { fail (Yaif_i18n.t "encode needs at least one source") }
     dst_name := keep_or_rename dst_name
     {i < n}.while_do {
       a := Command_args.at i
-      (i + 1 >= n).if { fail ("missing value after " + a) }
+      (i + 1 >= n).if { fail (Yaif_i18n.t1 ("missing value after %1", a)) }
       v := Command_args.at (i + 1)
       (a == "-m").if {
-        (v == "adaptive").if { opt_m := 0 }.elseif {v == "lossless"} then { opt_m := 1 }.elseif {v == "lossy"} then { opt_m := 2 } else { fail ("unknown mode " + v) }
+        (v == "adaptive").if { opt_m := 0 }.elseif {v == "lossless"} then { opt_m := 1 }.elseif {v == "lossy"} then { opt_m := 2 } else { fail (Yaif_i18n.t1 ("unknown mode %1", v)) }
       }.elseif {a == "-l"} then {
         opt_l := v.to_int
-        ((opt_l < 0) || {opt_l > Yaif_codec.max_level}).if { fail ("level must be 0.." + Yaif_codec.max_level.to_string) }
+        ((opt_l < 0) || {opt_l > Yaif_codec.max_level}).if { fail (Yaif_i18n.t1 ("level must be 0..%1", Yaif_codec.max_level.to_string)) }
         (opt_l = 0).if { opt_l := -1 }
       }.elseif {a == "-e"} then {
         opt_e := v.to_int
-        ((opt_e < 1) || {opt_e > 64}).if { fail "eps must be 1..64" }
+        ((opt_e < 1) || {opt_e > 64}).if { fail (Yaif_i18n.t "eps must be 1..64") }
       }.elseif {a == "-q"} then {
         opt_q := v.to_int
         opt_q_set := True
-        ((opt_q < 0) || {opt_q > 100}).if { fail "quality must be 0..100" }
+        ((opt_q < 0) || {opt_q > 100}).if { fail (Yaif_i18n.t "quality must be 0..100") }
       }.elseif {a == "-d"} then {
         opt_d := v.to_int
       }.elseif {a == "-live"} then {
         live_src := v
-        (File_utils.file_exists v).if { } else { fail ("cannot read " + v) }
+        (File_utils.file_exists v).if { } else { fail (Yaif_i18n.t1 ("cannot read %1", v)) }
       } else {
-        fail ("unknown option " + a)
+        fail (Yaif_i18n.t1 ("unknown option %1", a))
       }
       i := i + 2
     }
@@ -1784,7 +1791,7 @@ Public
     + c:Char
     result := name
     ((File_utils.file_exists name) && {Yaif_par.interactive}).if {
-      ((short_name name) + " exists. [r] replace, [n] new name, [c] cancel: ").print
+      (Yaif_i18n.t1 ("%1 exists. [r] replace, [n] new name, [c] cancel: ", (short_name name))).print
       Stdin.read_line
       // The time spent answering is not the command's: "Done ... in" starts from here.
       t0 := Yaif_par.ms
@@ -1794,9 +1801,9 @@ Public
       (c = 'r').if {
       }.elseif {c = 'n'} then {
         result := free_name name
-        ("Writing " + (short_name result) + "\n").print
+        (Yaif_i18n.t1 ("Writing %1", (short_name result)) + "\n").print
       } else {
-        "Cancelled.\n".print
+        ((Yaif_i18n.t "Cancelled.") + "\n").print
         System.exit 0
       }
     }
@@ -1836,17 +1843,16 @@ Public
   - done_line src:Int <-
   // "Done: 26,050,253 bytes, 80.6 % of the source (RAW, lossless) in 7.5 s"
   ( + r,n:Int
-    + s:String
     Yaif_par.clear
-    s := "Done: " + (group (Yaif_codec.out_count)) + " bytes"
     n := src
     // The Live Photo video is in the .yaif: count it in the source too.
     ((src > 0) && {live_src != NULL}).if { n := n + (file_size live_src) }
     (n > 0).if {
       r := (Yaif_codec.out_count * 1000 + n / 2) / n
-      s := s + ", " + (r / 10).to_string + "." + (r % 10).to_string + " % of the source"
+      (Yaif_i18n.t4 ("Done: %1 bytes, %2 % of the source (%3) in %4", (group (Yaif_codec.out_count)), (r / 10).to_string + "." + (r % 10).to_string, mode_name, elapsed) + "\n").print
+    } else {
+      (Yaif_i18n.t3 ("Done: %1 bytes (%2) in %3", (group (Yaif_codec.out_count)), mode_name, elapsed) + "\n").print
     }
-    (s + " (" + mode_name + ") in " + elapsed + "\n").print
   )
 
   // Time since the start of main, "7.6 s".
@@ -1881,7 +1887,7 @@ Public
         opt_hdr := True
         i := i + 1
       } else {
-        (i + 1 < n).if { } else { fail (a + ": value missing") }
+        (i + 1 < n).if { } else { fail (Yaif_i18n.t1 ("%1: value missing", a)) }
         v := Command_args.at (i + 1)
         parse_decode_pair (a, v)
         i := i + 2
@@ -1894,13 +1900,13 @@ Public
     (a == "-q").if {
       opt_q := v.to_int
       opt_q_set := True
-      ((opt_q < 1) || {opt_q > 100}).if { fail "quality must be 1..100" }
+      ((opt_q < 1) || {opt_q > 100}).if { fail (Yaif_i18n.t "quality must be 1..100") }
     }.elseif {a == "-m"} then {
-      (v == "lossy").if { opt_webp := 1 }.elseif {v == "lossless"} then { opt_webp := 2 } else { fail "-m: lossy or lossless" }
+      (v == "lossy").if { opt_webp := 1 }.elseif {v == "lossless"} then { opt_webp := 2 } else { fail (Yaif_i18n.t "-m: lossy or lossless") }
     }.elseif {a == "-look"} then {
-      (v == "canon").if { opt_look := 0 }.elseif {v == "darktable"} then { opt_look := 1 } else { fail "-look: canon or darktable" }
+      (v == "canon").if { opt_look := 0 }.elseif {v == "darktable"} then { opt_look := 1 } else { fail (Yaif_i18n.t "-look: canon or darktable") }
     } else {
-      fail ("unknown decode option " + a)
+      fail (Yaif_i18n.t1 ("unknown decode option %1", a))
     }
   )
 
@@ -1918,16 +1924,16 @@ Public
     + gmeta,o:C_array Uint8
     src := Command_args.at 2
     e := src.as_lower
-    (File_utils.file_exists src).if { } else { fail ("cannot read " + src) }
-    (e.has_suffix ".yaif").if { fail "the source is a .yaif: use yaif decode" }
-    ((Command_args.at 3).as_lower.has_suffix ".yaif").if { fail "the destination is a .yaif: use yaif encode" }
+    (File_utils.file_exists src).if { } else { fail (Yaif_i18n.t1 ("cannot read %1", src)) }
+    (e.has_suffix ".yaif").if { fail (Yaif_i18n.t "the source is a .yaif: use yaif decode") }
+    ((Command_args.at 3).as_lower.has_suffix ".yaif").if { fail (Yaif_i18n.t "the destination is a .yaif: use yaif encode") }
     parse_decode_args n
     (opt_webp = 0).if {
       ((e.has_suffix ".png") || {e.has_suffix ".pam"} || {e.has_suffix ".tif"} || {e.has_suffix ".tiff"}).if { opt_webp := 2 } else { opt_webp := 1 }
     }
     dst := keep_or_rename (Command_args.at 3)
     (is_raw src).if {
-      Yaif_par.status ("Reading " + (short_name src) + " with LibRaw...")
+      Yaif_par.status (Yaif_i18n.t1 ("Reading %1 with LibRaw...", (short_name src)))
       convert_to := dst
       encode_raw src
       data := copy_bytes (Yaif_codec.out) size (Yaif_codec.out_count)
@@ -1964,10 +1970,10 @@ Public
       }
       data := copy_bytes (Yaif_codec.out) size (Yaif_codec.out_count)
       data_size := Yaif_codec.out_count
-      Yaif_par.status ("Writing " + (short_name dst) + "...")
+      Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name dst)))
       write_image (frames.first) planes np to dst
       Yaif_par.clear
-      ("Done: wrote " + (short_name dst) + " in " + elapsed + "\n").print
+      (Yaif_i18n.t2 ("Done: wrote %1 in %2", (short_name dst), elapsed) + "\n").print
     }
   )
 
@@ -1981,10 +1987,10 @@ Public
     ((cmd != NULL) && {cmd == "encode"} && {n >= 3}).if {
       parse_encode_args n
       ((last_src = 2) && {File_utils.file_exists (Command_args.at 2)} && {is_raw (Command_args.at 2)}).if {
-        ((opt_m = 2) || {opt_l != 0}).if { fail "RAW sources are always lossless, level 6 (no -m lossy, no -l)" }
-        Yaif_par.status ("Reading " + (short_name (Command_args.at 2)) + " with LibRaw...")
+        ((opt_m = 2) || {opt_l != 0}).if { fail (Yaif_i18n.t "RAW sources are always lossless, level 6 (no -m lossy, no -l)") }
+        Yaif_par.status (Yaif_i18n.t1 ("Reading %1 with LibRaw...", (short_name (Command_args.at 2))))
         encode_raw (Command_args.at 2)
-        Yaif_par.status ("Writing " + (short_name dst_name) + "...")
+        Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name dst_name)))
         save_out dst_name
         done_line (file_size (Command_args.at 2))
         System.exit 0
@@ -1996,7 +2002,7 @@ Public
       '\n'.print
       meta_src := Command_args.at 2
       encode_frames opt_d mode opt_m level opt_l eps opt_e
-      Yaif_par.status ("Writing " + (short_name dst_name) + "...")
+      Yaif_par.status (Yaif_i18n.t1 ("Writing %1...", (short_name dst_name)))
       save_out dst_name
       n := 0
       2.to last_src do { i:Int n := n + file_size (Command_args.at i) }

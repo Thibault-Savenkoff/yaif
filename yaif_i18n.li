@@ -1,0 +1,65 @@
+Header
+  + name := Yaif_i18n
+  // Message translation: the C side (yaif_i18n.h) picks the language and looks a message up by its English
+  // text. t "text" is the translation of a fixed message; t1 to t4 fill %1 to %4 (whole sentences, so a
+  // language can reorder). Keys must also be in i18n/fr.tsv: python3 i18n/gen.py --check.
+  - include := `
+#include "yaif_i18n.h"
+`;
+
+Public
+
+  - t en:String :String <-
+  ( + e:C_array Char
+    + r:String_buffer
+    e := en.to_external
+    r := String_buffer.create 64
+    r.from_external_copy (`yi_tr((char*)@e)`:C_array Char)
+    r.to_string
+  )
+
+  - t1 (en:String, a:String) :String <-
+  ( + e, x:C_array Char
+    + r:String_buffer
+    e := en.to_external
+    x := a.to_external
+    r := String_buffer.create 64
+    r.from_external_copy (`yi_fmt((char*)@e, (char*)@x, "", "", "")`:C_array Char)
+    r.to_string
+  )
+
+  - t2 (en:String, a:String, b:String) :String <-
+  ( + e, x, y:C_array Char
+    + r:String_buffer
+    e := en.to_external
+    x := a.to_external
+    y := b.to_external
+    r := String_buffer.create 64
+    r.from_external_copy (`yi_fmt((char*)@e, (char*)@x, (char*)@y, "", "")`:C_array Char)
+    r.to_string
+  )
+
+  - t3 (en:String, a:String, b:String, c:String) :String <-
+  ( + e, x, y, z:C_array Char
+    + r:String_buffer
+    e := en.to_external
+    x := a.to_external
+    y := b.to_external
+    z := c.to_external
+    r := String_buffer.create 64
+    r.from_external_copy (`yi_fmt((char*)@e, (char*)@x, (char*)@y, (char*)@z, "")`:C_array Char)
+    r.to_string
+  )
+
+  - t4 (en:String, a:String, b:String, c:String, d:String) :String <-
+  ( + e, x, y, z, w:C_array Char
+    + r:String_buffer
+    e := en.to_external
+    x := a.to_external
+    y := b.to_external
+    z := c.to_external
+    w := d.to_external
+    r := String_buffer.create 64
+    r.from_external_copy (`yi_fmt((char*)@e, (char*)@x, (char*)@y, (char*)@z, (char*)@w)`:C_array Char)
+    r.to_string
+  )

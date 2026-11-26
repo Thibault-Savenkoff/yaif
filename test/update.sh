@@ -3,6 +3,7 @@
 # A fake curl stands in for GitHub (no network), and script(1) gives yaif a terminal.
 # Run from yaif-lisaac/ after building ./yaif: test/update.sh
 set -eu
+export YAIF_LANG=en   # the messages below are matched in English
 cd "$(dirname "$0")/.."
 [ -x ./yaif ] || { echo "build ./yaif first (lisaac yaif.li -boost)"; exit 1; }
 

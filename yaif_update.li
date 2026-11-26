@@ -11,6 +11,7 @@ Header
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "yaif_i18n.h"
 #ifdef _WIN32
 #include <direct.h>
 #include <sys/utime.h>
@@ -108,7 +109,7 @@ static const char *nu_check(const char *version) {
     if (n > 0 && n < (1 << 20) && (json = malloc(n + 1))) {
       json[fread(json, 1, n, f)] = 0;
       if (nu_newest(json, version, best, sizeof best) && nu_cmp(best, version) > 0)
-        fprintf(stderr, "yaif %s is available (this is %s): %s\n", best, version, NU_PAGE);
+        fprintf(stderr, "%s\n", yi_fmt("yaif %1 is available (this is %2): %3", best, version, NU_PAGE, ""));
       free(json);
     }
     fclose(f);

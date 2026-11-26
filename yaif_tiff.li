@@ -569,7 +569,7 @@ Public
     Yaif_zlib.set_predictor (! float_samples)
     ns := Yaif_zlib.tiff px bits b size (w, h) planes np big big
     Yaif_zlib.set_predictor True
-    (ns = 0).if { Yaif.fail "TIFF compression failed" }
+    (ns = 0).if { Yaif.fail (Yaif_i18n.t "TIFF compression failed") }
     start (65536 + en + xn + icn)
     add 254 type 4 count 1 value 0 kind 0
     add 256 type 4 count 1 value w kind 0
