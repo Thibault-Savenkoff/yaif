@@ -4,6 +4,7 @@
 # %LOCALAPPDATA%\Programs\YAIF, puts that folder on your PATH, adds the Tab-completion line to your
 # PowerShell profile and an entry in Settings > Apps. Uninstall from there. The Explorer thumbnail codec is
 # registered for your account only (HKCU), so no administrator is needed anywhere.
+# (From an unzipped release, run .\install.ps1 or double-click install.bat: it installs that folder.)
 # A script run this way is not SmartScreen- or Defender-checked like a downloaded .exe.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'   # Windows PowerShell 5.1 downloads 10x slower with the bar
@@ -22,29 +23,39 @@ foreach ($k in $unkey, 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstal
     if ($loc -and $loc -ne $dir) { throw "YAIF is already installed in ${loc}: uninstall it first (Settings > Apps)." }
 }
 
-# Latest v2 release (the Atom feed, not the API: 60 requests an hour per IP without a token).
-$tag = [regex]::Match((Invoke-WebRequest $feed -UseBasicParsing).Content, 'releases/tag/(v2\.[^"<]+)').Groups[1].Value
-if (-not $tag) { throw 'no v2 release found' }
-$ver = $tag.Substring(1)
-$zip = "yaif-$ver-windows-x86_64.zip"
-Write-Host "Installing YAIF $ver"
+# Run from an unzipped release (yaif.exe beside this script): install that folder, download nothing.
+# Piped to iex, $PSScriptRoot is empty: fetch the latest v2 release's zip instead.
+$here = $PSScriptRoot
 $tmp = Join-Path ([IO.Path]::GetTempPath()) "yaif-$([guid]::NewGuid())"
 New-Item -ItemType Directory $tmp | Out-Null
 try {
-    Invoke-WebRequest "$base/$tag/$zip" -OutFile "$tmp\$zip" -UseBasicParsing
-    $sums = (Invoke-WebRequest "$base/$tag/SHA256SUMS" -UseBasicParsing).Content
-    # GitHub serves it as application/octet-stream: PowerShell then hands back bytes, not text.
-    if ($sums -is [byte[]]) { $sums = [Text.Encoding]::UTF8.GetString($sums) }
-    $want = [regex]::Match($sums, "(?m)^([0-9a-fA-F]{64})\s+\*?$([regex]::Escape($zip))\s*$").Groups[1].Value
-    if (-not $want) { throw "$zip is not in SHA256SUMS" }
-    if ((Get-FileHash "$tmp\$zip" -Algorithm SHA256).Hash -ne $want) { throw "${zip}: checksum mismatch, nothing installed" }
-    Expand-Archive "$tmp\$zip" "$tmp\x"
+    if ($here -and (Test-Path "$here\yaif.exe")) {
+        $ver = ((& "$here\yaif.exe" --version) | Select-Object -First 1) -replace '^\S+\s+', ''
+        $from = $here
+        Write-Host "Installing YAIF $ver from $here"
+    } else {
+        # Latest v2 release (the Atom feed, not the API: 60 requests an hour per IP without a token).
+        $tag = [regex]::Match((Invoke-WebRequest $feed -UseBasicParsing).Content, 'releases/tag/(v2\.[^"<]+)').Groups[1].Value
+        if (-not $tag) { throw 'no v2 release found' }
+        $ver = $tag.Substring(1)
+        $zip = "yaif-$ver-windows-x86_64.zip"
+        Write-Host "Installing YAIF $ver"
+        Invoke-WebRequest "$base/$tag/$zip" -OutFile "$tmp\$zip" -UseBasicParsing
+        $sums = (Invoke-WebRequest "$base/$tag/SHA256SUMS" -UseBasicParsing).Content
+        # GitHub serves it as application/octet-stream: PowerShell then hands back bytes, not text.
+        if ($sums -is [byte[]]) { $sums = [Text.Encoding]::UTF8.GetString($sums) }
+        $want = [regex]::Match($sums, "(?m)^([0-9a-fA-F]{64})\s+\*?$([regex]::Escape($zip))\s*$").Groups[1].Value
+        if (-not $want) { throw "$zip is not in SHA256SUMS" }
+        if ((Get-FileHash "$tmp\$zip" -Algorithm SHA256).Hash -ne $want) { throw "${zip}: checksum mismatch, nothing installed" }
+        Expand-Archive "$tmp\$zip" "$tmp\x"
+        $from = "$tmp\x\yaif-windows"
+    }
     # yaif.exe or a DLL in use (a terminal still running yaif, Explorer holding a codec) fails here:
     # Stop = nothing half-copied is reported as done.
     New-Item -ItemType Directory $dir -Force | Out-Null
     # The helper scripts are in scripts\ from the release after beta.13 on, next to yaif.exe before.
-    if (Test-Path "$tmp\x\yaif-windows\scripts") { Remove-Item "$dir\yaif-completion.ps1", "$dir\yaif-profile.ps1" -ErrorAction SilentlyContinue }
-    Copy-Item "$tmp\x\yaif-windows\*" $dir -Recurse -Force
+    if (Test-Path "$from\scripts") { Remove-Item "$dir\yaif-completion.ps1", "$dir\yaif-profile.ps1" -ErrorAction SilentlyContinue }
+    if ($from -ne $dir) { Copy-Item "$from\*" $dir -Recurse -Force }
 } finally { Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue }
 
 # PATH (user): edit the registry value itself, [Environment]::SetEnvironmentVariable would flatten
@@ -64,6 +75,14 @@ $rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnati
 & $rs /s /n /i:user "$dir\yaif_wic.dll"
 if ($LASTEXITCODE -ne 0) { Write-Warning "The Explorer thumbnail codec could not be registered (regsvr32 exit $LASTEXITCODE)." }
 
+# ImHex (hex editor), when installed for this user: the pattern shows a .yaif's chunks as a tree.
+$ih = Join-Path $env:LOCALAPPDATA 'imhex'
+if ((Test-Path $ih) -and (Test-Path "$dir\imhex\yaif.hexpat")) {
+    New-Item -ItemType Directory "$ih\patterns" -Force | Out-Null
+    Copy-Item "$dir\imhex\yaif.hexpat" "$ih\patterns\yaif.hexpat" -Force
+    Write-Host 'ImHex pattern installed (restart ImHex).'
+}
+
 # Tab completion: the profile script runs under this same host, with the policy bypassed (a
 # default Windows PowerShell refuses unsigned scripts).
 $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
@@ -72,6 +91,7 @@ $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $
 # Uninstaller, kept next to yaif.exe so that Settings > Apps works offline.
 @'
 $dir = $PSScriptRoot
+Remove-Item "$env:LOCALAPPDATA\imhex\patterns\yaif.hexpat" -ErrorAction SilentlyContinue
 $rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnative\regsvr32.exe" } else { "$env:windir\System32\regsvr32.exe" }
 & $rs /s /u /n /i:user "$dir\yaif_wic.dll"
 $ps = (Get-Process -Id $PID).Path
