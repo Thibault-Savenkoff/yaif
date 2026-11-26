@@ -109,7 +109,7 @@ There is no package yet.
 
 **Windows:** `yaif-<version>-windows-x86_64-setup.exe` or `….msi` (on the release page, and built by `win/dist.sh`) install
 `yaif.exe`, put it on the `PATH` and register the codec, so the Explorer shows thumbnails and previews.
-The `.zip` is the same files: unzip it and double-click `install.bat` (per user, no administrator; the same as `install.ps1`). Uninstall from Settings > Apps. Either
+The `.zip` is the same files: unzip it and double-click `install.bat` and choose: me only (no administrator rights) or all users (asks for them; if refused, nothing is installed). Uninstall from Settings > Apps. Either
 installer sets up PowerShell tab completion by itself, for Windows PowerShell and PowerShell 7 both; from
 the zip, run `scripts\yaif-profile.ps1` once (its `README.txt` has the details). The completion script is named
 `yaif-completion.ps1`, not `yaif.ps1`, because PowerShell resolves a bare `yaif` to a `.ps1` on the `PATH`

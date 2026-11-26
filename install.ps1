@@ -1,10 +1,13 @@
-# YAIF installer for Windows, per user (no administrator needed):
+# YAIF installer for Windows, per user by default (no administrator needed):
 #   irm https://raw.githubusercontent.com/Thibault-Savenkoff/yaif/v2/install.ps1 | iex
 # Downloads the latest v2 release's .zip, checks its SHA-256, unpacks it to
 # %LOCALAPPDATA%\Programs\YAIF, puts that folder on your PATH, adds the Tab-completion line to your
 # PowerShell profile and an entry in Settings > Apps. Uninstall from there. The Explorer thumbnail codec is
 # registered for your account only (HKCU), so no administrator is needed anywhere.
-# (From an unzipped release, run .\install.ps1 or double-click install.bat: it installs that folder.)
+# (From an unzipped release, run .\install.ps1 or double-click install.bat: it installs that folder.
+#  install.bat can also install for all users: .\install.ps1 -AllUsers = C:\Program Files\YAIF, the
+#  machine PATH, the codec for every account, tab completion for every account at their next logon.
+#  It asks for administrator rights itself; refused = nothing installed.)
 # A script run this way is not SmartScreen- or Defender-checked like a downloaded .exe.
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'   # Windows PowerShell 5.1 downloads 10x slower with the bar
@@ -13,8 +16,24 @@ $repo = 'Thibault-Savenkoff/yaif'
 # Test-only overrides, like install.sh's
 $feed = if ($env:YAIF_FEED) { $env:YAIF_FEED } else { "https://github.com/$repo/releases.atom" }
 $base = if ($env:YAIF_RELEASE_BASE) { $env:YAIF_RELEASE_BASE } else { "https://github.com/$repo/releases/download" }
-$dir = Join-Path $env:LOCALAPPDATA 'Programs\YAIF'
-$unkey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF'
+# -AllUsers (and -ForUser <the account that asked>, added by the relaunch below)
+$all = $args -contains '-AllUsers'
+$i = [array]::IndexOf($args, '-ForUser'); $for = if ($i -ge 0) { $args[$i + 1] }
+if ($all) {
+    $admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    if (-not $admin) {
+        $a = "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" -AllUsers -ForUser `"$env:USERNAME`""
+        try { $c = Start-Process (Get-Process -Id $PID).Path -ArgumentList $a -Verb RunAs -Wait -PassThru }
+        catch { Write-Host 'Administrator rights were refused: nothing was installed.'; exit 1 }
+        exit $c.ExitCode
+    }
+    # The elevated window closes with the script: keep any error readable.
+    trap { Write-Host "YAIF: $_" -ForegroundColor Red; if ($for) { Read-Host 'Press Enter to close' }; exit 1 }
+    # Another administrator's credentials at the UAC prompt: this would install for them, not for you.
+    if ($for -and $for -ne $env:USERNAME) { throw "Elevated as $env:USERNAME, not as ${for}: nothing was installed. Run it from an administrator account." }
+}
+$dir = if ($all) { Join-Path $env:ProgramFiles 'YAIF' } else { Join-Path $env:LOCALAPPDATA 'Programs\YAIF' }
+$unkey = $(if ($all) { 'HKLM:' } else { 'HKCU:' }) + '\Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF'
 
 if (-not [Environment]::Is64BitOperatingSystem) { throw 'YAIF needs 64-bit Windows.' }
 # An install made by the setup (or the MSI) owns that Settings > Apps entry: do not overwrite it.
@@ -58,9 +77,9 @@ try {
     if ($from -ne $dir) { Copy-Item "$from\*" $dir -Recurse -Force }
 } finally { Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue }
 
-# PATH (user): edit the registry value itself, [Environment]::SetEnvironmentVariable would flatten
+# PATH (user, or machine with -AllUsers): edit the registry value itself, [Environment]::SetEnvironmentVariable would flatten
 # a REG_EXPAND_SZ Path into a REG_SZ and break its %VARS%.
-$env_ = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true)
+$env_ = if ($all) { [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey('SYSTEM\CurrentControlSet\Control\Session Manager\Environment', $true) } else { [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true) }
 $path = $env_.GetValue('Path', '', 'DoNotExpandEnvironmentNames')
 if (";$path;".ToLower().IndexOf(";$($dir.ToLower());") -lt 0) {
     $env_.SetValue('Path', ($path.TrimEnd(';') + ";$dir").TrimStart(';'), 'ExpandString')
@@ -69,10 +88,11 @@ $env_.Close()
 # Setting then deleting a user variable makes Windows broadcast "environment changed" (new terminals see the PATH).
 [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', '1', 'User'); [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', $null, 'User')
 
-# Explorer thumbnails and the viewer codec, for this user only (HKCU\Software\Classes: no administrator).
-# regsvr32 calls DllInstall(TRUE, "user") with /n /i:user. The 64-bit one: this process may be a 32-bit one.
+# Explorer thumbnails and the viewer codec: for this user only (HKCU\Software\Classes: no administrator;
+# regsvr32 calls DllInstall(TRUE, "user") with /n /i:user), or every account with -AllUsers.
+# The 64-bit regsvr32: this process may be a 32-bit one.
 $rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnative\regsvr32.exe" } else { "$env:windir\System32\regsvr32.exe" }
-& $rs /s /n /i:user "$dir\yaif_wic.dll"
+if ($all) { & $rs /s "$dir\yaif_wic.dll" } else { & $rs /s /n /i:user "$dir\yaif_wic.dll" }
 if ($LASTEXITCODE -ne 0) { Write-Warning "The Explorer thumbnail codec could not be registered (regsvr32 exit $LASTEXITCODE)." }
 
 # ImHex (hex editor), when installed for this user: the pattern shows a .yaif's chunks as a tree.
@@ -87,22 +107,40 @@ if ((Test-Path $ih) -and (Test-Path "$dir\imhex\yaif.hexpat")) {
 # default Windows PowerShell refuses unsigned scripts).
 $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
 & (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File "$sd\yaif-profile.ps1" -Script "$sd\yaif-completion.ps1"
+# Other accounts: Active Setup runs the same script once per user, in their session, at their next logon.
+if ($all) {
+    $as = 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{C041617A-3C51-4727-8351-E0BDF68C733B}'
+    New-Item $as -Value 'YAIF tab completion' -Force | Out-Null
+    Set-ItemProperty $as Version '1'
+    Set-ItemProperty $as StubPath "`"$env:windir\System32\WindowsPowerShell\v1.0\powershell.exe`" -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$sd\yaif-profile.ps1`" -Script `"$sd\yaif-completion.ps1`""
+}
 
 # Uninstaller, kept next to yaif.exe so that Settings > Apps works offline.
 @'
 $dir = $PSScriptRoot
+$all = $dir.StartsWith($env:ProgramFiles, 'OrdinalIgnoreCase')
+if ($all -and -not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    try { Start-Process (Get-Process -Id $PID).Path -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs -Wait }
+    catch { Write-Host 'Administrator rights were refused: nothing was removed.' }
+    exit
+}
 Remove-Item "$env:LOCALAPPDATA\imhex\patterns\yaif.hexpat" -ErrorAction SilentlyContinue
 $rs = if (Test-Path "$env:windir\Sysnative\regsvr32.exe") { "$env:windir\Sysnative\regsvr32.exe" } else { "$env:windir\System32\regsvr32.exe" }
-& $rs /s /u /n /i:user "$dir\yaif_wic.dll"
+if ($all) { & $rs /s /u "$dir\yaif_wic.dll" } else { & $rs /s /u /n /i:user "$dir\yaif_wic.dll" }
 $ps = (Get-Process -Id $PID).Path
 $sd = if (Test-Path "$dir\scripts\yaif-profile.ps1") { "$dir\scripts" } else { $dir }
 & $ps -NoProfile -ExecutionPolicy Bypass -File "$sd\yaif-profile.ps1" -Remove
-$e = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true)
+$e = if ($all) { [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey('SYSTEM\CurrentControlSet\Control\Session Manager\Environment', $true) } else { [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Environment', $true) }
 $p = $e.GetValue('Path', '', 'DoNotExpandEnvironmentNames')
 $e.SetValue('Path', (($p -split ';' | Where-Object { $_ -and $_ -ne $dir }) -join ';'), 'ExpandString')
 $e.Close()
 [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', '1', 'User'); [Environment]::SetEnvironmentVariable('YAIF_NOTIFY', $null, 'User')
-Remove-Item 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF' -Recurse -ErrorAction SilentlyContinue
+if ($all) {
+    Remove-Item 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{C041617A-3C51-4727-8351-E0BDF68C733B}' -Recurse -ErrorAction SilentlyContinue
+    Remove-Item 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF' -Recurse -ErrorAction SilentlyContinue
+} else {
+    Remove-Item 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\YAIF' -Recurse -ErrorAction SilentlyContinue
+}
 # This script lives in $dir: let cmd delete the folder once we have exited.
 Start-Process cmd -ArgumentList '/c', "ping -n 3 127.0.0.1 >nul & rmdir /s /q `"$dir`"" -WindowStyle Hidden
 '@ | Set-Content "$dir\uninstall.ps1" -Encoding UTF8
@@ -120,3 +158,4 @@ New-ItemProperty $unkey NoModify -Value 1 -PropertyType DWord -Force | Out-Null
 
 Write-Host "YAIF $ver installed in $dir. Open a new terminal and run: yaif --version"
 Write-Host 'Uninstall: Settings > Apps > YAIF.'
+if ($for) { Read-Host 'Press Enter to close' }

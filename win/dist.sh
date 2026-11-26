@@ -60,8 +60,9 @@ YAIF for Windows (test build)
    Ticking "Unblock" in the zip's Properties before extracting does the same for every file at once.
 
 1. yaif.exe: open a terminal here, then: yaif encode photo.jpg photo.yaif / yaif decode photo.yaif photo.jpg
-2. Install: double-click install.bat (per user, no administrator: PATH, Tab completion, Explorer
-   thumbnails, the ImHex pattern when ImHex is installed). Then open the .yaif files of the samples folder in Explorer (thumbnails) and Windows Photo Viewer. The modern
+2. Install: double-click install.bat and choose: M = me only (no administrator rights), A = all users
+   (asks for administrator rights; refuse and nothing is installed). It sets the PATH, Tab completion, Explorer
+   thumbnails and the ImHex pattern when ImHex is installed. Then open the .yaif files of the samples folder in Explorer (thumbnails) and Windows Photo Viewer. The modern
    Photos app takes no third-party codec, whatever the format -- it will not open .yaif.
 3. Remove: double-click uninstall.bat (or Settings > Apps > YAIF).
 
@@ -86,9 +87,33 @@ https://github.com/Thibault-Savenkoff/yaif/tree/v2/libheif-gainmap
    It adds one line to your PowerShell profile; .\scripts\yaif-profile.ps1 -Remove takes it back out.
 EOF
 # install.bat / uninstall.bat only launch the PowerShell scripts (policy bypassed: a downloaded script is
-# blocked by default). Per user, no administrator: the codec is registered under HKCU.
-printf '%s\n' '@echo off' 'cd /d "%~dp0"' 'powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1"' 'pause' > $D/install.bat
-printf '%s\n' '@echo off' 'powershell -NoProfile -ExecutionPolicy Bypass -File "%LOCALAPPDATA%\Programs\YAIF\uninstall.ps1"' 'pause' > $D/uninstall.bat
+# blocked by default). "Me only" needs no administrator (the codec goes under HKCU); "all users" makes
+# install.ps1 ask for it itself, and a refused UAC prompt installs nothing.
+cat > $D/install.bat <<'EOF'
+@echo off
+cd /d "%~dp0"
+echo Install YAIF for:
+echo   M = me only (no administrator rights needed)
+echo   A = all users (asks for administrator rights)
+choice /c MA /n /m "Choose M or A: "
+if errorlevel 2 goto all
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1"
+goto end
+:all
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" -AllUsers
+:end
+pause
+EOF
+cat > $D/uninstall.bat <<'EOF'
+@echo off
+if exist "%ProgramFiles%\YAIF\uninstall.ps1" goto all
+powershell -NoProfile -ExecutionPolicy Bypass -File "%LOCALAPPDATA%\Programs\YAIF\uninstall.ps1"
+goto end
+:all
+powershell -NoProfile -ExecutionPolicy Bypass -File "%ProgramFiles%\YAIF\uninstall.ps1"
+:end
+pause
+EOF
 # PowerShell has no auto-load directory for argument completers, so the only way to make the
 # completion permanent is a line in the user's $PROFILE. PowerShell edits its own file here:
 # doing it from NSIS would mean guessing the profile's encoding. Idempotent both ways, so a
