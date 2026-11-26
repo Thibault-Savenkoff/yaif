@@ -91,7 +91,9 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 alias ll=ls
 EOF
+mkdir -p "$h1/.local/share/imhex"   # ImHex "installed": the pattern is offered
 run_install "$h1" --yes --no-plugins --no-heic-hdr > "$T/1.log" 2>&1
+check "install: ImHex pattern" test -f "$h1/.local/share/imhex/patterns/yaif.hexpat"
 check "install: binary"    test -x "$h1/.local/bin/yaif"
 check "install: manifest"  test -f "$h1/.local/share/yaif/installed.txt"
 check "install: mime type" test -f "$h1/.local/share/mime/packages/yaif.xml"
@@ -109,6 +111,7 @@ check "install: prints the local uninstall command" grep -qF 'bash ~/.local/shar
 env -i HOME="$h1" PATH=/usr/bin:/bin TMPDIR="${TMPDIR:-/tmp}" SHELL=/bin/zsh YAIF_TEST_ROOT="$T/root" \
   bash "$h1/.local/share/yaif/install.sh" --uninstall > "$T/3.log" 2>&1
 check "uninstall: its own script gone" [ ! -e "$h1/.local/share/yaif/install.sh" ]
+check "uninstall: ImHex pattern gone" [ ! -e "$h1/.local/share/imhex/patterns/yaif.hexpat" ]
 check "uninstall: its empty folders gone" [ ! -e "$h1/.local/share/yaif" ]
 check "uninstall: binary gone"   [ ! -e "$h1/.local/bin/yaif" ]
 check "uninstall: manifest gone" [ ! -e "$h1/.local/share/yaif/installed.txt" ]

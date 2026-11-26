@@ -604,6 +604,23 @@ install_plugins() {
   fi
 }
 
+install_imhex() {  # the ImHex pattern for .yaif, when ImHex has a data folder here
+  [ -f "$src/imhex/yaif.hexpat" ] || return 0
+  local d data=
+  for d in "$HOME/.var/app/net.werwolv.ImHex/data/imhex" "$HOME/.local/share/imhex" "$HOME/Library/Application Support/imhex"; do
+    [ -d "$d" ] && { data=$d; break; }
+  done
+  [ -n "$data" ] || return 0
+  step "ImHex"
+  info "ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree."
+  ask "Install the YAIF pattern for ImHex?" || return 0
+  if install_file user "$src/imhex/yaif.hexpat" "$data/patterns/yaif.hexpat" 644; then
+    ok "ImHex pattern -> $(pretty "$data/patterns/yaif.hexpat") (restart ImHex)"
+  else
+    warn "the ImHex pattern could not be installed"
+  fi
+}
+
 # ---- main ----
 case $(uname -s) in
   Linux) os=linux ;;
@@ -670,6 +687,7 @@ install_mime
 check_libs
 install_heic_hdr
 install_plugins
+install_imhex
 
 step "Done"
 ok "yaif $version is installed."
