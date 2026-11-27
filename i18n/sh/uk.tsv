@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English	Ukrainian)
+                  (run from an unpacked archive, it installs that archive's files)	                  (запуск із розпакованого архіву: встановлює файли цього архіву)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     встановити з локального .tar.gz замість завантаження
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       не перевіряти бібліотеки HEIC/AVIF/WebP/RAW
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   не збирати libyaif-heif (тоді .heic без карти підсилення HDR)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    не встановлювати плагіни переглядачів Qt/KDE/GNOME/GTK
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    встановити в DIR замість ~/.local або /usr/local
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        встановити в /usr/local (потрібен sudo) замість ~/.local
+  --uninstall     remove everything a previous run installed	  --uninstall     видалити все, що встановив попередній запуск
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       виводити кожну команду (при помилці показуються завжди)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z встановити цю версію замість останньої v2
+  -h, --help      this message	  -h, --help      ця довідка
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       не питати перед зміною ~/.zshrc або збиранням плагінів
+%1 (not found)	%1 (не знайдено)
+%1 does not run here: an archive for another OS or architecture?	%1 тут не запускається: архів для іншої ОС або архітектури?
+%1 installed	%1 встановлено
+%1 is not in PATH	%1 немає в PATH
+%1 needs a value	%1 потребує значення
+%1: build failed (log above)	%1: збирання не вдалося (журнал вище)
+%1: configuration failed (log above)	%1: налаштування не вдалося (журнал вище)
+%1: install failed (log above)	%1: встановлення не вдалося (журнал вище)
+(open a new terminal)	(відкрийте новий термінал)
+Add it to ~/.zshrc?	Додати до ~/.zshrc?
+Build and install the Finder thumbnail extension?	Зібрати й встановити розширення мініатюр Finder?
+Build and install the Qt and KDE plugins?	Зібрати й встановити плагіни Qt і KDE?
+Build and install the gdk-pixbuf loader?	Зібрати й встановити завантажувач gdk-pixbuf?
+Build and install the glycin loader?	Зібрати й встановити завантажувач glycin?
+Checking the libraries yaif uses for other formats	Перевірка бібліотек, які yaif використовує для інших форматів
+Dolphin already uses the YAIF thumbnailer	Dolphin уже використовує генератор мініатюр YAIF
+Dolphin no longer uses the YAIF thumbnailer	Dolphin більше не використовує генератор мініатюр YAIF
+Dolphin thumbnailer	Генератор мініатюр Dolphin
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	Мініатюри Dolphin увімкнено для .yaif (перезапустіть Dolphin)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin використовує свої генератори за замовчуванням, зокрема YAIF (перезапустіть Dolphin)
+Done	Готово
+Downloading %1	Завантаження %1
+Error	Помилка
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Розширення мініатюр Finder встановлено (якщо мініатюра не з'являється: Системні параметри > Основні > Елементи входу та розширення > Швидкий перегляд)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: мініатюри файлів .yaif (невеликий застосунок у ~/Applications, зібраний тут, підписаний ad hoc).
+Finding the YAIF release	Пошук версії YAIF
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): не встановлено, завантажувач glycin пропущено.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): відкриває .yaif через завантажувач glycin.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP та старіші застосунки GTK відкривають .yaif.
+Get them:  %1	Отримати їх:  %1
+HEIC with HDR (libyaif-heif)	HEIC з HDR (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	HEIC з HDR пропущено (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	ImHex знайдено: шаблон показує блоки .yaif (сигнатуру, заголовок, метадані, кадри) деревом.
+ImHex pattern -> %1 (restart ImHex)	Шаблон ImHex -> %1 (перезапустіть ImHex)
+Install the YAIF pattern for ImHex?	Встановити шаблон YAIF для ImHex?
+Installing from %1	Встановлення з %1
+Installing shell completion	Встановлення автодоповнення оболонки
+Installing the yaif command	Встановлення команди yaif
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita відкривають .yaif; Dolphin показує мініатюри.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	KF6KIO не знайдено (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), генератор мініатюр Dolphin пропущено.
+Latest v2 release on github.com/%1	Остання версія v2 на github.com/%1
+LibRaw: camera RAW	LibRaw: RAW з камер
+Manual: https://github.com/%1/blob/v2/MANUAL.md	Посібник: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	Деінсталятор NOVA не спрацював; запустіть його самі: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	Жодна випущена libheif не вміє записувати HDR у HEIC: збираю таку (1-3 хв)...
+Options:	Параметри:
+Qt 6 not found, Qt/KDE plugins skipped.	Qt 6 не знайдено, плагіни Qt/KDE пропущено.
+Qt plugin (Gwenview, Okular, Krita)	Плагін Qt (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	Реєстрація типу файлу .yaif (image/x-yaif)
+Removing NOVA, the former name of YAIF (%1)	Видалення NOVA, попередньої назви YAIF (%1)
+SHA-256 checked (%1)	SHA-256 перевірено (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	Невідповідність SHA-256 для %1: завантаження пошкоджене або змінене. Нічого не встановлено.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	Їх зібрано тут, для Qt / GNOME цієї системи. Для встановлення потрібен root (системні теки плагінів).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	Спробуйте:  yaif encode photo.jpg          (запише photo.yaif)
+Uninstall: bash %1 --uninstall%2	Видалення: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	Видалення YAIF (%1)
+Unpacking %1	Розпакування %1
+Usage:	Використання:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	Плагіни переглядачів (відкривають .yaif у переглядачах зображень, показують мініатюри)
+Viewer plugins skipped (--no-plugins)	Плагіни переглядачів пропущено (--no-plugins)
+YAIF installer	Установник YAIF
+YAIF installer  (%1 %2, into %3)	Установник YAIF  (%1 %2, у %3)
+YAIF is uninstalled.	YAIF видалено.
+added at the end; move it above compinit if you add one later	додано в кінець; перенесіть вище compinit, якщо додасте пізніше
+added to ~/.zshrc %1	додано до ~/.zshrc %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	додано до ~/.zshrc; відкрийте новий термінал (якщо Tab досі показує файли: rm ~/.zcompdump*)
+already built, unchanged	уже зібрано, без змін
+already gone: %1	вже видалено: %1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash і fish підхоплюють його самі (нова оболонка; bash потребує пакет bash-completion)
+cargo not found (needs Rust), glycin loader skipped.	cargo не знайдено (потрібен Rust), завантажувач glycin пропущено.
+could not enable the Dolphin thumbnailer	не вдалося увімкнути генератор мініатюр Dolphin
+could not fetch the checksum for %1	не вдалося отримати контрольну суму для %1
+could not unpack %1	не вдалося розпакувати %1
+download failed: %1	завантаження не вдалося: %1
+file managers now know .yaif files	файлові менеджери тепер знають файли .yaif
+gdk-pixbuf loader installed	завантажувач gdk-pixbuf встановлено
+gdk-pixbuf loader: build failed (log above)	завантажувач gdk-pixbuf: збирання не вдалося (журнал вище)
+gdk-pixbuf loader: could not install it (see above)	завантажувач gdk-pixbuf: не вдалося встановити (див. вище)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	завантажувач gdk-pixbuf: gdk_pixbuf_moduledir невідомо, пропущено
+gdk-pixbuf not found, GTK loader skipped.	gdk-pixbuf не знайдено, завантажувач GTK пропущено.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	кеш завантажувачів gdk-pixbuf не оновлено: виконайте  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	завантажувач glycin встановлено
+glycin loader: build failed (log above)	завантажувач glycin: збирання не вдалося (журнал вище)
+glycin loader: build produced no binary, skipped	завантажувач glycin: збирання не створило двійковий файл, пропущено
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	kreadconfig6/kwriteconfig6 не знайдено, позначте YAIF Images у налаштуваннях попереднього перегляду Dolphin
+libavif: AVIF with an HDR gain map	libavif: AVIF з картою підсилення HDR
+libwebp: WebP output	libwebp: вивід WebP
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: збирання не вдалося (журнал вище) -- вивід .heic буде лише SDR
+mktemp failed	помилка mktemp
+no such file: %1	немає такого файлу: %1
+no terminal to ask; pass --yes	немає терміналу, щоб запитати; вкажіть --yes
+no v2 release found on github.com/%1	версію v2 на github.com/%1 не знайдено
+no ~/.zshrc, add manually before compinit: %1	немає ~/.zshrc, додайте вручну перед compinit: %1
+no ~/.zshrc, add manually: %1	немає ~/.zshrc, додайте вручну: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	не зібрано, бракує:%1 -- вивід .heic буде лише SDR (.avif і .jpg зберігають HDR)
+nothing to uninstall: %1 not found (installed with another --prefix?)	нічого видаляти: %1 не знайдено (встановлено з іншим --prefix?)
+removed %1	видалено %1
+removed %1 (Dolphin listed YAIF twice)	видалено %1 (Dolphin показував YAIF двічі)
+removed from %1: %2	видалено з %1: %2
+removed the Finder thumbnail extension	розширення мініатюр Finder видалено
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	swiftc не знайдено (xcode-select --install), мініатюри Finder пропущено.
+the Finder thumbnail extension could not be built	не вдалося зібрати розширення мініатюр Finder
+the ImHex pattern could not be installed	не вдалося встановити шаблон ImHex
+then run this installer again.	потім запустіть цей установник знову.
+unexpected archive layout: %1/ not found	неочікувана структура архіву: %1/ не знайдено
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	неочікувана назва архіву: %1 (очікувалось yaif-<версія>-%2-%3.tar.gz)
+unknown option: %1	невідомий параметр: %1
+unsupported OS: %1	непідтримувана ОС: %1
+unsupported architecture: %1	непідтримувана архітектура: %1
+update-mime-database failed	помилка update-mime-database
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	update-mime-database не знайдено; файли .yaif не отримають значок і мініатюру, доки він не запуститься
+version %1, for %2 %3	версія %1, для %2 %3
+yaif %1 is installed.	yaif %1 встановлено.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic тепер зберігає карту підсилення HDR
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif працює і без них; кожна додає формати (HEIC, AVIF, WebP, RAW).
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh не шукає в %1. Додати до ~/.zshrc (перед compinit)?
+~/.zshrc already adds %1	~/.zshrc вже додає %1
+~/.zshrc already adds it %1	~/.zshrc вже додає його %1
+no 'lisaac' compiler found.	компілятор «lisaac» не знайдено.
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Завантажте його з https://lisaac.org (0.7) або скористайтеся install.sh для готового бінарного файлу.
+Compiling yaif (lisaac yaif.li -boost)	Компіляція yaif (lisaac yaif.li -boost)
+Installing	Встановлення

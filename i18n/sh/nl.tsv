@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English<TAB>Dutch)
+                  (run from an unpacked archive, it installs that archive's files)	                  (vanuit een uitgepakt archief: installeert de bestanden van dat archief)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     installeren vanaf een lokaal .tar.gz in plaats van downloaden
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       niet controleren op de HEIC/AVIF/WebP/RAW-bibliotheken
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   libyaif-heif niet compileren (dan heeft .heic geen HDR-gainmap)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    de Qt/KDE/GNOME/GTK-viewerplug-ins overslaan
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    installeren in DIR in plaats van ~/.local of /usr/local
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        installeren in /usr/local (sudo nodig) in plaats van ~/.local
+  --uninstall     remove everything a previous run installed	  --uninstall     alles verwijderen wat een eerdere installatie heeft geplaatst
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       elk commando tonen (bij een fout altijd getoond)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z deze versie installeren in plaats van de nieuwste v2-release
+  -h, --help      this message	  -h, --help      dit bericht
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       niet vragen voordat ~/.zshrc wordt aangepast of plug-ins worden gecompileerd
+%1 (not found)	%1 (niet gevonden)
+%1 does not run here: an archive for another OS or architecture?	%1 draait hier niet: een archief voor een ander besturingssysteem of andere architectuur?
+%1 installed	%1 geïnstalleerd
+%1 is not in PATH	%1 staat niet in het PATH
+%1 needs a value	%1 heeft een waarde nodig
+%1: build failed (log above)	%1: compileren mislukt (logboek hierboven)
+%1: configuration failed (log above)	%1: configureren mislukt (logboek hierboven)
+%1: install failed (log above)	%1: installeren mislukt (logboek hierboven)
+(open a new terminal)	(open een nieuwe terminal)
+Add it to ~/.zshrc?	Toevoegen aan ~/.zshrc?
+Build and install the Finder thumbnail extension?	Finder-miniatuurextensie compileren en installeren?
+Build and install the Qt and KDE plugins?	Qt- en KDE-plug-ins compileren en installeren?
+Build and install the gdk-pixbuf loader?	gdk-pixbuf-lader compileren en installeren?
+Build and install the glycin loader?	glycin-lader compileren en installeren?
+Checking the libraries yaif uses for other formats	Bibliotheken controleren die yaif voor andere formaten gebruikt
+Dolphin already uses the YAIF thumbnailer	Dolphin gebruikt al de YAIF-miniatuurgenerator
+Dolphin no longer uses the YAIF thumbnailer	Dolphin gebruikt de YAIF-miniatuurgenerator niet meer
+Dolphin thumbnailer	Dolphin-miniatuurgenerator
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	Dolphin-miniaturen ingeschakeld voor .yaif (start Dolphin opnieuw)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin gebruikt zijn standaardgeneratoren, inclusief die van YAIF (start Dolphin opnieuw)
+Done	Klaar
+Downloading %1	%1 downloaden
+Error	Fout
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Finder-miniatuurextensie geïnstalleerd (verschijnt er geen miniatuur: Systeeminstellingen > Algemeen > Inlogobjecten en extensies > Quick Look)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: miniaturen van .yaif-bestanden (een kleine app in ~/Applications, hier gecompileerd, ad hoc ondertekend).
+Finding the YAIF release	Zoeken naar de YAIF-release
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): niet geïnstalleerd, glycin-lader overgeslagen.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): opent .yaif via de glycin-lader.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP en oudere GTK-apps openen .yaif.
+Get them:  %1	Ophalen:  %1
+HEIC with HDR (libyaif-heif)	HEIC met HDR (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	HEIC met HDR overgeslagen (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	ImHex gevonden: een patroon toont de blokken van een .yaif (handtekening, kop, metadata, frames) als boom.
+ImHex pattern -> %1 (restart ImHex)	ImHex-patroon -> %1 (start ImHex opnieuw)
+Install the YAIF pattern for ImHex?	Het YAIF-patroon voor ImHex installeren?
+Installing from %1	Installeren vanaf %1
+Installing shell completion	Shell-aanvulling installeren
+Installing the yaif command	Het yaif-commando installeren
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita openen .yaif; Dolphin toont de miniaturen.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	KF6KIO niet gevonden (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin-miniatuurgenerator overgeslagen.
+Latest v2 release on github.com/%1	Nieuwste v2-release op github.com/%1
+LibRaw: camera RAW	LibRaw: camera-RAW
+Manual: https://github.com/%1/blob/v2/MANUAL.md	Handleiding: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	het verwijderprogramma van NOVA is mislukt; voer het zelf uit: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	Geen uitgebrachte libheif kan HDR in een HEIC schrijven: een versie die dat wel kan wordt gecompileerd (1 tot 3 min)...
+Options:	Opties:
+Qt 6 not found, Qt/KDE plugins skipped.	Qt 6 niet gevonden, Qt/KDE-plug-ins overgeslagen.
+Qt plugin (Gwenview, Okular, Krita)	Qt-plug-in (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	Het bestandstype .yaif (image/x-yaif) registreren
+Removing NOVA, the former name of YAIF (%1)	NOVA, de vroegere naam van YAIF, verwijderen (%1)
+SHA-256 checked (%1)	SHA-256 gecontroleerd (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	SHA-256 komt niet overeen voor %1: de download is beschadigd of gewijzigd. Er is niets geïnstalleerd.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	Ze worden hier gecompileerd voor de Qt / GNOME van dit systeem. Installeren vereist root (systeemmappen voor plug-ins).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	Probeer:  yaif encode photo.jpg          (schrijft photo.yaif)
+Uninstall: bash %1 --uninstall%2	Verwijderen: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	YAIF verwijderen (%1)
+Unpacking %1	%1 uitpakken
+Usage:	Gebruik:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	Viewerplug-ins (open .yaif-bestanden in beeldviewers, toon miniaturen)
+Viewer plugins skipped (--no-plugins)	Viewerplug-ins overgeslagen (--no-plugins)
+YAIF installer	YAIF-installatieprogramma
+YAIF installer  (%1 %2, into %3)	YAIF-installatieprogramma  (%1 %2, in %3)
+YAIF is uninstalled.	YAIF is verwijderd.
+added at the end; move it above compinit if you add one later	aan het eind toegevoegd; verplaats het boven compinit als je er later een toevoegt
+added to ~/.zshrc %1	toegevoegd aan ~/.zshrc %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	toegevoegd aan ~/.zshrc; open een nieuwe terminal (als Tab nog bestanden toont: rm ~/.zcompdump*)
+already built, unchanged	al gecompileerd, ongewijzigd
+already gone: %1	%1 al verwijderd
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash en fish pakken het automatisch op (nieuwe shell; bash heeft het pakket bash-completion nodig)
+cargo not found (needs Rust), glycin loader skipped.	cargo niet gevonden (Rust is nodig), glycin-lader overgeslagen.
+could not enable the Dolphin thumbnailer	de Dolphin-miniatuurgenerator kon niet worden ingeschakeld
+could not fetch the checksum for %1	de controlesom voor %1 kon niet worden opgehaald
+could not unpack %1	%1 kon niet worden uitgepakt
+download failed: %1	download mislukt: %1
+file managers now know .yaif files	bestandsbeheerders kennen nu .yaif-bestanden
+gdk-pixbuf loader installed	gdk-pixbuf-lader geïnstalleerd
+gdk-pixbuf loader: build failed (log above)	gdk-pixbuf-lader: compileren mislukt (logboek hierboven)
+gdk-pixbuf loader: could not install it (see above)	gdk-pixbuf-lader: kon niet worden geïnstalleerd (zie hierboven)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	gdk-pixbuf-lader: gdk_pixbuf_moduledir onbekend, overgeslagen
+gdk-pixbuf not found, GTK loader skipped.	gdk-pixbuf niet gevonden, GTK-lader overgeslagen.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	de cache van de gdk-pixbuf-laders is niet ververst: voer uit  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	glycin-lader geïnstalleerd
+glycin loader: build failed (log above)	glycin-lader: compileren mislukt (logboek hierboven)
+glycin loader: build produced no binary, skipped	glycin-lader: het compileren leverde geen binair bestand op, overgeslagen
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	kreadconfig6/kwriteconfig6 niet gevonden, vink YAIF Images aan in de voorvertoningsinstellingen van Dolphin
+libavif: AVIF with an HDR gain map	libavif: AVIF met een HDR-gainmap
+libwebp: WebP output	libwebp: WebP-uitvoer
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: compileren mislukt (logboek hierboven) -- .heic-uitvoer wordt alleen SDR
+mktemp failed	mktemp mislukt
+no such file: %1	bestand bestaat niet: %1
+no terminal to ask; pass --yes	geen terminal om te vragen; geef --yes op
+no v2 release found on github.com/%1	geen v2-release gevonden op github.com/%1
+no ~/.zshrc, add manually before compinit: %1	geen ~/.zshrc, voeg handmatig toe vóór compinit: %1
+no ~/.zshrc, add manually: %1	geen ~/.zshrc, voeg handmatig toe: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	niet gecompileerd, ontbreekt:%1 -- .heic-uitvoer wordt alleen SDR (.avif en .jpg behouden de HDR)
+nothing to uninstall: %1 not found (installed with another --prefix?)	niets om te verwijderen: %1 niet gevonden (geïnstalleerd met een andere --prefix?)
+removed %1	%1 verwijderd
+removed %1 (Dolphin listed YAIF twice)	%1 verwijderd (Dolphin toonde YAIF twee keer)
+removed from %1: %2	verwijderd uit %1: %2
+removed the Finder thumbnail extension	Finder-miniatuurextensie verwijderd
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	swiftc niet gevonden (xcode-select --install), Finder-miniaturen overgeslagen.
+the Finder thumbnail extension could not be built	de Finder-miniatuurextensie kon niet worden gecompileerd
+the ImHex pattern could not be installed	het ImHex-patroon kon niet worden geïnstalleerd
+then run this installer again.	voer daarna dit installatieprogramma opnieuw uit.
+unexpected archive layout: %1/ not found	onverwachte archiefindeling: %1/ niet gevonden
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	onverwachte archiefnaam: %1 (verwacht yaif-<version>-%2-%3.tar.gz)
+unknown option: %1	onbekende optie: %1
+unsupported OS: %1	niet ondersteund besturingssysteem: %1
+unsupported architecture: %1	niet ondersteunde architectuur: %1
+update-mime-database failed	update-mime-database mislukt
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	update-mime-database niet gevonden; .yaif-bestanden krijgen pas een icoon en miniatuur als het draait
+version %1, for %2 %3	versie %1, voor %2 %3
+yaif %1 is installed.	yaif %1 is geïnstalleerd.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic behoudt nu de HDR-gainmap
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif werkt zonder deze; elk pakket voegt formaten toe (HEIC, AVIF, WebP, RAW).
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh kijkt niet in %1. Toevoegen aan ~/.zshrc (vóór compinit)?
+~/.zshrc already adds %1	~/.zshrc voegt %1 al toe
+~/.zshrc already adds it %1	~/.zshrc doet dat al: %1
+no 'lisaac' compiler found.	compiler 'lisaac' niet gevonden.
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Haal hem op via https://lisaac.org (0.7), of gebruik install.sh voor een kant-en-klare binary.
+Compiling yaif (lisaac yaif.li -boost)	yaif compileren (lisaac yaif.li -boost)
+Installing	Installeren

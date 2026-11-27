@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English	Korean)
+                  (run from an unpacked archive, it installs that archive's files)	                  (압축을 푼 아카이브에서 실행: 그 아카이브의 파일을 설치합니다)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     다운로드 대신 로컬 .tar.gz에서 설치
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       HEIC/AVIF/WebP/RAW 라이브러리 확인 건너뛰기
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   libyaif-heif을 빌드하지 않음 (.heic 출력에 HDR 게인 맵 없음)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    Qt/KDE/GNOME/GTK 뷰어 플러그인 건너뛰기
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    ~/.local 또는 /usr/local 대신 DIR에 설치
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        ~/.local 대신 /usr/local에 설치 (sudo 필요)
+  --uninstall     remove everything a previous run installed	  --uninstall     이전 실행으로 설치된 모든 항목 제거
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       실행되는 모든 명령 출력 (실패 시에는 항상 출력)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z 최신 v2 대신 이 버전 설치
+  -h, --help      this message	  -h, --help      이 도움말 표시
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       ~/.zshrc 수정이나 플러그인 빌드 전에 묻지 않음
+%1 (not found)	%1 (찾을 수 없음)
+%1 does not run here: an archive for another OS or architecture?	%1이(가) 여기서 실행되지 않습니다: 다른 OS 또는 아키텍처용 아카이브인가요?
+%1 installed	%1 설치됨
+%1 is not in PATH	%1이(가) PATH에 없음
+%1 needs a value	%1에 값이 필요함
+%1: build failed (log above)	%1: 빌드 실패 (위의 로그 참고)
+%1: configuration failed (log above)	%1: 구성 실패 (위의 로그 참고)
+%1: install failed (log above)	%1: 설치 실패 (위의 로그 참고)
+(open a new terminal)	(새 터미널을 여세요)
+Add it to ~/.zshrc?	~/.zshrc에 추가할까요?
+Build and install the Finder thumbnail extension?	Finder 썸네일 확장을 빌드하여 설치할까요?
+Build and install the Qt and KDE plugins?	Qt 및 KDE 플러그인을 빌드하여 설치할까요?
+Build and install the gdk-pixbuf loader?	gdk-pixbuf 로더를 빌드하여 설치할까요?
+Build and install the glycin loader?	glycin 로더를 빌드하여 설치할까요?
+Checking the libraries yaif uses for other formats	yaif가 다른 형식에 사용하는 라이브러리 확인 중
+Dolphin already uses the YAIF thumbnailer	Dolphin이 이미 YAIF 썸네일 생성기를 사용 중
+Dolphin no longer uses the YAIF thumbnailer	Dolphin이 더 이상 YAIF 썸네일 생성기를 사용하지 않음
+Dolphin thumbnailer	Dolphin 썸네일 생성기
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	.yaif 썸네일을 Dolphin에서 활성화함 (Dolphin 재시작)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin이 YAIF를 포함한 기본 썸네일 생성기를 사용함 (Dolphin 재시작)
+Done	완료
+Downloading %1	%1 다운로드 중
+Error	오류
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Finder 썸네일 확장 설치됨 (썸네일이 보이지 않으면: 시스템 설정 > 일반 > 로그인 항목 및 확장 프로그램 > 빠른 보기)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: .yaif 파일의 썸네일 (~/Applications의 작은 앱, 여기서 빌드, ad hoc 서명).
+Finding the YAIF release	YAIF 릴리스 찾는 중
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): 설치되지 않아 glycin 로더를 건너뜀.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): glycin 로더로 .yaif 열기.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP 및 이전 GTK 앱에서 .yaif를 엽니다.
+Get them:  %1	받을 곳:  %1
+HEIC with HDR (libyaif-heif)	HDR을 포함한 HEIC (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	HDR을 포함한 HEIC 건너뜀 (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	ImHex 발견: 패턴으로 .yaif의 청크(시그니처, 헤더, 메타데이터, 프레임)를 트리로 볼 수 있습니다.
+ImHex pattern -> %1 (restart ImHex)	ImHex 패턴 -> %1 (ImHex 재시작)
+Install the YAIF pattern for ImHex?	ImHex용 YAIF 패턴을 설치할까요?
+Installing from %1	%1에서 설치 중
+Installing shell completion	셸 자동 완성 설치 중
+Installing the yaif command	yaif 명령 설치 중
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita에서 .yaif를 열고, Dolphin은 썸네일을 표시합니다.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	KF6KIO를 찾을 수 없음 (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin 썸네일 생성기 건너뜀.
+Latest v2 release on github.com/%1	github.com/%1의 최신 v2 릴리스
+LibRaw: camera RAW	LibRaw: 카메라 RAW
+Manual: https://github.com/%1/blob/v2/MANUAL.md	매뉴얼: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	NOVA 제거 프로그램 실패. 직접 실행하세요: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	공개된 libheif 중 HDR을 HEIC로 쓸 수 있는 것이 없음: 쓸 수 있는 것을 빌드합니다 (1~3분)...
+Options:	옵션:
+Qt 6 not found, Qt/KDE plugins skipped.	Qt 6을 찾을 수 없음, Qt/KDE 플러그인 건너뜀.
+Qt plugin (Gwenview, Okular, Krita)	Qt 플러그인 (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	.yaif 파일 형식 등록 중 (image/x-yaif)
+Removing NOVA, the former name of YAIF (%1)	YAIF의 이전 이름 NOVA 제거 중 (%1)
+SHA-256 checked (%1)	SHA-256 확인됨 (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	%1의 SHA-256 불일치: 다운로드가 손상되었거나 변조되었습니다. 아무것도 설치하지 않았습니다.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	이 시스템의 Qt / GNOME용으로 여기서 빌드합니다. 설치에는 root 권한이 필요합니다 (시스템 플러그인 폴더).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	사용해 보세요:  yaif encode photo.jpg          (photo.yaif 생성)
+Uninstall: bash %1 --uninstall%2	제거: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	YAIF 제거 중 (%1)
+Unpacking %1	%1 압축 해제 중
+Usage:	사용법:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	뷰어 플러그인 (이미지 뷰어에서 .yaif 열기, 썸네일 표시)
+Viewer plugins skipped (--no-plugins)	뷰어 플러그인 건너뜀 (--no-plugins)
+YAIF installer	YAIF 설치 프로그램
+YAIF installer  (%1 %2, into %3)	YAIF 설치 프로그램  (%1 %2, 설치 위치 %3)
+YAIF is uninstalled.	YAIF가 제거되었습니다.
+added at the end; move it above compinit if you add one later	끝에 추가됨; 나중에 추가한다면 compinit 위로 옮기세요
+added to ~/.zshrc %1	~/.zshrc에 추가됨 %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	~/.zshrc에 추가됨; 새 터미널을 여세요 (Tab이 여전히 파일을 나열하면: rm ~/.zcompdump*)
+already built, unchanged	이미 빌드됨, 변경 없음
+already gone: %1	이미 없음: %1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash와 fish는 자동으로 인식합니다 (새 셸에서; bash는 bash-completion 패키지가 필요)
+cargo not found (needs Rust), glycin loader skipped.	cargo를 찾을 수 없음 (Rust 필요), glycin 로더 건너뜀.
+could not enable the Dolphin thumbnailer	Dolphin 썸네일 생성기를 활성화할 수 없음
+could not fetch the checksum for %1	%1의 체크섬을 가져올 수 없음
+could not unpack %1	%1 압축을 풀 수 없음
+download failed: %1	다운로드 실패: %1
+file managers now know .yaif files	파일 관리자가 이제 .yaif 파일을 인식합니다
+gdk-pixbuf loader installed	gdk-pixbuf 로더 설치됨
+gdk-pixbuf loader: build failed (log above)	gdk-pixbuf 로더: 빌드 실패 (위의 로그 참고)
+gdk-pixbuf loader: could not install it (see above)	gdk-pixbuf 로더: 설치할 수 없음 (위 참고)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	gdk-pixbuf 로더: gdk_pixbuf_moduledir을 알 수 없어 건너뜀
+gdk-pixbuf not found, GTK loader skipped.	gdk-pixbuf를 찾을 수 없음, GTK 로더 건너뜀.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	gdk-pixbuf 로더 캐시가 갱신되지 않음: 다음을 실행하세요  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	glycin 로더 설치됨
+glycin loader: build failed (log above)	glycin 로더: 빌드 실패 (위의 로그 참고)
+glycin loader: build produced no binary, skipped	glycin 로더: 빌드 결과 바이너리가 없음, 건너뜀
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	kreadconfig6/kwriteconfig6을 찾을 수 없음, Dolphin 미리보기 설정에서 YAIF Images를 선택하세요
+libavif: AVIF with an HDR gain map	libavif: HDR 게인 맵이 있는 AVIF
+libwebp: WebP output	libwebp: WebP 출력
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: 빌드 실패 (위의 로그 참고) -- .heic 출력은 SDR만 지원
+mktemp failed	mktemp 실패
+no such file: %1	파일 없음: %1
+no terminal to ask; pass --yes	물어볼 터미널이 없음; --yes를 지정하세요
+no v2 release found on github.com/%1	github.com/%1에서 v2 릴리스를 찾을 수 없음
+no ~/.zshrc, add manually before compinit: %1	~/.zshrc가 없음, compinit 전에 직접 추가하세요: %1
+no ~/.zshrc, add manually: %1	~/.zshrc가 없음, 직접 추가하세요: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	빌드되지 않음, 누락: %1 -- .heic 출력은 SDR만 지원 (.avif와 .jpg는 HDR 유지)
+nothing to uninstall: %1 not found (installed with another --prefix?)	제거할 항목 없음: %1을(를) 찾을 수 없음 (다른 --prefix로 설치했나요?)
+removed %1	%1 삭제됨
+removed %1 (Dolphin listed YAIF twice)	%1 삭제됨 (Dolphin에 YAIF가 두 번 표시되었음)
+removed from %1: %2	%1에서 제거됨: %2
+removed the Finder thumbnail extension	Finder 썸네일 확장 제거됨
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	swiftc를 찾을 수 없음 (xcode-select --install), Finder 썸네일 건너뜀.
+the Finder thumbnail extension could not be built	Finder 썸네일 확장을 빌드할 수 없음
+the ImHex pattern could not be installed	ImHex 패턴을 설치할 수 없음
+then run this installer again.	그런 다음 이 설치 프로그램을 다시 실행하세요.
+unexpected archive layout: %1/ not found	예상치 못한 아카이브 구조: %1/을 찾을 수 없음
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	예상치 못한 아카이브 이름: %1 (기대값: yaif-<version>-%2-%3.tar.gz)
+unknown option: %1	알 수 없는 옵션: %1
+unsupported OS: %1	지원하지 않는 OS: %1
+unsupported architecture: %1	지원하지 않는 아키텍처: %1
+update-mime-database failed	update-mime-database 실패
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	update-mime-database를 찾을 수 없음; 실행 전까지 .yaif 파일은 아이콘과 썸네일이 없습니다
+version %1, for %2 %3	버전 %1, 대상 %2 %3
+yaif %1 is installed.	yaif %1이(가) 설치되었습니다.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic이 이제 HDR 게인 맵을 유지합니다
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif는 없어도 동작합니다. 각각은 형식(HEIC, AVIF, WebP, RAW)을 추가합니다.
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh는 %1을(를) 검색하지 않습니다. ~/.zshrc(compinit 전)에 추가할까요?
+~/.zshrc already adds %1	~/.zshrc에 이미 %1이(가) 추가되어 있음
+~/.zshrc already adds it %1	~/.zshrc에 이미 추가되어 있음 %1
+no 'lisaac' compiler found.	'lisaac' 컴파일러를 찾을 수 없습니다.
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	https://lisaac.org (0.7)에서 받거나, 미리 빌드된 바이너리는 install.sh를 사용하세요.
+Compiling yaif (lisaac yaif.li -boost)	yaif 컴파일 중 (lisaac yaif.li -boost)
+Installing	설치 중

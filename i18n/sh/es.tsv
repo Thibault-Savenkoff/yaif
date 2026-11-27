@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English<TAB>Spanish)
+                  (run from an unpacked archive, it installs that archive's files)	                  (desde un archivo descomprimido: instala sus archivos)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     instalar desde un .tar.gz local en lugar de descargar
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       no comprobar las bibliotecas HEIC/AVIF/WebP/RAW
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   no compilar libyaif-heif (.heic sin mapa de ganancia HDR)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    omitir los complementos Qt/KDE/GNOME/GTK
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    instalar en DIR en lugar de ~/.local o /usr/local
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        instalar en /usr/local (sudo) en lugar de ~/.local
+  --uninstall     remove everything a previous run installed	  --uninstall     eliminar todo lo que instaló una ejecución anterior
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       mostrar cada comando (siempre si falla)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z instalar esta versión en lugar de la última v2
+  -h, --help      this message	  -h, --help      este mensaje
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       no preguntar antes de tocar ~/.zshrc ni compilar complementos
+%1 (not found)	%1 (no encontrado)
+%1 does not run here: an archive for another OS or architecture?	%1 no se ejecuta aquí: ¿archivo para otro sistema o arquitectura?
+%1 installed	%1 instalado
+%1 is not in PATH	%1 no está en el PATH
+%1 needs a value	%1 necesita un valor
+%1: build failed (log above)	%1: error de compilación (registro arriba)
+%1: configuration failed (log above)	%1: error de configuración (registro arriba)
+%1: install failed (log above)	%1: error de instalación (registro arriba)
+(open a new terminal)	(abra una terminal nueva)
+Add it to ~/.zshrc?	¿Añadirlo a ~/.zshrc?
+Build and install the Finder thumbnail extension?	¿Compilar e instalar la extensión de miniaturas del Finder?
+Build and install the Qt and KDE plugins?	¿Compilar e instalar los complementos Qt y KDE?
+Build and install the gdk-pixbuf loader?	¿Compilar e instalar el cargador gdk-pixbuf?
+Build and install the glycin loader?	¿Compilar e instalar el cargador glycin?
+Checking the libraries yaif uses for other formats	Comprobando las bibliotecas que yaif usa para otros formatos
+Dolphin already uses the YAIF thumbnailer	Dolphin ya usa el generador de miniaturas de YAIF
+Dolphin no longer uses the YAIF thumbnailer	Dolphin ya no usa el generador de miniaturas de YAIF
+Dolphin thumbnailer	Miniaturas de Dolphin
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	Miniaturas de Dolphin activadas para .yaif (reinicie Dolphin)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin usa sus generadores predeterminados, incluido el de YAIF (reinicie Dolphin)
+Done	Listo
+Downloading %1	Descargando %1
+Error	Error
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Extensión de miniaturas del Finder instalada (si no aparece ninguna miniatura: Ajustes del Sistema > General > Ítems de inicio y extensiones > Vista rápida)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: miniaturas de los archivos .yaif (una pequeña app en ~/Applications, compilada aquí, firmada ad hoc).
+Finding the YAIF release	Buscando la versión de YAIF
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): no instalado, cargador glycin omitido.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): abre los .yaif mediante el cargador glycin.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP y las aplicaciones GTK antiguas abren .yaif.
+Get them:  %1	Para obtenerlos:  %1
+HEIC with HDR (libyaif-heif)	HEIC con HDR (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	HEIC con HDR omitido (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	ImHex encontrado: una plantilla muestra los bloques de un .yaif (firma, cabecera, metadatos, imágenes) en forma de árbol.
+ImHex pattern -> %1 (restart ImHex)	Plantilla de ImHex -> %1 (reinicie ImHex)
+Install the YAIF pattern for ImHex?	¿Instalar la plantilla YAIF para ImHex?
+Installing from %1	Instalando desde %1
+Installing shell completion	Instalando la autocompletación de la shell
+Installing the yaif command	Instalando el comando yaif
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita abren .yaif; Dolphin muestra miniaturas.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	KF6KIO no encontrado (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), miniaturas de Dolphin omitidas.
+Latest v2 release on github.com/%1	Última versión v2 en github.com/%1
+LibRaw: camera RAW	LibRaw: RAW de cámaras
+Manual: https://github.com/%1/blob/v2/MANUAL.md	Manual: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	El desinstalador de NOVA falló; ejecútelo usted: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	Ninguna libheif publicada puede escribir HDR en un HEIC: compilando una que sí puede (1-3 min)...
+Options:	Opciones:
+Qt 6 not found, Qt/KDE plugins skipped.	Qt 6 no encontrado, complementos Qt/KDE omitidos.
+Qt plugin (Gwenview, Okular, Krita)	Complemento Qt (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	Registrando el tipo de archivo .yaif (image/x-yaif)
+Removing NOVA, the former name of YAIF (%1)	Eliminando NOVA, el nombre anterior de YAIF (%1)
+SHA-256 checked (%1)	SHA-256 verificado (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	SHA-256 distinto para %1: la descarga está dañada o fue alterada. No se instaló nada.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	Se compilan aquí, para el Qt / GNOME de este sistema. Instalarlos requiere root (carpetas de complementos del sistema).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	Pruebe:  yaif encode photo.jpg          (escribe photo.yaif)
+Uninstall: bash %1 --uninstall%2	Desinstalar: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	Desinstalando YAIF (%1)
+Unpacking %1	Descomprimiendo %1
+Usage:	Uso:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	Complementos de visores (abrir .yaif en visores de imágenes, mostrar miniaturas)
+Viewer plugins skipped (--no-plugins)	Complementos de visores omitidos (--no-plugins)
+YAIF installer	Instalador de YAIF
+YAIF installer  (%1 %2, into %3)	Instalador de YAIF  (%1 %2, en %3)
+YAIF is uninstalled.	YAIF está desinstalado.
+added at the end; move it above compinit if you add one later	añadido al final; muévalo antes de compinit si añade otro más tarde
+added to ~/.zshrc %1	añadido a ~/.zshrc %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	añadido a ~/.zshrc; abra una terminal nueva (si Tab sigue listando archivos: rm ~/.zcompdump*)
+already built, unchanged	ya compilado, sin cambios
+already gone: %1	ya eliminado: %1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash y fish lo detectan solos (shell nueva; bash necesita el paquete bash-completion)
+cargo not found (needs Rust), glycin loader skipped.	cargo no encontrado (necesita Rust), cargador glycin omitido.
+could not enable the Dolphin thumbnailer	no se pudieron activar las miniaturas de Dolphin
+could not fetch the checksum for %1	no se pudo obtener la suma de control de %1
+could not unpack %1	no se pudo descomprimir %1
+download failed: %1	fallo de la descarga: %1
+file managers now know .yaif files	los gestores de archivos ya conocen los archivos .yaif
+gdk-pixbuf loader installed	cargador gdk-pixbuf instalado
+gdk-pixbuf loader: build failed (log above)	cargador gdk-pixbuf: error de compilación (registro arriba)
+gdk-pixbuf loader: could not install it (see above)	cargador gdk-pixbuf: no se pudo instalar (ver arriba)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	cargador gdk-pixbuf: gdk_pixbuf_moduledir desconocido, omitido
+gdk-pixbuf not found, GTK loader skipped.	gdk-pixbuf no encontrado, cargador GTK omitido.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	la caché de cargadores de gdk-pixbuf no se actualizó: ejecute  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	cargador glycin instalado
+glycin loader: build failed (log above)	cargador glycin: error de compilación (registro arriba)
+glycin loader: build produced no binary, skipped	cargador glycin: la compilación no produjo ningún binario, omitido
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	kreadconfig6/kwriteconfig6 no encontrados, marque YAIF Images en los ajustes de vista previa de Dolphin
+libavif: AVIF with an HDR gain map	libavif: AVIF con mapa de ganancia HDR
+libwebp: WebP output	libwebp: salida WebP
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: error de compilación (registro arriba) -- la salida .heic será solo SDR
+mktemp failed	fallo de mktemp
+no such file: %1	no existe el archivo: %1
+no terminal to ask; pass --yes	no hay terminal para preguntar; use --yes
+no v2 release found on github.com/%1	no se encontró ninguna versión v2 en github.com/%1
+no ~/.zshrc, add manually before compinit: %1	no hay ~/.zshrc, añada a mano antes de compinit: %1
+no ~/.zshrc, add manually: %1	no hay ~/.zshrc, añada a mano: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	no compilado, falta:%1 -- la salida .heic será solo SDR (.avif y .jpg conservan el HDR)
+nothing to uninstall: %1 not found (installed with another --prefix?)	nada que desinstalar: %1 no encontrado (¿instalado con otro --prefix?)
+removed %1	eliminado %1
+removed %1 (Dolphin listed YAIF twice)	eliminado %1 (Dolphin listaba YAIF dos veces)
+removed from %1: %2	retirado de %1: %2
+removed the Finder thumbnail extension	extensión de miniaturas del Finder eliminada
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	swiftc no encontrado (xcode-select --install), miniaturas del Finder omitidas.
+the Finder thumbnail extension could not be built	la extensión de miniaturas del Finder no pudo compilarse
+the ImHex pattern could not be installed	el modelo de ImHex no pudo instalarse
+then run this installer again.	luego vuelva a ejecutar este instalador.
+unexpected archive layout: %1/ not found	estructura de archivo inesperada: %1/ no encontrado
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	nombre de archivo inesperado: %1 (se espera yaif-<version>-%2-%3.tar.gz)
+unknown option: %1	opción desconocida: %1
+unsupported OS: %1	sistema no compatible: %1
+unsupported architecture: %1	arquitectura no compatible: %1
+update-mime-database failed	fallo de update-mime-database
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	update-mime-database no encontrado; los .yaif no tendrán icono ni miniatura hasta que se ejecute
+version %1, for %2 %3	versión %1, para %2 %3
+yaif %1 is installed.	yaif %1 está instalado.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic ahora conserva el mapa de ganancia HDR
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif funciona sin ellas; cada una añade formatos (HEIC, AVIF, WebP, RAW).
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh no busca en %1. ¿Añadirlo a ~/.zshrc (antes de compinit)?
+~/.zshrc already adds %1	~/.zshrc ya añade %1
+~/.zshrc already adds it %1	~/.zshrc ya lo añade %1
+no 'lisaac' compiler found.	no se encontró el compilador «lisaac».
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Descárgalo de https://lisaac.org (0.7), o usa install.sh para un binario precompilado.
+Compiling yaif (lisaac yaif.li -boost)	Compilando yaif (lisaac yaif.li -boost)
+Installing	Instalando

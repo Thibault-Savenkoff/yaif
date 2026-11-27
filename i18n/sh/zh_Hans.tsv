@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English	Simplified Chinese)
+                  (run from an unpacked archive, it installs that archive's files)	                  （从解压后的归档运行：安装该归档中的文件）
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     从本地 .tar.gz 安装，而不是下载
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       跳过 HEIC/AVIF/WebP/RAW 库的检查
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   不编译 libyaif-heif（.heic 输出没有 HDR 增益图）
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    跳过 Qt/KDE/GNOME/GTK 查看器插件
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    安装到 DIR，而不是 ~/.local 或 /usr/local
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        安装到 /usr/local（需要 sudo），而不是 ~/.local
+  --uninstall     remove everything a previous run installed	  --uninstall     删除之前安装留下的全部内容
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       打印执行的每条命令（失败时总会打印）
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z 安装此版本，而不是最新的 v2 版本
+  -h, --help      this message	  -h, --help      显示此帮助信息
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       修改 ~/.zshrc 或编译插件之前不再询问
+%1 (not found)	%1（未找到）
+%1 does not run here: an archive for another OS or architecture?	%1 无法在此运行：是否为其他操作系统或架构的归档？
+%1 installed	%1 已安装
+%1 is not in PATH	%1 不在 PATH 中
+%1 needs a value	%1 需要一个值
+%1: build failed (log above)	%1：编译失败（见上方日志）
+%1: configuration failed (log above)	%1：配置失败（见上方日志）
+%1: install failed (log above)	%1：安装失败（见上方日志）
+(open a new terminal)	（请打开新的终端）
+Add it to ~/.zshrc?	要将其添加到 ~/.zshrc 吗？
+Build and install the Finder thumbnail extension?	要编译并安装 Finder 缩略图扩展吗？
+Build and install the Qt and KDE plugins?	要编译并安装 Qt 和 KDE 插件吗？
+Build and install the gdk-pixbuf loader?	要编译并安装 gdk-pixbuf 加载器吗？
+Build and install the glycin loader?	要编译并安装 glycin 加载器吗？
+Checking the libraries yaif uses for other formats	正在检查 yaif 用于其他格式的库
+Dolphin already uses the YAIF thumbnailer	Dolphin 已在使用 YAIF 缩略图生成器
+Dolphin no longer uses the YAIF thumbnailer	Dolphin 已不再使用 YAIF 缩略图生成器
+Dolphin thumbnailer	Dolphin 缩略图生成器
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	已为 .yaif 启用 Dolphin 缩略图（请重启 Dolphin）
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin 使用默认缩略图生成器（含 YAIF）（请重启 Dolphin）
+Done	完成
+Downloading %1	正在下载 %1
+Error	错误
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Finder 缩略图扩展已安装（若没有显示缩略图：系统设置 > 通用 > 登录项与扩展 > 快速查看）
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder：.yaif 文件的缩略图（~/Applications 中的一个小应用，在此编译，ad hoc 签名）。
+Finding the YAIF release	正在查找 YAIF 发行版
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME（Loupe、Nautilus）：未安装，已跳过 glycin 加载器。
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME（Loupe、Nautilus）：通过 glycin 加载器打开 .yaif。
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf：Eye of GNOME、GIMP 和旧版 GTK 应用可以打开 .yaif。
+Get them:  %1	获取方式：  %1
+HEIC with HDR (libyaif-heif)	带 HDR 的 HEIC（libyaif-heif）
+HEIC with HDR skipped (--no-heic-hdr)	已跳过带 HDR 的 HEIC（--no-heic-hdr）
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	发现 ImHex：可用模板以树形显示 .yaif 的数据块（签名、头部、元数据、帧）。
+ImHex pattern -> %1 (restart ImHex)	ImHex 模板 -> %1（请重启 ImHex）
+Install the YAIF pattern for ImHex?	要为 ImHex 安装 YAIF 模板吗？
+Installing from %1	正在从 %1 安装
+Installing shell completion	正在安装 shell 补全
+Installing the yaif command	正在安装 yaif 命令
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt：Gwenview、Okular、Krita 可打开 .yaif；Dolphin 显示缩略图。
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	未找到 KF6KIO（Fedora：kf6-kio-devel，Debian/Ubuntu：libkf6kio-dev），已跳过 Dolphin 缩略图生成器。
+Latest v2 release on github.com/%1	github.com/%1 上的最新 v2 发行版
+LibRaw: camera RAW	LibRaw：相机 RAW
+Manual: https://github.com/%1/blob/v2/MANUAL.md	手册：https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	NOVA 的卸载程序失败；请自行运行：bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	没有已发布的 libheif 能将 HDR 写入 HEIC：正在编译一个可以写入的版本（1–3 分钟）……
+Options:	选项：
+Qt 6 not found, Qt/KDE plugins skipped.	未找到 Qt 6，已跳过 Qt/KDE 插件。
+Qt plugin (Gwenview, Okular, Krita)	Qt 插件（Gwenview、Okular、Krita）
+Registering the .yaif file type (image/x-yaif)	正在注册 .yaif 文件类型（image/x-yaif）
+Removing NOVA, the former name of YAIF (%1)	正在删除 NOVA（YAIF 的旧名称）（%1）
+SHA-256 checked (%1)	已检查 SHA-256（%1）
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	%1 的 SHA-256 不匹配：下载文件已损坏或被篡改。未安装任何内容。
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	这些插件在此为本系统的 Qt / GNOME 编译。安装它们需要 root 权限（系统插件目录）。
+Try:  yaif encode photo.jpg          (writes photo.yaif)	试试：  yaif encode photo.jpg          （写入 photo.yaif）
+Uninstall: bash %1 --uninstall%2	卸载：bash %1 --uninstall%2
+Uninstalling YAIF (%1)	正在卸载 YAIF（%1）
+Unpacking %1	正在解压 %1
+Usage:	用法：
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	查看器插件（在图片查看器中打开 .yaif 文件，显示缩略图）
+Viewer plugins skipped (--no-plugins)	已跳过查看器插件（--no-plugins）
+YAIF installer	YAIF 安装程序
+YAIF installer  (%1 %2, into %3)	YAIF 安装程序（%1 %2，安装到 %3）
+YAIF is uninstalled.	YAIF 已卸载。
+added at the end; move it above compinit if you add one later	已添加到末尾；如果以后要添加，请将其移到 compinit 之前
+added to ~/.zshrc %1	已添加到 ~/.zshrc %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	已添加到 ~/.zshrc；请打开新终端（如果 Tab 仍列出文件：rm ~/.zcompdump*）
+already built, unchanged	已编译，未更改
+already gone: %1	已不存在：%1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash 和 fish 会自动识别（需新开 shell；bash 需要 bash-completion 软件包）
+cargo not found (needs Rust), glycin loader skipped.	未找到 cargo（需要 Rust），已跳过 glycin 加载器。
+could not enable the Dolphin thumbnailer	无法启用 Dolphin 缩略图生成器
+could not fetch the checksum for %1	无法获取 %1 的校验和
+could not unpack %1	无法解压 %1
+download failed: %1	下载失败：%1
+file managers now know .yaif files	文件管理器现在可以识别 .yaif 文件
+gdk-pixbuf loader installed	gdk-pixbuf 加载器已安装
+gdk-pixbuf loader: build failed (log above)	gdk-pixbuf 加载器：编译失败（见上方日志）
+gdk-pixbuf loader: could not install it (see above)	gdk-pixbuf 加载器：无法安装（见上文）
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	gdk-pixbuf 加载器：gdk_pixbuf_moduledir 未知，已跳过
+gdk-pixbuf not found, GTK loader skipped.	未找到 gdk-pixbuf，已跳过 GTK 加载器。
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	gdk-pixbuf 的加载器缓存未刷新：请运行  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	glycin 加载器已安装
+glycin loader: build failed (log above)	glycin 加载器：编译失败（见上方日志）
+glycin loader: build produced no binary, skipped	glycin 加载器：编译未生成二进制文件，已跳过
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	未找到 kreadconfig6/kwriteconfig6，请在 Dolphin 的预览设置中勾选 YAIF Images
+libavif: AVIF with an HDR gain map	libavif：带 HDR 增益图的 AVIF
+libwebp: WebP output	libwebp：WebP 输出
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif：编译失败（见上方日志）-- .heic 输出将仅为 SDR
+mktemp failed	mktemp 失败
+no such file: %1	没有此文件：%1
+no terminal to ask; pass --yes	没有可询问的终端；请传入 --yes
+no v2 release found on github.com/%1	在 github.com/%1 上未找到 v2 发行版
+no ~/.zshrc, add manually before compinit: %1	没有 ~/.zshrc，请在 compinit 之前手动添加：%1
+no ~/.zshrc, add manually: %1	没有 ~/.zshrc，请手动添加：%1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	未编译，缺少：%1 -- .heic 输出将仅为 SDR（.avif 和 .jpg 保留 HDR）
+nothing to uninstall: %1 not found (installed with another --prefix?)	没有可卸载的内容：找不到 %1（是否使用其他 --prefix 安装？）
+removed %1	已删除 %1
+removed %1 (Dolphin listed YAIF twice)	已删除 %1（Dolphin 曾列出两次 YAIF）
+removed from %1: %2	已从 %1 中移除：%2
+removed the Finder thumbnail extension	已删除 Finder 缩略图扩展
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	未找到 swiftc（xcode-select --install），已跳过 Finder 缩略图。
+the Finder thumbnail extension could not be built	无法编译 Finder 缩略图扩展
+the ImHex pattern could not be installed	无法安装 ImHex 模板
+then run this installer again.	然后再次运行此安装程序。
+unexpected archive layout: %1/ not found	归档结构异常：未找到 %1/
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	归档名称异常：%1（应为 yaif-<version>-%2-%3.tar.gz）
+unknown option: %1	未知选项：%1
+unsupported OS: %1	不支持的操作系统：%1
+unsupported architecture: %1	不支持的架构：%1
+update-mime-database failed	update-mime-database 失败
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	未找到 update-mime-database；在其运行之前 .yaif 文件不会显示图标或缩略图
+version %1, for %2 %3	版本 %1，适用于 %2 %3
+yaif %1 is installed.	yaif %1 已安装。
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic 现在会保留 HDR 增益图
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	没有它们 yaif 也能运行；每个都会增加格式支持（HEIC、AVIF、WebP、RAW）。
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh 不会在 %1 中查找。是否将其添加到 ~/.zshrc（compinit 之前）？
+~/.zshrc already adds %1	~/.zshrc 已添加 %1
+~/.zshrc already adds it %1	~/.zshrc 已添加它 %1
+no 'lisaac' compiler found.	未找到编译器“lisaac”。
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	请从 https://lisaac.org (0.7) 获取，或使用 install.sh 安装预编译的二进制文件。
+Compiling yaif (lisaac yaif.li -boost)	正在编译 yaif (lisaac yaif.li -boost)
+Installing	正在安装

@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English	Turkish)
+                  (run from an unpacked archive, it installs that archive's files)	                  (bir açılmış arşivden: o arşivin dosyalarını kurar)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     yerel bir .tar.gz dosyasından kur, indirme yapma
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       HEIC/AVIF/WebP/RAW kitaplıklarını denetleme
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   libyaif-heif derlenmez (.heic'te HDR kazanç haritası olmaz)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    Qt/KDE/GNOME/GTK görüntüleyici eklentilerini kurma
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    ~/.local veya /usr/local yerine DIR içine kur
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        ~/.local yerine /usr/local'e kur (sudo gerekir)
+  --uninstall     remove everything a previous run installed	  --uninstall     önceki kurulumun kurduğu her şeyi kaldır
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       çalıştırılan her komutu yazdır (hata anında her zaman)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z bu sürümü kur, en son v2 sürümü yerine
+  -h, --help      this message	  -h, --help      bu iletiyi göster
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       ~/.zshrc'ye dokunmadan veya eklenti derlemeden önce sorma
+%1 (not found)	%1 (bulunamadı)
+%1 does not run here: an archive for another OS or architecture?	%1 burada çalışmıyor: başka bir işletim sistemi veya mimari için bir arşiv mi?
+%1 installed	%1 kuruldu
+%1 is not in PATH	%1 PATH içinde değil
+%1 needs a value	%1 bir değer istiyor
+%1: build failed (log above)	%1: derleme başarısız (yukarıdaki günlük)
+%1: configuration failed (log above)	%1: yapılandırma başarısız (yukarıdaki günlük)
+%1: install failed (log above)	%1: kurulum başarısız (yukarıdaki günlük)
+(open a new terminal)	(yeni bir terminal açın)
+Add it to ~/.zshrc?	~/.zshrc dosyasına eklensin mi?
+Build and install the Finder thumbnail extension?	Finder küçük resim eklentisi derlensin ve kurulsun mu?
+Build and install the Qt and KDE plugins?	Qt ve KDE eklentileri derlensin ve kurulsun mu?
+Build and install the gdk-pixbuf loader?	gdk-pixbuf yükleyicisi derlensin ve kurulsun mu?
+Build and install the glycin loader?	glycin yükleyicisi derlensin ve kurulsun mu?
+Checking the libraries yaif uses for other formats	yaif'in diğer biçimler için kullandığı kitaplıklar denetleniyor
+Dolphin already uses the YAIF thumbnailer	Dolphin zaten YAIF küçük resim üreticisini kullanıyor
+Dolphin no longer uses the YAIF thumbnailer	Dolphin artık YAIF küçük resim üreticisini kullanmıyor
+Dolphin thumbnailer	Dolphin küçük resim üreticisi
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	.yaif için Dolphin küçük resimleri etkinleştirildi (Dolphin'i yeniden başlatın)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin, YAIF'inkinin de bulunduğu varsayılan küçük resim üreticilerini kullanıyor (Dolphin'i yeniden başlatın)
+Done	Tamamlandı
+Downloading %1	%1 indiriliyor
+Error	Hata
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Finder küçük resim eklentisi kuruldu (küçük resim görünmezse: Sistem Ayarları > Genel > Oturum Açma Öğeleri ve Uzantılar > Quick Look)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: .yaif dosyalarının küçük resimleri (~/Applications içinde küçük bir uygulama, burada derlendi, ad hoc imzalı).
+Finding the YAIF release	YAIF sürümü aranıyor
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): kurulu değil, glycin yükleyicisi atlandı.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): .yaif dosyalarını glycin yükleyicisiyle açar.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP ve eski GTK uygulamaları .yaif dosyalarını açar.
+Get them:  %1	Edinmek için:  %1
+HEIC with HDR (libyaif-heif)	HDR'li HEIC (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	HDR'li HEIC atlandı (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	ImHex bulundu: bir desen, bir .yaif'in bloklarını (imza, başlık, üst veri, kareler) ağaç olarak gösterir.
+ImHex pattern -> %1 (restart ImHex)	ImHex deseni -> %1 (ImHex'i yeniden başlatın)
+Install the YAIF pattern for ImHex?	ImHex için YAIF deseni kurulsun mu?
+Installing from %1	%1 kaynağından kuruluyor
+Installing shell completion	Kabuk tamamlaması kuruluyor
+Installing the yaif command	yaif komutu kuruluyor
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita .yaif dosyalarını açar; Dolphin küçük resimleri gösterir.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	KF6KIO bulunamadı (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin küçük resim üreticisi atlandı.
+Latest v2 release on github.com/%1	github.com/%1 üzerindeki en son v2 sürümü
+LibRaw: camera RAW	LibRaw: kamera RAW'ları
+Manual: https://github.com/%1/blob/v2/MANUAL.md	Kılavuz: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	NOVA'nın kaldırıcısı başarısız oldu; kendiniz çalıştırın: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	Yayımlanmış hiçbir libheif HEIC'e HDR yazamıyor: yazabilen biri derleniyor (1-3 dk)...
+Options:	Seçenekler:
+Qt 6 not found, Qt/KDE plugins skipped.	Qt 6 bulunamadı, Qt/KDE eklentileri atlandı.
+Qt plugin (Gwenview, Okular, Krita)	Qt eklentisi (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	.yaif dosya türü kaydediliyor (image/x-yaif)
+Removing NOVA, the former name of YAIF (%1)	YAIF'in eski adı olan NOVA kaldırılıyor (%1)
+SHA-256 checked (%1)	SHA-256 denetlendi (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	%1 için SHA-256 uyuşmuyor: indirme bozuk veya değiştirilmiş. Hiçbir şey kurulmadı.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	Bunlar burada, bu sistemin Qt / GNOME sürümü için derlenir. Kurmak root yetkisi gerektirir (sistem eklenti klasörleri).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	Deneyin:  yaif encode photo.jpg          (photo.yaif yazar)
+Uninstall: bash %1 --uninstall%2	Kaldırmak için: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	YAIF kaldırılıyor (%1)
+Unpacking %1	%1 açılıyor
+Usage:	Kullanım:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	Görüntüleyici eklentileri (.yaif dosyalarını resim görüntüleyicilerde açar, küçük resimleri gösterir)
+Viewer plugins skipped (--no-plugins)	Görüntüleyici eklentileri atlandı (--no-plugins)
+YAIF installer	YAIF kurulum programı
+YAIF installer  (%1 %2, into %3)	YAIF kurulum programı  (%1 %2, şuraya: %3)
+YAIF is uninstalled.	YAIF kaldırıldı.
+added at the end; move it above compinit if you add one later	sona eklendi; daha sonra bir tane eklerseniz compinit'in üstüne taşıyın
+added to ~/.zshrc %1	~/.zshrc dosyasına eklendi %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	~/.zshrc dosyasına eklendi; yeni bir terminal açın (Tab hâlâ dosyaları listeliyorsa: rm ~/.zcompdump*)
+already built, unchanged	zaten derlenmiş, değişmemiş
+already gone: %1	zaten silinmiş: %1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash ve fish bunu otomatik alır (yeni kabuk; bash için bash-completion paketi gerekir)
+cargo not found (needs Rust), glycin loader skipped.	cargo bulunamadı (Rust gerekir), glycin yükleyicisi atlandı.
+could not enable the Dolphin thumbnailer	Dolphin küçük resim üreticisi etkinleştirilemedi
+could not fetch the checksum for %1	%1 için sağlama toplamı alınamadı
+could not unpack %1	%1 açılamadı
+download failed: %1	indirme başarısız: %1
+file managers now know .yaif files	dosya yöneticileri artık .yaif dosyalarını tanıyor
+gdk-pixbuf loader installed	gdk-pixbuf yükleyicisi kuruldu
+gdk-pixbuf loader: build failed (log above)	gdk-pixbuf yükleyicisi: derleme başarısız (yukarıdaki günlük)
+gdk-pixbuf loader: could not install it (see above)	gdk-pixbuf yükleyicisi: kurulamadı (yukarıya bakın)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	gdk-pixbuf yükleyicisi: gdk_pixbuf_moduledir bilinmiyor, atlandı
+gdk-pixbuf not found, GTK loader skipped.	gdk-pixbuf bulunamadı, GTK yükleyicisi atlandı.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	gdk-pixbuf yükleyici önbelleği yenilenmedi: şunu çalıştırın:  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	glycin yükleyicisi kuruldu
+glycin loader: build failed (log above)	glycin yükleyicisi: derleme başarısız (yukarıdaki günlük)
+glycin loader: build produced no binary, skipped	glycin yükleyicisi: derleme ikili dosya üretmedi, atlandı
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	kreadconfig6/kwriteconfig6 bulunamadı, Dolphin'in önizleme ayarlarında YAIF Images'i işaretleyin
+libavif: AVIF with an HDR gain map	libavif: HDR kazanç haritalı AVIF
+libwebp: WebP output	libwebp: WebP çıktısı
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: derleme başarısız (yukarıdaki günlük) -- .heic çıktısı yalnızca SDR olacak
+mktemp failed	mktemp başarısız
+no such file: %1	böyle bir dosya yok: %1
+no terminal to ask; pass --yes	sorulacak terminal yok; --yes verin
+no v2 release found on github.com/%1	github.com/%1 üzerinde v2 sürümü bulunamadı
+no ~/.zshrc, add manually before compinit: %1	~/.zshrc yok, compinit'ten önce elle ekleyin: %1
+no ~/.zshrc, add manually: %1	~/.zshrc yok, elle ekleyin: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	derlenmedi, eksik:%1 -- .heic çıktısı yalnızca SDR olacak (.avif ve .jpg HDR'yi korur)
+nothing to uninstall: %1 not found (installed with another --prefix?)	kaldırılacak bir şey yok: %1 bulunamadı (başka bir --prefix ile mi kuruldu?)
+removed %1	%1 kaldırıldı
+removed %1 (Dolphin listed YAIF twice)	%1 kaldırıldı (Dolphin YAIF'i iki kez listeliyordu)
+removed from %1: %2	%1 dosyasından kaldırıldı: %2
+removed the Finder thumbnail extension	Finder küçük resim eklentisi kaldırıldı
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	swiftc bulunamadı (xcode-select --install), Finder küçük resimleri atlandı.
+the Finder thumbnail extension could not be built	Finder küçük resim eklentisi derlenemedi
+the ImHex pattern could not be installed	ImHex deseni kurulamadı
+then run this installer again.	sonra bu kurulum programını yeniden çalıştırın.
+unexpected archive layout: %1/ not found	beklenmeyen arşiv yapısı: %1/ bulunamadı
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	beklenmeyen arşiv adı: %1 (beklenen: yaif-<version>-%2-%3.tar.gz)
+unknown option: %1	bilinmeyen seçenek: %1
+unsupported OS: %1	desteklenmeyen işletim sistemi: %1
+unsupported architecture: %1	desteklenmeyen mimari: %1
+update-mime-database failed	update-mime-database başarısız
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	update-mime-database bulunamadı; çalışana kadar .yaif dosyaları simge/küçük resim almaz
+version %1, for %2 %3	sürüm %1, %2 %3 için
+yaif %1 is installed.	yaif %1 kuruldu.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic artık HDR kazanç haritasını korur
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif bunlar olmadan da çalışır; her biri biçim ekler (HEIC, AVIF, WebP, RAW).
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh %1 içinde aramaz. ~/.zshrc dosyasına (compinit'ten önce) eklensin mi?
+~/.zshrc already adds %1	~/.zshrc zaten %1 ekliyor
+~/.zshrc already adds it %1	~/.zshrc onu zaten ekliyor %1
+no 'lisaac' compiler found.	'lisaac' derleyicisi bulunamadı.
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	https://lisaac.org (0.7) adresinden edinin veya hazır derlenmiş ikili dosya için install.sh kullanın.
+Compiling yaif (lisaac yaif.li -boost)	yaif derleniyor (lisaac yaif.li -boost)
+Installing	Kuruluyor

@@ -1,0 +1,135 @@
+# Messages of install.sh and build.sh (English	Vietnamese)
+                  (run from an unpacked archive, it installs that archive's files)	                  (chạy từ một gói đã giải nén, cài các tệp của gói đó)
+  --from FILE     install from a local .tar.gz instead of downloading	  --from FILE     cài từ tệp .tar.gz cục bộ thay vì tải xuống
+  --no-deps       skip checking for the HEIC/AVIF/WebP/RAW libraries	  --no-deps       bỏ qua kiểm tra thư viện HEIC/AVIF/WebP/RAW
+  --no-heic-hdr   don't build libyaif-heif (then .heic output has no HDR gain map)	  --no-heic-hdr   bỏ biên dịch libyaif-heif (.heic không có bản đồ HDR)
+  --no-plugins    skip the Qt/KDE/GNOME/GTK viewer plugins	  --no-plugins    bỏ qua plugin xem ảnh Qt/KDE/GNOME/GTK
+  --prefix DIR    install into DIR instead of ~/.local or /usr/local	  --prefix DIR    cài vào DIR thay vì ~/.local hoặc /usr/local
+  --system        install into /usr/local (needs sudo) instead of ~/.local	  --system        cài vào /usr/local (cần sudo) thay vì ~/.local
+  --uninstall     remove everything a previous run installed	  --uninstall     gỡ mọi thứ mà lần cài trước đã đặt
+  --verbose       print every command this script runs (always shown on failure)	  --verbose       in mọi lệnh được chạy (luôn hiện khi lỗi)
+  --version X.Y.Z install this version instead of the latest v2 release	  --version X.Y.Z cài phiên bản này thay vì bản v2 mới nhất
+  -h, --help      this message	  -h, --help      hiện thông báo này
+  -y, --yes       don't ask before touching ~/.zshrc or building plugins	  -y, --yes       không hỏi trước khi sửa ~/.zshrc hoặc biên dịch plugin
+%1 (not found)	%1 (không tìm thấy)
+%1 does not run here: an archive for another OS or architecture?	%1 không chạy được ở đây: gói cho hệ điều hành hoặc kiến trúc khác?
+%1 installed	%1 đã cài
+%1 is not in PATH	%1 không có trong PATH
+%1 needs a value	%1 cần một giá trị
+%1: build failed (log above)	%1: biên dịch thất bại (xem nhật ký phía trên)
+%1: configuration failed (log above)	%1: cấu hình thất bại (xem nhật ký phía trên)
+%1: install failed (log above)	%1: cài đặt thất bại (xem nhật ký phía trên)
+(open a new terminal)	(mở một cửa sổ terminal mới)
+Add it to ~/.zshrc?	Thêm vào ~/.zshrc?
+Build and install the Finder thumbnail extension?	Biên dịch và cài tiện ích ảnh thu nhỏ cho Finder?
+Build and install the Qt and KDE plugins?	Biên dịch và cài plugin Qt và KDE?
+Build and install the gdk-pixbuf loader?	Biên dịch và cài bộ nạp gdk-pixbuf?
+Build and install the glycin loader?	Biên dịch và cài bộ nạp glycin?
+Checking the libraries yaif uses for other formats	Đang kiểm tra các thư viện yaif dùng cho định dạng khác
+Dolphin already uses the YAIF thumbnailer	Dolphin đã dùng trình tạo ảnh thu nhỏ YAIF
+Dolphin no longer uses the YAIF thumbnailer	Dolphin không còn dùng trình tạo ảnh thu nhỏ YAIF
+Dolphin thumbnailer	Trình tạo ảnh thu nhỏ Dolphin
+Dolphin thumbnails enabled for .yaif (restart Dolphin)	Đã bật ảnh thu nhỏ Dolphin cho .yaif (khởi động lại Dolphin)
+Dolphin uses its default thumbnailers, the YAIF one included (restart Dolphin)	Dolphin dùng trình tạo ảnh thu nhỏ mặc định, kể cả YAIF (khởi động lại Dolphin)
+Done	Xong
+Downloading %1	Đang tải %1
+Error	Lỗi
+Finder thumbnail extension installed (if no thumbnail shows: System Settings > General > Login Items & Extensions > Quick Look)	Đã cài tiện ích ảnh thu nhỏ Finder (nếu không thấy ảnh: Cài đặt Hệ thống > Chung > Mục đăng nhập & Tiện ích mở rộng > Quick Look)
+Finder: thumbnails of .yaif files (a small app in ~/Applications, built here, signed ad hoc).	Finder: ảnh thu nhỏ của tệp .yaif (một ứng dụng nhỏ trong ~/Applications, biên dịch tại đây, ký ad hoc).
+Finding the YAIF release	Đang tìm bản phát hành YAIF
+GNOME (Loupe, Nautilus): not installed, glycin loader skipped.	GNOME (Loupe, Nautilus): chưa cài, bỏ qua bộ nạp glycin.
+GNOME (Loupe, Nautilus): open .yaif via the glycin loader.	GNOME (Loupe, Nautilus): mở .yaif qua bộ nạp glycin.
+GTK / gdk-pixbuf: Eye of GNOME, GIMP and older GTK apps open .yaif.	GTK / gdk-pixbuf: Eye of GNOME, GIMP và các ứng dụng GTK cũ mở được .yaif.
+Get them:  %1	Cách lấy:  %1
+HEIC with HDR (libyaif-heif)	HEIC có HDR (libyaif-heif)
+HEIC with HDR skipped (--no-heic-hdr)	Bỏ qua HEIC có HDR (--no-heic-hdr)
+ImHex found: a pattern shows a .yaif's chunks (signature, header, metadata, frames) as a tree.	Đã tìm thấy ImHex: một mẫu hiển thị các khối của .yaif (chữ ký, tiêu đề, siêu dữ liệu, khung hình) dạng cây.
+ImHex pattern -> %1 (restart ImHex)	Mẫu ImHex -> %1 (khởi động lại ImHex)
+Install the YAIF pattern for ImHex?	Cài mẫu YAIF cho ImHex?
+Installing from %1	Đang cài từ %1
+Installing shell completion	Đang cài bổ sung tự động hoàn thành cho shell
+Installing the yaif command	Đang cài lệnh yaif
+KDE / Qt: Gwenview, Okular, Krita open .yaif; Dolphin shows thumbnails.	KDE / Qt: Gwenview, Okular, Krita mở được .yaif; Dolphin hiển thị ảnh thu nhỏ.
+KF6KIO not found (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), Dolphin thumbnailer skipped.	Không tìm thấy KF6KIO (Fedora: kf6-kio-devel, Debian/Ubuntu: libkf6kio-dev), bỏ qua trình tạo ảnh thu nhỏ Dolphin.
+Latest v2 release on github.com/%1	Bản v2 mới nhất trên github.com/%1
+LibRaw: camera RAW	LibRaw: RAW của máy ảnh
+Manual: https://github.com/%1/blob/v2/MANUAL.md	Hướng dẫn: https://github.com/%1/blob/v2/MANUAL.md
+NOVA's uninstaller failed; run it yourself: bash %1 --uninstall	Trình gỡ của NOVA thất bại; hãy tự chạy: bash %1 --uninstall
+No released libheif can write HDR into a HEIC: building one that can (1-3 min)...	Không có libheif phát hành nào ghi được HDR vào HEIC: đang biên dịch một bản làm được (1-3 phút)...
+Options:	Tùy chọn:
+Qt 6 not found, Qt/KDE plugins skipped.	Không tìm thấy Qt 6, bỏ qua plugin Qt/KDE.
+Qt plugin (Gwenview, Okular, Krita)	Plugin Qt (Gwenview, Okular, Krita)
+Registering the .yaif file type (image/x-yaif)	Đang đăng ký kiểu tệp .yaif (image/x-yaif)
+Removing NOVA, the former name of YAIF (%1)	Đang gỡ NOVA, tên cũ của YAIF (%1)
+SHA-256 checked (%1)	Đã kiểm tra SHA-256 (%1)
+SHA-256 mismatch for %1: the download is corrupt or was altered. Nothing was installed.	SHA-256 của %1 không khớp: tệp tải về bị hỏng hoặc đã bị thay đổi. Chưa cài gì cả.
+They are built here, for this system's Qt / GNOME. Installing them needs root (system plugin folders).	Các plugin này được biên dịch tại đây, cho Qt / GNOME của hệ thống này. Cài đặt cần quyền root (thư mục plugin hệ thống).
+Try:  yaif encode photo.jpg          (writes photo.yaif)	Thử:  yaif encode photo.jpg          (ghi photo.yaif)
+Uninstall: bash %1 --uninstall%2	Gỡ cài đặt: bash %1 --uninstall%2
+Uninstalling YAIF (%1)	Đang gỡ YAIF (%1)
+Unpacking %1	Đang giải nén %1
+Usage:	Cách dùng:
+Viewer plugins (open .yaif files in image viewers, show thumbnails)	Plugin trình xem (mở tệp .yaif trong trình xem ảnh, hiển thị ảnh thu nhỏ)
+Viewer plugins skipped (--no-plugins)	Bỏ qua plugin trình xem (--no-plugins)
+YAIF installer	Trình cài đặt YAIF
+YAIF installer  (%1 %2, into %3)	Trình cài đặt YAIF  (%1 %2, vào %3)
+YAIF is uninstalled.	Đã gỡ YAIF.
+added at the end; move it above compinit if you add one later	đã thêm vào cuối; nếu thêm dòng khác sau này, hãy chuyển lên trên compinit
+added to ~/.zshrc %1	đã thêm vào ~/.zshrc %1
+added to ~/.zshrc; open a new terminal (if Tab still lists files: rm ~/.zcompdump*)	đã thêm vào ~/.zshrc; mở terminal mới (nếu Tab vẫn liệt kê tệp: rm ~/.zcompdump*)
+already built, unchanged	đã biên dịch, không đổi
+already gone: %1	đã mất: %1
+bash and fish pick it up automatically (a new shell; bash needs the bash-completion package)	bash và fish tự nhận ra (shell mới; bash cần gói bash-completion)
+cargo not found (needs Rust), glycin loader skipped.	Không tìm thấy cargo (cần Rust), bỏ qua bộ nạp glycin.
+could not enable the Dolphin thumbnailer	không thể bật trình tạo ảnh thu nhỏ Dolphin
+could not fetch the checksum for %1	không lấy được checksum của %1
+could not unpack %1	không giải nén được %1
+download failed: %1	tải thất bại: %1
+file managers now know .yaif files	trình quản lý tệp giờ đã nhận biết tệp .yaif
+gdk-pixbuf loader installed	Đã cài bộ nạp gdk-pixbuf
+gdk-pixbuf loader: build failed (log above)	bộ nạp gdk-pixbuf: biên dịch thất bại (xem nhật ký phía trên)
+gdk-pixbuf loader: could not install it (see above)	bộ nạp gdk-pixbuf: không cài được (xem phía trên)
+gdk-pixbuf loader: gdk_pixbuf_moduledir unknown, skipped	bộ nạp gdk-pixbuf: không rõ gdk_pixbuf_moduledir, bỏ qua
+gdk-pixbuf not found, GTK loader skipped.	Không tìm thấy gdk-pixbuf, bỏ qua bộ nạp GTK.
+gdk-pixbuf's loader cache was not refreshed: run  sudo gdk-pixbuf-query-loaders --update-cache	Bộ nhớ đệm bộ nạp gdk-pixbuf chưa được làm mới: chạy  sudo gdk-pixbuf-query-loaders --update-cache
+glycin loader installed	Đã cài bộ nạp glycin
+glycin loader: build failed (log above)	bộ nạp glycin: biên dịch thất bại (xem nhật ký phía trên)
+glycin loader: build produced no binary, skipped	bộ nạp glycin: biên dịch không tạo ra tệp nhị phân, bỏ qua
+kreadconfig6/kwriteconfig6 not found, tick YAIF Images in Dolphin's preview settings	Không tìm thấy kreadconfig6/kwriteconfig6, hãy đánh dấu YAIF Images trong cài đặt xem trước của Dolphin
+libavif: AVIF with an HDR gain map	libavif: AVIF có bản đồ tăng HDR
+libwebp: WebP output	libwebp: xuất WebP
+libyaif-heif: build failed (log above) -- .heic output will be SDR only	libyaif-heif: biên dịch thất bại (xem nhật ký phía trên) -- đầu ra .heic sẽ chỉ là SDR
+mktemp failed	mktemp thất bại
+no such file: %1	không có tệp: %1
+no terminal to ask; pass --yes	không có terminal để hỏi; hãy truyền --yes
+no v2 release found on github.com/%1	không tìm thấy bản v2 trên github.com/%1
+no ~/.zshrc, add manually before compinit: %1	không có ~/.zshrc, hãy thêm thủ công trước compinit: %1
+no ~/.zshrc, add manually: %1	không có ~/.zshrc, hãy thêm thủ công: %1
+not built, missing:%1 -- .heic output will be SDR only (.avif and .jpg keep the HDR)	chưa biên dịch, thiếu:%1 -- đầu ra .heic sẽ chỉ là SDR (.avif và .jpg vẫn giữ HDR)
+nothing to uninstall: %1 not found (installed with another --prefix?)	không có gì để gỡ: không tìm thấy %1 (cài với --prefix khác?)
+removed %1	Đã xóa %1
+removed %1 (Dolphin listed YAIF twice)	Đã xóa %1 (Dolphin liệt kê YAIF hai lần)
+removed from %1: %2	Đã xóa khỏi %1: %2
+removed the Finder thumbnail extension	Đã gỡ tiện ích ảnh thu nhỏ Finder
+swiftc not found (xcode-select --install), Finder thumbnails skipped.	Không tìm thấy swiftc (xcode-select --install), bỏ qua ảnh thu nhỏ Finder.
+the Finder thumbnail extension could not be built	Không biên dịch được tiện ích ảnh thu nhỏ Finder
+the ImHex pattern could not be installed	Không cài được mẫu ImHex
+then run this installer again.	rồi chạy lại trình cài đặt này.
+unexpected archive layout: %1/ not found	bố cục gói không như mong đợi: không tìm thấy %1/
+unexpected archive name: %1 (expected yaif-<version>-%2-%3.tar.gz)	tên gói không như mong đợi: %1 (cần yaif-<version>-%2-%3.tar.gz)
+unknown option: %1	tùy chọn không xác định: %1
+unsupported OS: %1	hệ điều hành không được hỗ trợ: %1
+unsupported architecture: %1	kiến trúc không được hỗ trợ: %1
+update-mime-database failed	update-mime-database thất bại
+update-mime-database not found; .yaif files won't get an icon/thumbnail until it runs	Không tìm thấy update-mime-database; tệp .yaif sẽ chưa có biểu tượng hay ảnh thu nhỏ cho đến khi nó chạy
+version %1, for %2 %3	phiên bản %1, cho %2 %3
+yaif %1 is installed.	Đã cài yaif %1.
+yaif decode photo.yaif photo.heic now keeps the HDR gain map	yaif decode photo.yaif photo.heic giờ giữ bản đồ tăng HDR
+yaif runs without them; each one adds formats (HEIC, AVIF, WebP, RAW).	yaif chạy được không cần chúng; mỗi thứ thêm định dạng (HEIC, AVIF, WebP, RAW).
+zsh does not look in %1. Add it to ~/.zshrc (before compinit)?	zsh không tìm trong %1. Thêm vào ~/.zshrc (trước compinit)?
+~/.zshrc already adds %1	~/.zshrc đã thêm %1
+~/.zshrc already adds it %1	~/.zshrc đã thêm nó %1
+no 'lisaac' compiler found.	không tìm thấy trình biên dịch 'lisaac'.
+Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Tải về từ https://lisaac.org (0.7), hoặc dùng install.sh để cài bản nhị phân dựng sẵn.
+Compiling yaif (lisaac yaif.li -boost)	Đang biên dịch yaif (lisaac yaif.li -boost)
+Installing	Đang cài đặt

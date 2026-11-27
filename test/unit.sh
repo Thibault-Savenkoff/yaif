@@ -11,6 +11,7 @@ lisaac unit.li -add_path "$PWD/.." -boost > /dev/null 2>&1 || exit 1
 cd .. || exit 1
 fail=0
 python3 i18n/gen.py --check || { echo "FAIL i18n"; fail=1; }
+python3 i18n/gensh.py --check || { echo "FAIL i18n sh"; fail=1; }
 YAIF=${YAIF:-./yaif}   # e.g. a build with sanitizers
 ./test/unit || fail=1
 YAIF_THREADS=1 ./test/unit | tail -1 || fail=1

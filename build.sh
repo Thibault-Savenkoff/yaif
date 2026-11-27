@@ -7,30 +7,30 @@
 export MAKEFLAGS="-j${JOBS:-2}" CMAKE_BUILD_PARALLEL_LEVEL="${JOBS:-2}"
 set -eu
 cd "$(dirname "$0")"
+. i18n/sh/lib.sh   # t (English text): the message in the user's language
 
 if ! command -v lisaac >/dev/null 2>&1; then
-  echo "build.sh: no 'lisaac' compiler found." >&2
-  echo "Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary." >&2
+  printf 'build.sh: %s\n%s\n' "$(t "no 'lisaac' compiler found.")" "$(t "Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.")" >&2
   exit 1
 fi
 
-echo "==> Compiling yaif (lisaac yaif.li -boost)"
+printf '==> %s\n' "$(t "Compiling yaif (lisaac yaif.li -boost)")"
 lisaac yaif.li -boost
 
 case $(uname -s) in
   Linux) os=linux ;;
   Darwin) os=macos ;;
-  *) echo "build.sh: unsupported OS: $(uname -s)" >&2; exit 1 ;;
+  *) printf 'build.sh: %s\n' "$(t "unsupported OS: %1" "$(uname -s)")" >&2; exit 1 ;;
 esac
 case $(uname -m) in
   x86_64|amd64) arch=x86_64 ;;
   arm64|aarch64) arch=arm64 ;;
-  *) echo "build.sh: unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+  *) printf 'build.sh: %s\n' "$(t "unsupported architecture: %1" "$(uname -m)")" >&2; exit 1 ;;
 esac
 
 tmp=$(mktemp -d)
 trap 'rm -rf -- "$tmp"' EXIT
 archive=$(release/pack.sh "$PWD/yaif" "$os" "$arch" "$tmp")
 
-echo "==> Installing"
+printf '==> %s\n' "$(t "Installing")"
 ./install.sh --from "$archive" "$@"
