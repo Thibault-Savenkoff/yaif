@@ -119,3 +119,17 @@ LangString NEED64 ${LANG_UKRAINIAN} "YAIF потрібна 64-розрядна W
 LangString REMOVING_NOVA ${LANG_UKRAINIAN} "Видалення NOVA, колишньої назви YAIF, з $R0"
 LangString REGSVR ${LANG_UKRAINIAN} "Не вдалося зареєструвати кодек перегляду (помилка regsvr32 $0)."
 LangString PATH_LONG ${LANG_UKRAINIAN} "Змінна PATH завелика для безпечного редагування: додайте $InstDir самостійно, щоб запускати yaif із термінала."
+
+; MultiUser.nsh ships no Turkish or Korean text for its install-mode page (NSIS fell back to English).
+!pragma warning disable 6030
+LangString MULTIUSER_TEXT_INSTALLMODE_TITLE ${LANG_TURKISH} "Kullanıcıları Seçin"
+LangString MULTIUSER_TEXT_INSTALLMODE_SUBTITLE ${LANG_TURKISH} "$(^NameDA) uygulamasını hangi kullanıcılar için kurmak istediğinizi seçin."
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_TOP ${LANG_TURKISH} "$(^NameDA) uygulamasını yalnızca kendiniz için mi yoksa bu bilgisayarın tüm kullanıcıları için mi kurmak istediğinizi seçin. $(^ClickNext)"
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_ALLUSERS ${LANG_TURKISH} "Bu bilgisayarı kullanan herkes için kur"
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_CURRENTUSER ${LANG_TURKISH} "Yalnızca benim için kur"
+LangString MULTIUSER_TEXT_INSTALLMODE_TITLE ${LANG_KOREAN} "사용자 선택"
+LangString MULTIUSER_TEXT_INSTALLMODE_SUBTITLE ${LANG_KOREAN} "$(^NameDA)을(를) 설치할 사용자를 선택하십시오."
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_TOP ${LANG_KOREAN} "$(^NameDA)을(를) 나만 사용할지, 이 컴퓨터의 모든 사용자가 사용할지 선택하십시오. $(^ClickNext)"
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_ALLUSERS ${LANG_KOREAN} "이 컴퓨터를 사용하는 모든 사용자용으로 설치"
+LangString MULTIUSER_INNERTEXT_INSTALLMODE_CURRENTUSER ${LANG_KOREAN} "나만 사용하도록 설치"
+!pragma warning enable 6030
