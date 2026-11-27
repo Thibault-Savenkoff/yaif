@@ -816,13 +816,13 @@ Public
   - meta_size:Int <- `nh_meta_n`:Int
 
   // Writes name as AVIF (av1) or HEIC. rgba: 4 bytes per pixel. Metadata: buf[pos, pos + len).
-  - export name:String pixels rgba:C_array Uint8 size (w,h:Int) planes np:Int avif av:Boolean lossless ll:Boolean quality q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Boolean <-
+  - export name:String pixels rgba_in:C_array Uint8 size (w,h:Int) planes np:Int avif av:Boolean lossless ll:Boolean quality q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Boolean <-
   ( + pe:C_array Char
     + a,l:Int
     pe := name.to_external
     a := av.to_int
     l := ll.to_int
-    `nh_export((char *)@pe, @rgba, @w, @h, @np, @a, @l, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn, 0, 0)`:Int != 0
+    `nh_export((char *)@pe, @rgba_in, @w, @h, @np, @a, @l, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn, 0, 0)`:Int != 0
   )
 
   // HDR: pq = 16-bit big-endian RGB coded PQ (Yaif_hdr.apply), written 10 bits; prim: cICP primaries.
@@ -837,17 +837,17 @@ Public
   // AVIF with the HDR gain map gm (gw x gh, RGBA) and its ISO 21496-1 metadata iso[ip, ip + n): the
   // SDR image shows everywhere, HDR screens apply the gain map. 1: written, 0: error (message),
   // -1: no libavif with gain maps (write a plain AVIF instead).
-  - export_gain_map name:String px rgba:C_array Uint8 size (w,h:Int) gain (gm:C_array Uint8, gw,gh:Int) iso (m:C_array Uint8, mp,mn:Int) prim prim:Int q q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Int <-
+  - export_gain_map name:String px rgba_in:C_array Uint8 size (w,h:Int) gain (gm:C_array Uint8, gw,gh:Int) iso (m:C_array Uint8, mp,mn:Int) prim prim:Int q q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Int <-
   ( + pe:C_array Char
     pe := name.to_external
-    `na_export((char *)@pe, @rgba, @w, @h, @gm, @gw, @gh, @m + @mp, @mn, @prim, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn)`:Int
+    `na_export((char *)@pe, @rgba_in, @w, @h, @gm, @gw, @gh, @m + @mp, @mn, @prim, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn)`:Int
   )
 
   // The same as a HEIC, through libyaif-heif (-1: not installed, write a plain HEIC instead).
-  - export_heic_gain_map name:String px rgba:C_array Uint8 size (w,h:Int) gain (gm:C_array Uint8, gw,gh:Int) iso (m:C_array Uint8, mp,mn:Int) prim prim:Int q q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Int <-
+  - export_heic_gain_map name:String px rgba_in:C_array Uint8 size (w,h:Int) gain (gm:C_array Uint8, gw,gh:Int) iso (m:C_array Uint8, mp,mn:Int) prim prim:Int q q:Int meta (e:C_array Uint8, ep,en:Int, c:C_array Uint8, cn:Int, x:C_array Uint8, xp,xn:Int) :Int <-
   ( + pe:C_array Char
     pe := name.to_external
-    `ng_export((char *)@pe, @rgba, @w, @h, @gm, @gw, @gh, @m + @mp, @mn, @prim, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn)`:Int
+    `ng_export((char *)@pe, @rgba_in, @w, @h, @gm, @gw, @gh, @m + @mp, @mn, @prim, @q, @e + @ep, @en, @c, @cn, @x + @xp, @xn)`:Int
   )
 
   // HDR gain map of the last pixel load (gain_width 0: none): RGBA, and its ISO 21496-1 metadata.
