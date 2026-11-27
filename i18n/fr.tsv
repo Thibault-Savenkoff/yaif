@@ -105,3 +105,5 @@ unsupported bit depth	profondeur de bits non prise en charge
 unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	extension de sortie non prise en charge : %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
 yaif %1 is available (this is %2): %3	yaif %1 est disponible (ceci est %2) : %3
 TIFF compression failed	Échec de la compression TIFF
+decimal separator	,
+thousands separator	 

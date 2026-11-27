@@ -1818,13 +1818,31 @@ Public
     name.substring (i + 1) to (name.upper)
   )
 
+  // Number separators of the language (the English text of a separator is longer than any real one).
+  - dec_sep:String <-
+  ( + r:String
+    r := Yaif_i18n.t "decimal separator"
+    (r.count > 3).if {
+      r := "."
+    }
+    r
+  )
+  - grp_sep:String <-
+  ( + r:String
+    r := Yaif_i18n.t "thousands separator"
+    (r.count > 3).if {
+      r := ","
+    }
+    r
+  )
+
   // 26050253 -> "26,050,253"
   - group n:Int :String <-
   ( + result:String
     (n < 1000).if {
       result := n.to_string
     } else {
-      result := (group (n / 1000)) + "," + ((n % 1000) + 1000).to_string.substring 1 to 3
+      result := (group (n / 1000)) + grp_sep + ((n % 1000) + 1000).to_string.substring 1 to 3
     }
     result
   )
@@ -1849,7 +1867,7 @@ Public
     ((src > 0) && {live_src != NULL}).if { n := n + (file_size live_src) }
     (n > 0).if {
       r := (Yaif_codec.out_count * 1000 + n / 2) / n
-      (Yaif_i18n.t4 ("Done: %1 bytes, %2 % of the source (%3) in %4", (group (Yaif_codec.out_count)), (r / 10).to_string + "." + (r % 10).to_string, mode_name, elapsed) + "\n").print
+      (Yaif_i18n.t4 ("Done: %1 bytes, %2 % of the source (%3) in %4", (group (Yaif_codec.out_count)), (r / 10).to_string + dec_sep + (r % 10).to_string, mode_name, elapsed) + "\n").print
     } else {
       (Yaif_i18n.t3 ("Done: %1 bytes (%2) in %3", (group (Yaif_codec.out_count)), mode_name, elapsed) + "\n").print
     }
@@ -1859,7 +1877,7 @@ Public
   - elapsed:String <-
   ( + d:Int
     d := (Yaif_par.ms - t0 + 50) / 100
-    (d / 10).to_string + "." + (d % 10).to_string + " s"
+    (d / 10).to_string + dec_sep + (d % 10).to_string + " s"
   )
 
   // Look of developed RAWs: 0 canon (the camera JPEG), 1 darktable (its default render).
