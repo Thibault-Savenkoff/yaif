@@ -14,17 +14,17 @@
     -look  camera's look (canon, default) or darktable's	    -look  rendu de l'appareil (canon, défaut) ou de darktable
     -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  défaut adaptive : sans perte pour
     -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (défaut : sans perte si le
-    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  qualité ondelettes (défaut 90, ~45 dB : visuellement sans perte ;
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  qualité ondelettes (défaut 90, ~45 dB : sans perte visible ;
     -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  qualité (défaut : JPEG/WebP 90, AVIF 85, HEIC 60 : ~44 dB)
     .avif with the gain map (libavif)	    .avif avec la carte de gain (libavif)
     .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng : DNG ; .png .tif .jpg .webp .avif .heic : développé avec LibRaw
-    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Une source avec perte reste avec perte, un PNG/TIFF sans perte (-m pour choisir)
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Une source avec perte reste avec perte, PNG/TIFF sans perte (-m : choix)
     HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    Carte de gain HDR (HEIC iPhone) : le .jpg est écrit en Ultra HDR, un
     RAW: sensor frame kept losslessly (level 6)	    RAW : image du capteur conservée sans perte (niveau 6)
     animation: dst_000.png, dst_001.png...	    animation : dst_000.png, dst_001.png...
-    any source encode reads -> any dst decode writes, in one step,	    toute source lue par encode -> toute destination écrite par decode, en une étape,
+    any source encode reads -> any dst decode writes, in one step,	    toute source d'encode -> toute destination de decode, en une étape,
     dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst : .png .tif .jpg .webp .avif .heic (format selon l'extension)
-    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    les métadonnées (EXIF/GPS, XMP, ICC, texte) de la première source sont gardées
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    métadonnées (EXIF/GPS, XMP, ICC, texte) de la 1re source conservées
     several sources = animation	    plusieurs sources = animation
     sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    sources : PNG, JPEG, HEIC/HEIF/AVIF (libheif), RAW d'appareil (LibRaw)
     with its metadata and HDR gain map; decode's options.	    avec ses métadonnées et sa carte de gain HDR ; options de decode.
