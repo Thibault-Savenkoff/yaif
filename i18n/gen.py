@@ -6,7 +6,9 @@ A .tsv line is  English<TAB>translation  (\\n \\t \\\\ escaped). The English tex
 import glob, os, re, sys
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # columns of the table: the languages of win/lang.nsh minus English
-LANGS = "fr es de it pt_BR pt nl ru pl tr ja ko zh_Hans zh_Hant ar hi id vi uk".split()
+# ar is written (i18n/ar.tsv) but NOT listed: GNOME Terminal (VTE) shows it with unjoined letters and
+# scrambled word order (seen 2026-11-27), so Arabic falls back to English. Add "ar" back when terminals shape it.
+LANGS = "fr es de it pt_BR pt nl ru pl tr ja ko zh_Hans zh_Hant hi id vi uk".split()
 
 def unesc(s):
     return re.sub(r'\\(.)', lambda m: {'n': '\n', 't': '\t', '\\': '\\', '"': '"'}.get(m.group(1), m.group(0)), s)
