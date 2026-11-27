@@ -435,7 +435,13 @@ remove_dolphin_thumbnailer() {
 }
 
 refresh_caches() {
-  command -v update-mime-database >/dev/null 2>&1 && run "$owner" update-mime-database "$prefix/share/mime" 2>/dev/null || true
+  command -v update-mime-database >/dev/null 2>&1 || return 0
+  run "$owner" update-mime-database "$prefix/share/mime" 2>/dev/null || true
+  # The system database too, when the glycin step put the type there (the manifest records the file).
+  local f
+  grep '^root .*/share/mime/packages/yaif\.xml$' "$tmp/manifest" 2>/dev/null | cut -d' ' -f2- | while IFS= read -r f; do
+    run root update-mime-database "$(dirname "$(dirname "$f")")" 2>/dev/null || true
+  done
 }
 
 do_uninstall() {
@@ -715,13 +721,19 @@ cargo_glycin_plugin() {
   install_file root "$bin_out" "$execdir/$name" 755 || return 1
   printf '[loader:image/x-yaif]\nExec=%s/%s\n' "$execdir" "$name" > "$tmp/glycin-yaif.conf"
   install_file root "$tmp/glycin-yaif.conf" "$confdir/glycin-yaif.conf" 644 || return 1
+  # Nautilus runs glycin-thumbnailer in a sandbox that sees /usr only: the user-level MIME database
+  # (~/.local/share/mime) is invisible there, glycin then reads the file as application/octet-stream
+  # ("Unknown image format") and never starts our loader. So the type goes into the system database too.
+  install_file root "$src/plugins/mime/yaif.xml" "/usr/share/mime/packages/yaif.xml" 644 || return 1
+  if command -v update-mime-database >/dev/null 2>&1; then
+    run root update-mime-database "$TEST_ROOT/usr/share/mime" || warn "update-mime-database failed"
+  fi
   # Nautilus thumbnails: glycin-thumbnailer is a generic tool that thumbnails whatever glycin can
   # load, so registering the loader above is enough to make it work for .yaif too, in principle.
   # Newer GNOME (glycin-loaders' era) ships this instead of the older gdk-pixbuf-thumbnailer, which
   # make_gdk_pixbuf_plugin's own yaif.thumbnailer still targets for systems that have it. The other
   # glycin-shipped .thumbnailer files all use glycin-thumbnailer's absolute path (the factory spawns
-  # it outside an interactive shell's PATH), so this does too -- confirmed NOT sufficient on its own
-  # by itself on a real GNOME 50 VM (still no thumbnail); see CLAUDE.md, not chased further.
+  # it outside an interactive shell's PATH), so this does too.
   local gt_path
   gt_path=$(command -v glycin-thumbnailer 2>/dev/null) || gt_path=
   if [ -n "$gt_path" ]; then
