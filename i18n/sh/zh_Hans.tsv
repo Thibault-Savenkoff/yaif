@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	未找到编译器“lisaac”。
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	请从 https://lisaac.org (0.7) 获取，或使用 install.sh 安装预编译的二进制文件。
 Compiling yaif (lisaac yaif.li -boost)	正在编译 yaif (lisaac yaif.li -boost)
 Installing	正在安装
+Administrator rights were refused: nothing was installed.	管理员权限被拒绝:未安装任何内容。
+Administrator rights were refused: nothing was removed.	管理员权限被拒绝:未删除任何内容。
+Press Enter to close	按 Enter 键关闭
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	已以 %1 身份提升权限,而非 %2:未安装任何内容。请使用管理员账户运行。
+YAIF needs 64-bit Windows.	YAIF 需要 64 位 Windows。
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF 已安装在 %1 中:请先卸载(设置 > 应用)。
+Installing YAIF %1 from %2	正在从 %2 安装 YAIF %1
+no v2 release found	未找到 v2 版本
+Installing YAIF %1	正在安装 YAIF %1
+%1 is not in SHA256SUMS	%1 不在 SHA256SUMS 中
+%1: checksum mismatch, nothing installed	%1:校验和不匹配,未安装任何内容。
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	无法注册资源管理器缩略图编解码器(regsvr32 退出代码 %1)。
+ImHex pattern installed (restart ImHex).	已安装 ImHex 模式(请重启 ImHex)。
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 已安装到 %2。请打开新终端并运行:yaif --version
+Uninstall: Settings > Apps > YAIF.	卸载:设置 > 应用 > YAIF
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	安装范围:[M] 仅限我(无需管理员权限),[A] 所有用户(需要管理员权限)

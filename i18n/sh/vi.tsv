@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	không tìm thấy trình biên dịch 'lisaac'.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Tải về từ https://lisaac.org (0.7), hoặc dùng install.sh để cài bản nhị phân dựng sẵn.
 Compiling yaif (lisaac yaif.li -boost)	Đang biên dịch yaif (lisaac yaif.li -boost)
 Installing	Đang cài đặt
+Administrator rights were refused: nothing was installed.	Từ chối quyền quản trị: chưa cài đặt gì.
+Administrator rights were refused: nothing was removed.	Từ chối quyền quản trị: chưa gỡ bỏ gì.
+Press Enter to close	Nhấn Enter để đóng
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Đã nâng quyền thành %1, không phải %2: chưa cài đặt gì. Hãy chạy từ tài khoản quản trị viên.
+YAIF needs 64-bit Windows.	YAIF cần Windows 64 bit.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF đã được cài trong %1: hãy gỡ bỏ trước (Cài đặt > Ứng dụng).
+Installing YAIF %1 from %2	Đang cài YAIF %1 từ %2
+no v2 release found	không tìm thấy bản phát hành v2
+Installing YAIF %1	Đang cài YAIF %1
+%1 is not in SHA256SUMS	%1 không có trong SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: sai checksum, chưa cài đặt gì
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Không thể đăng ký codec ảnh thu nhỏ của Explorer (regsvr32 mã thoát %1).
+ImHex pattern installed (restart ImHex).	Đã cài mẫu ImHex (hãy khởi động lại ImHex).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	Đã cài YAIF %1 trong %2. Mở terminal mới và chạy: yaif --version
+Uninstall: Settings > Apps > YAIF.	Gỡ bỏ: Cài đặt > Ứng dụng > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Cài cho: [M] chỉ mình tôi (không cần quyền quản trị), [A] tất cả người dùng (yêu cầu quyền quản trị)

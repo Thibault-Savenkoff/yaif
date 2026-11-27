@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	कंपाइलर 'lisaac' नहीं मि�
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	इसे https://lisaac.org (0.7) से लें, या पहले से बने बाइनरी के लिए install.sh का उपयोग करें।
 Compiling yaif (lisaac yaif.li -boost)	yaif कंपाइल हो रहा है (lisaac yaif.li -boost)
 Installing	इंस्टॉल हो रहा है
+Administrator rights were refused: nothing was installed.	व्यवस्थापक अधिकार अस्वीकार किए गए: कुछ भी इंस्टॉल नहीं हुआ।
+Administrator rights were refused: nothing was removed.	व्यवस्थापक अधिकार अस्वीकार किए गए: कुछ भी हटाया नहीं गया।
+Press Enter to close	बंद करने के लिए Enter दबाएँ
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	%1 के रूप में एलिवेट हुआ, %2 के रूप में नहीं: कुछ भी इंस्टॉल नहीं हुआ। व्यवस्थापक खाते से चलाएँ।
+YAIF needs 64-bit Windows.	YAIF के लिए 64-बिट Windows चाहिए।
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF %1 में पहले से इंस्टॉल है: पहले इसे अनइंस्टॉल करें (सेटिंग्स > ऐप्स)।
+Installing YAIF %1 from %2	%2 से YAIF %1 इंस्टॉल हो रहा है
+no v2 release found	कोई v2 रिलीज़ नहीं मिली
+Installing YAIF %1	YAIF %1 इंस्टॉल हो रहा है
+%1 is not in SHA256SUMS	%1, SHA256SUMS में नहीं है
+%1: checksum mismatch, nothing installed	%1: चेकसम मेल नहीं खाता, कुछ भी इंस्टॉल नहीं हुआ।
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	एक्सप्लोरर थंबनेल कोडेक पंजीकृत नहीं हो सका (regsvr32 निकास कोड %1)।
+ImHex pattern installed (restart ImHex).	ImHex पैटर्न इंस्टॉल हुआ (ImHex पुनः आरंभ करें)।
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 को %2 में इंस्टॉल किया गया। नया टर्मिनल खोलें और चलाएँ: yaif --version
+Uninstall: Settings > Apps > YAIF.	अनइंस्टॉल: सेटिंग्स > ऐप्स > YAIF
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	इंस्टॉल करें: [M] केवल मेरे लिए (व्यवस्थापक अधिकार नहीं चाहिए), [A] सभी उपयोगकर्ताओं के लिए (व्यवस्थापक अधिकार माँगे जाएँगे)

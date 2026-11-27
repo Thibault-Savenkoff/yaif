@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	compilateur « lisaac » introuvable.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Récupérez-le sur https://lisaac.org (0.7), ou utilisez install.sh pour un binaire précompilé.
 Compiling yaif (lisaac yaif.li -boost)	Compilation de yaif (lisaac yaif.li -boost)
 Installing	Installation
+Administrator rights were refused: nothing was installed.	Les droits d'administrateur ont été refusés : rien n'a été installé.
+Administrator rights were refused: nothing was removed.	Les droits d'administrateur ont été refusés : rien n'a été supprimé.
+Press Enter to close	Appuyez sur Entrée pour fermer
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Élévation en tant que %1 et non %2 : rien n'a été installé. Lancez-le depuis un compte administrateur.
+YAIF needs 64-bit Windows.	YAIF demande Windows 64 bits.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF est déjà installé dans %1 : désinstallez-le d'abord (Paramètres > Applications).
+Installing YAIF %1 from %2	Installation de YAIF %1 depuis %2
+no v2 release found	aucune version v2 trouvée
+Installing YAIF %1	Installation de YAIF %1
+%1 is not in SHA256SUMS	%1 n'est pas dans SHA256SUMS
+%1: checksum mismatch, nothing installed	%1 : somme de contrôle différente, rien n'a été installé
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Le codec de miniatures de l'Explorateur n'a pas pu être enregistré (regsvr32 : code %1).
+ImHex pattern installed (restart ImHex).	Modèle ImHex installé (redémarrez ImHex).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 installé dans %2. Ouvrez un nouveau terminal et lancez : yaif --version
+Uninstall: Settings > Apps > YAIF.	Désinstaller : Paramètres > Applications > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Installer pour : [M] moi seul (sans droits d'administrateur), [A] tous les utilisateurs (demande les droits d'administrateur)

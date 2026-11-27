@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	compiler 'lisaac' niet gevonden.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Haal hem op via https://lisaac.org (0.7), of gebruik install.sh voor een kant-en-klare binary.
 Compiling yaif (lisaac yaif.li -boost)	yaif compileren (lisaac yaif.li -boost)
 Installing	Installeren
+Administrator rights were refused: nothing was installed.	Beheerdersrechten geweigerd: er is niets geïnstalleerd.
+Administrator rights were refused: nothing was removed.	Beheerdersrechten geweigerd: er is niets verwijderd.
+Press Enter to close	Druk op Enter om te sluiten
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Verhoogd uitgevoerd als %1, niet als %2: er is niets geïnstalleerd. Voer het uit vanuit een beheerdersaccount.
+YAIF needs 64-bit Windows.	YAIF vereist 64-bit Windows.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF is al geïnstalleerd in %1: verwijder het eerst (Instellingen > Apps).
+Installing YAIF %1 from %2	YAIF %1 installeren vanaf %2
+no v2 release found	geen v2-release gevonden
+Installing YAIF %1	YAIF %1 installeren
+%1 is not in SHA256SUMS	%1 staat niet in SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: controlesom komt niet overeen, er is niets geïnstalleerd
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Het miniatuurcodec van Verkenner kon niet worden geregistreerd (regsvr32-afsluitcode %1).
+ImHex pattern installed (restart ImHex).	ImHex-patroon geïnstalleerd (start ImHex opnieuw).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 geïnstalleerd in %2. Open een nieuwe terminal en voer uit: yaif --version
+Uninstall: Settings > Apps > YAIF.	Verwijderen: Instellingen > Apps > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Installeren voor: [M] alleen mij (zonder beheerdersrechten), [A] alle gebruikers (vraagt om beheerdersrechten)

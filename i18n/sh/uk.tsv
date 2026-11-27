@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	компілятор «lisaac» не знайден�
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Завантажте його з https://lisaac.org (0.7) або скористайтеся install.sh для готового бінарного файлу.
 Compiling yaif (lisaac yaif.li -boost)	Компіляція yaif (lisaac yaif.li -boost)
 Installing	Встановлення
+Administrator rights were refused: nothing was installed.	Права адміністратора не надано: нічого не встановлено.
+Administrator rights were refused: nothing was removed.	Права адміністратора не надано: нічого не видалено.
+Press Enter to close	Натисніть Enter, щоб закрити
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Підвищення прав виконано як %1, а не як %2: нічого не встановлено. Запустіть із облікового запису адміністратора.
+YAIF needs 64-bit Windows.	YAIF потребує 64-розрядної Windows.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF уже встановлено в %1: спочатку видаліть його (Параметри > Програми).
+Installing YAIF %1 from %2	Встановлення YAIF %1 з %2
+no v2 release found	версію v2 не знайдено
+Installing YAIF %1	Встановлення YAIF %1
+%1 is not in SHA256SUMS	%1 немає в SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: контрольна сума не збігається, нічого не встановлено
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Не вдалося зареєструвати кодек мініатюр Провідника (regsvr32, код %1).
+ImHex pattern installed (restart ImHex).	Шаблон ImHex встановлено (перезапустіть ImHex).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 встановлено в %2. Відкрийте новий термінал і виконайте: yaif --version
+Uninstall: Settings > Apps > YAIF.	Видалення: Параметри > Програми > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Встановити для: [M] лише мене (без прав адміністратора), [A] для всіх користувачів (запитає права адміністратора)

@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	nie znaleziono kompilatora „lisaac”.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Pobierz go z https://lisaac.org (0.7) lub użyj install.sh, aby zainstalować gotowy plik binarny.
 Compiling yaif (lisaac yaif.li -boost)	Kompilowanie yaif (lisaac yaif.li -boost)
 Installing	Instalowanie
+Administrator rights were refused: nothing was installed.	Odmówiono praw administratora: nic nie zainstalowano.
+Administrator rights were refused: nothing was removed.	Odmówiono praw administratora: nic nie usunięto.
+Press Enter to close	Naciśnij Enter, aby zamknąć
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Podniesiono uprawnienia jako %1, a nie %2: nic nie zainstalowano. Uruchom z konta administratora.
+YAIF needs 64-bit Windows.	YAIF wymaga 64-bitowego systemu Windows.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF jest już zainstalowany w %1: najpierw go odinstaluj (Ustawienia > Aplikacje).
+Installing YAIF %1 from %2	Instalacja YAIF %1 z %2
+no v2 release found	nie znaleziono wydania v2
+Installing YAIF %1	Instalacja YAIF %1
+%1 is not in SHA256SUMS	%1 nie ma w SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: suma kontrolna się nie zgadza, nic nie zainstalowano
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Nie udało się zarejestrować kodeka miniatur Eksploratora (regsvr32, kod %1).
+ImHex pattern installed (restart ImHex).	Wzorzec ImHex zainstalowany (uruchom ImHex ponownie).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 zainstalowany w %2. Otwórz nowy terminal i uruchom: yaif --version
+Uninstall: Settings > Apps > YAIF.	Odinstalowanie: Ustawienia > Aplikacje > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Instaluj dla: [M] tylko mnie (bez praw administratora), [A] wszystkich użytkowników (wymaga praw administratora)

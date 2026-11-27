@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	Compiler „lisaac“ nicht gefunden.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Hol ihn von https://lisaac.org (0.7) oder nimm install.sh für eine fertige Binärdatei.
 Compiling yaif (lisaac yaif.li -boost)	yaif wird kompiliert (lisaac yaif.li -boost)
 Installing	Installation
+Administrator rights were refused: nothing was installed.	Administratorrechte wurden verweigert: es wurde nichts installiert.
+Administrator rights were refused: nothing was removed.	Administratorrechte wurden verweigert: es wurde nichts entfernt.
+Press Enter to close	Zum Schließen Eingabetaste drücken
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Als %1 mit erhöhten Rechten gestartet, nicht als %2: Es wurde nichts installiert. Starten Sie es mit einem Administratorkonto.
+YAIF needs 64-bit Windows.	YAIF benötigt 64-bit-Windows.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF ist bereits in %1 installiert: Deinstallieren Sie es zuerst (Einstellungen > Apps).
+Installing YAIF %1 from %2	YAIF %1 wird aus %2 installiert
+no v2 release found	keine v2-Version gefunden
+Installing YAIF %1	YAIF %1 wird installiert
+%1 is not in SHA256SUMS	%1 steht nicht in SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: Prüfsumme stimmt nicht überein, nichts installiert
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Der Miniaturansicht-Codec des Explorers konnte nicht registriert werden (regsvr32-Exitcode %1).
+ImHex pattern installed (restart ImHex).	ImHex-Muster installiert (ImHex neu starten).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 in %2 installiert. Öffnen Sie ein neues Terminal und führen Sie aus: yaif --version
+Uninstall: Settings > Apps > YAIF.	Deinstallation: Einstellungen > Apps > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Installieren für: [M] nur mich (ohne Administratorrechte), [A] alle Benutzer (fordert Administratorrechte an)

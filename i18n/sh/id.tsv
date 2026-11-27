@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	kompiler 'lisaac' tidak ditemukan.
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Unduh dari https://lisaac.org (0.7), atau gunakan install.sh untuk biner yang sudah jadi.
 Compiling yaif (lisaac yaif.li -boost)	Mengompilasi yaif (lisaac yaif.li -boost)
 Installing	Menginstal
+Administrator rights were refused: nothing was installed.	Hak administrator ditolak: tidak ada yang diinstal.
+Administrator rights were refused: nothing was removed.	Hak administrator ditolak: tidak ada yang dihapus.
+Press Enter to close	Tekan Enter untuk menutup
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Ditinggikan sebagai %1, bukan %2: tidak ada yang diinstal. Jalankan dari akun administrator.
+YAIF needs 64-bit Windows.	YAIF memerlukan Windows 64-bit.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF sudah terpasang di %1: copot dulu (Pengaturan > Aplikasi).
+Installing YAIF %1 from %2	Menginstal YAIF %1 dari %2
+no v2 release found	rilis v2 tidak ditemukan
+Installing YAIF %1	Menginstal YAIF %1
+%1 is not in SHA256SUMS	%1 tidak ada di SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: checksum tidak cocok, tidak ada yang diinstal
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	Kodec miniatur Explorer tidak dapat didaftarkan (kode keluar regsvr32 %1).
+ImHex pattern installed (restart ImHex).	Pola ImHex terpasang (mulai ulang ImHex).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 terpasang di %2. Buka terminal baru lalu jalankan: yaif --version
+Uninstall: Settings > Apps > YAIF.	Copot: Pengaturan > Aplikasi > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Instal untuk: [M] saya saja (tanpa hak administrator), [A] semua pengguna (meminta hak administrator)

@@ -15,7 +15,7 @@ mkdir -p $D/samples && cp docs/samples/{photo,screenshot,animation}.yaif $D/samp
 # next to yaif.exe: on the PATH, `yaif<Tab>` would offer both .ps1 files as commands.
 mkdir -p $D/scripts $D/imhex
 cp imhex/yaif.hexpat $D/imhex/
-cp install.ps1 $D/install.ps1
+{ printf '\357\273\277'; cat install.ps1; } > $D/install.ps1   # UTF-8 BOM: Windows PowerShell 5.1 reads a BOM-less file as ANSI and would garble the translations
 cp completions/yaif.ps1 $D/scripts/yaif-completion.ps1
 # Camera RAW: yaif dlopens libraw_r.so.25, which win/yaif_win.h turns into libraw_r-25.dll.
 # The other three are LibRaw's own DLL dependencies inside the MinGW sysroot, from
@@ -92,16 +92,8 @@ EOF
 cat > $D/install.bat <<'EOF'
 @echo off
 cd /d "%~dp0"
-echo Install YAIF for:
-echo   M = me only (no administrator rights needed)
-echo   A = all users (asks for administrator rights)
-choice /c MA /n /m "Choose M or A: "
-if errorlevel 2 goto all
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1"
-goto end
-:all
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" -AllUsers
-:end
+rem install.ps1 asks "me only (M) or all users (A)" itself, in the Windows display language.
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" -Ask
 pause
 EOF
 cat > $D/uninstall.bat <<'EOF'

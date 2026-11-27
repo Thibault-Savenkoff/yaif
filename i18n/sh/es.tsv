@@ -133,3 +133,19 @@ no 'lisaac' compiler found.	no se encontró el compilador «lisaac».
 Get it from https://lisaac.org (0.7), or use install.sh instead for a prebuilt binary.	Descárgalo de https://lisaac.org (0.7), o usa install.sh para un binario precompilado.
 Compiling yaif (lisaac yaif.li -boost)	Compilando yaif (lisaac yaif.li -boost)
 Installing	Instalando
+Administrator rights were refused: nothing was installed.	Se rechazaron los derechos de administrador: no se instaló nada.
+Administrator rights were refused: nothing was removed.	Se rechazaron los derechos de administrador: no se eliminó nada.
+Press Enter to close	Pulse Intro para cerrar
+Elevated as %1, not as %2: nothing was installed. Run it from an administrator account.	Elevado como %1, no como %2: no se instaló nada. Ejecútelo desde una cuenta de administrador.
+YAIF needs 64-bit Windows.	YAIF requiere Windows 64-bit.
+YAIF is already installed in %1: uninstall it first (Settings > Apps).	YAIF ya está instalado en %1: desinstálelo primero (Configuración > Aplicaciones).
+Installing YAIF %1 from %2	Instalando YAIF %1 desde %2
+no v2 release found	no se encontró ninguna versión v2
+Installing YAIF %1	Instalando YAIF %1
+%1 is not in SHA256SUMS	%1 no está en SHA256SUMS
+%1: checksum mismatch, nothing installed	%1: la suma de comprobación no coincide, no se instaló nada
+The Explorer thumbnail codec could not be registered (regsvr32 exit %1).	No se pudo registrar el códec de miniaturas del Explorador (código de salida de regsvr32: %1).
+ImHex pattern installed (restart ImHex).	Patrón de ImHex instalado (reinicie ImHex).
+YAIF %1 installed in %2. Open a new terminal and run: yaif --version	YAIF %1 instalado en %2. Abra un nuevo terminal y ejecute: yaif --version
+Uninstall: Settings > Apps > YAIF.	Desinstalar: Configuración > Aplicaciones > YAIF.
+Install for: [M] me only (no administrator rights), [A] all users (asks for administrator rights)	Instalar para: [M] solo yo (sin derechos de administrador), [A] todos los usuarios (requiere derechos de administrador)
