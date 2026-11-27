@@ -1,0 +1,109 @@
+# Ukrainian. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                графіка, вейвлети q 90 для фото
+                       .yaif is)	                       .yaif без втрат)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 передбачення (4 найсильніше), 5 вейвлети з втратами
+              TIFF 16-bit float (linear)	              TIFF із рухомою комою 16 біт (лінійний)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              джерело JPEG зберігає власну якість, 50 + Q/2 до 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16 біт, решта 8 біт); .pgm: необроблений кадр сенсора
+    -d ms     frame delay (animation)	    -d ms     затримка між кадрами (анімація)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   макс. похибка на відлік із втратами (типово 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: приблизно в 4 рази швидше, файли на 2-6 % більші
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR-вивід: PNG 16 біт, AVIF/HEIC 10 біт (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    метод (типово: кодер пробує всі): 0 палітра,
+    -live f.mov  adds the Live Photo video	    -live f.mov  додає відео Live Photo
+    -look  camera's look (canon, default) or darktable's	    -look  вигляд камери (canon, типово) або darktable
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  типово adaptive: без втрат для
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (типово: без втрат, якщо
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  якість вейвлетів (типово 90, ~45 дБ: візуально без втрат;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  якість (типово: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 дБ)
+    .avif with the gain map (libavif)	    .avif з картою підсилення (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: проявка через LibRaw
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Джерело з втратами лишається з втратами, PNG/TIFF без втрат (-m: вибір)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR-карта підсилення (HEIC з iPhone): .jpg пишеться як Ultra HDR,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: кадр сенсора зберігається без втрат (рівень 6)
+    animation: dst_000.png, dst_001.png...	    анімація: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    будь-яке джерело encode -> будь-яка ціль decode, за один крок,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (формат за розширенням)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    метадані (EXIF/GPS, XMP, ICC, текст) першого джерела зберігаються
+    several sources = animation	    кілька джерел = анімація
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    джерела: PNG, JPEG, HEIC/HEIF/AVIF (libheif), RAW камер (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    з метаданими та HDR-картою підсилення; параметри decode.
+    without dst: the first source with .yaif, next to it	    без dst: перше джерело з .yaif, поруч із ним
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  лише мініатюра (512 px), миттєво
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 уже існує. [r] замінити, [n] нова назва, [c] скасувати:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 не є придатним для читання зображенням, а ціль encode має закінчуватися на .yaif (для DNG, PNG, ...: yaif convert або yaif decode)
+%1: value missing	%1: немає значення
+-look: canon or darktable	-look: canon або darktable
+-m: lossy or lossless	-m: lossy або lossless
+Applying the gain map (%1x%2)...	Застосування карти підсилення (%1x%2)...
+CRC mismatch	Невідповідність CRC
+Cancelled.	Скасовано.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	Проявка RAW через LibRaw (%1 біт, баланс білого камери, %2)...
+Done: %1 bytes (%2) in %3	Готово: %1 байт (%2) за %3
+Done: %1 bytes, %2 % of the source (%3) in %4	Готово: %1 байт, %2 % від джерела (%3) за %4
+Done: wrote %1 frames (%2...) in %3	Готово: записано кадрів: %1 (%2...) за %3
+Done: wrote %1 in %2	Готово: %1 записано за %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	Помилка кодування JPEG (не вистачає пам'яті)
+RAW development failed: %1	Помилка проявки RAW: %1
+RAW files have one frame	У файлі RAW один кадр
+RAW frame too large	Кадр RAW завеликий
+RAW frame without RAWH	Кадр RAW без RAWH
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	Джерела RAW завжди без втрат, рівень 6 (без -m lossy і без -l)
+Reading %1 with LibRaw...	Читання %1 через LibRaw...
+Reading %1...	Читання %1...
+Usage:	Використання:
+WebP: %1	WebP: %1
+Writing %1	Запис %1
+Writing %1 (%2x%3)...	Запис %1 (%2x%3)...
+Writing %1 with its gain map...	Запис %1 з картою підсилення...
+Writing %1...	Запис %1...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	кадр RAW декодується в .dng, .png, .tif, .jpg (або .pgm: необроблений кадр сенсора)
+all frames must have the same size: %1	усі кадри мають бути одного розміру: %1
+bad FDLT	хибний FDLT
+bad FDLT region	хибна область FDLT
+bad GMAP	хибний GMAP
+bad IHDR	хибний IHDR
+bad PREV	хибний PREV
+bad RAW frame header	хибний заголовок кадру RAW
+bad RAWH	хибний RAWH
+bad plane count	хибна кількість площин
+bad size	хибний розмір
+cannot read %1	не вдається прочитати %1
+cannot read HEIC %1: %2	не вдається прочитати HEIC %1: %2
+cannot read RAW %1: %2	не вдається прочитати RAW %1: %2
+cannot read image %1	не вдається прочитати зображення %1
+cannot write %1	не вдається записати %1
+corrupt GMAP	пошкоджений GMAP
+corrupt PREV	пошкоджений PREV
+corrupt frame	пошкоджений кадр
+delta frame before full frame	різницевий кадр перед повним кадром
+encode needs at least one source	encode потребує принаймні одного джерела
+eps must be 1..64	eps має бути від 1 до 64
+frame before IHDR	кадр перед IHDR
+image too large for this system (over 500 Mpx)	зображення завелике для цієї системи (понад 500 Мпікс)
+image too large: YAIF stores at most 65535 x 65535 pixels	зображення завелике: YAIF зберігає щонайбільше 65535 x 65535 пікселів
+level 0 needs an image of 256 colours or less	рівень 0 потребує зображення не більш ніж з 256 кольорів
+level 5 is lossy only (-m lossy or adaptive)	рівень 5 лише з втратами (-m lossy або adaptive)
+level must be 0..%1	рівень має бути від 0 до %1
+missing value after %1	немає значення після %1
+no IHDR	немає IHDR
+not a YAIF file	це не файл YAIF
+quality must be 0..100	якість має бути від 0 до 100
+quality must be 1..100	якість має бути від 1 до 100
+second IHDR	другий IHDR
+the destination is a .yaif: use yaif encode	ціль — файл .yaif: використайте yaif encode
+the source is a .yaif: use yaif decode	джерело — файл .yaif: використайте yaif decode
+truncated file	файл обрізано
+truncated file (missing frames)	файл обрізано (бракує кадрів)
+unknown decode option %1	невідомий параметр decode: %1
+unknown mode %1	невідомий режим: %1
+unknown option %1	невідомий параметр: %1
+unsupported RAWH version	непідтримувана версія RAWH
+unsupported YAIF version (only v2)	непідтримувана версія YAIF (лише v2)
+unsupported bit depth	непідтримувана глибина біта
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	непідтримуване розширення виводу: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 доступний (зараз %2): %3
+TIFF compression failed	Помилка стиснення TIFF
+decimal separator	,
+thousands separator	 

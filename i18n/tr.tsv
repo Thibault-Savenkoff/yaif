@@ -1,0 +1,109 @@
+# Turkish. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                fotoğraflar için wavelet q 90
+                       .yaif is)	                       kayıpsızsa kayıpsız)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 öngörülü (4 en güçlü), 5 kayıplı wavelet
+              TIFF 16-bit float (linear)	              TIFF 16 bit kayan noktalı (doğrusal)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              bir JPEG kaynağı kendi kalitesini korur, 50 + Q/2, en çok 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16 bit, diğerleri 8 bit); .pgm: ham sensör karesi
+    -d ms     frame delay (animation)	    -d ms     kareler arası gecikme (animasyon)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   örnek başına en büyük hata, kayıplı (varsayılan 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: yaklaşık 4 kat hızlı, dosyalar 2-6 % daha büyük
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR çıktısı: PNG 16 bit, AVIF/HEIC 10 bit (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    yöntem (varsayılan: kodlayıcı hepsini dener): 0 palet,
+    -live f.mov  adds the Live Photo video	    -live f.mov  Live Photo videosunu ekler
+    -look  camera's look (canon, default) or darktable's	    -look  kameranın görünümü (canon, varsayılan) veya darktable'ınki
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  varsayılan adaptive: grafik için kayıpsız,
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (varsayılan: kaynak .yaif
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  wavelet kalitesi (varsayılan 90, ~45 dB: gözle kayıpsız;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  kalite (varsayılan: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif kazanç haritasıyla (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: LibRaw ile geliştirilir
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Kayıplı kaynak kayıplı kalır, PNG/TIFF kayıpsız (-m ile seçilir)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR kazanç haritası (iPhone HEIC): .jpg Ultra HDR olarak yazılır,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: sensör karesi kayıpsız saklanır (düzey 6)
+    animation: dst_000.png, dst_001.png...	    animasyon: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    her encode kaynağı -> her decode hedefi, tek adımda,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (biçim uzantıdan)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    ilk kaynağın üst verisi (EXIF/GPS, XMP, ICC, metin) korunur
+    several sources = animation	    birden çok kaynak = animasyon
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    kaynaklar: PNG, JPEG, HEIC/HEIF/AVIF (libheif), kamera RAW (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    üst verisi ve HDR kazanç haritasıyla; decode seçenekleri.
+    without dst: the first source with .yaif, next to it	    dst yoksa: ilk kaynağın yanına .yaif uzantılı
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  yalnızca küçük resim (512 px), anında
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 var. [r] değiştir, [n] yeni ad, [c] iptal:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 okunabilir bir görüntü değil ve encode hedefi .yaif ile bitmeli (DNG, PNG, ... için: yaif convert veya yaif decode)
+%1: value missing	%1: değer eksik
+-look: canon or darktable	-look: canon veya darktable
+-m: lossy or lossless	-m: lossy veya lossless
+Applying the gain map (%1x%2)...	Kazanç haritası uygulanıyor (%1x%2)...
+CRC mismatch	CRC uyuşmazlığı
+Cancelled.	İptal edildi.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	RAW, LibRaw ile geliştiriliyor (%1 bit, kameranın beyaz dengesi, %2)...
+Done: %1 bytes (%2) in %3	Bitti: %1 bayt (%2), süre %3
+Done: %1 bytes, %2 % of the source (%3) in %4	Bitti: %1 bayt, kaynağa oran %2 % (%3), süre %4
+Done: wrote %1 frames (%2...) in %3	Bitti: %1 kare yazıldı (%2...), süre %3
+Done: wrote %1 in %2	Bitti: %1 yazıldı, süre %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	JPEG kodlaması başarısız (bellek yetersiz)
+RAW development failed: %1	RAW geliştirme başarısız: %1
+RAW files have one frame	RAW dosyalarında tek kare vardır
+RAW frame too large	RAW karesi çok büyük
+RAW frame without RAWH	RAWH'siz RAW karesi
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW kaynakları her zaman kayıpsızdır, düzey 6 (-m lossy ve -l yok)
+Reading %1 with LibRaw...	%1, LibRaw ile okunuyor...
+Reading %1...	%1 okunuyor...
+Usage:	Kullanım:
+WebP: %1	WebP: %1
+Writing %1	%1 yazılıyor
+Writing %1 (%2x%3)...	%1 yazılıyor (%2x%3)...
+Writing %1 with its gain map...	%1, kazanç haritasıyla yazılıyor...
+Writing %1...	%1 yazılıyor...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	bir RAW karesi .dng, .png, .tif, .jpg olarak çözülür (veya .pgm: ham sensör karesi)
+all frames must have the same size: %1	tüm kareler aynı boyutta olmalı: %1
+bad FDLT	geçersiz FDLT
+bad FDLT region	geçersiz FDLT bölgesi
+bad GMAP	geçersiz GMAP
+bad IHDR	geçersiz IHDR
+bad PREV	geçersiz PREV
+bad RAW frame header	geçersiz RAW kare başlığı
+bad RAWH	geçersiz RAWH
+bad plane count	geçersiz düzlem sayısı
+bad size	geçersiz boyut
+cannot read %1	%1 okunamıyor
+cannot read HEIC %1: %2	HEIC %1 okunamıyor: %2
+cannot read RAW %1: %2	RAW %1 okunamıyor: %2
+cannot read image %1	%1 görüntüsü okunamıyor
+cannot write %1	%1 yazılamıyor
+corrupt GMAP	bozuk GMAP
+corrupt PREV	bozuk PREV
+corrupt frame	bozuk kare
+delta frame before full frame	tam kareden önce delta karesi
+encode needs at least one source	encode için en az bir kaynak gerekir
+eps must be 1..64	eps 1..64 arasında olmalı
+frame before IHDR	IHDR'den önce kare
+image too large for this system (over 500 Mpx)	görüntü bu sistem için çok büyük (500 Mpx üstü)
+image too large: YAIF stores at most 65535 x 65535 pixels	görüntü çok büyük: YAIF en fazla 65535 x 65535 piksel saklar
+level 0 needs an image of 256 colours or less	düzey 0 en fazla 256 renkli bir görüntü ister
+level 5 is lossy only (-m lossy or adaptive)	düzey 5 yalnızca kayıplıdır (-m lossy veya adaptive)
+level must be 0..%1	düzey 0..%1 arasında olmalı
+missing value after %1	%1 sonrasında değer eksik
+no IHDR	IHDR yok
+not a YAIF file	YAIF dosyası değil
+quality must be 0..100	kalite 0..100 arasında olmalı
+quality must be 1..100	kalite 1..100 arasında olmalı
+second IHDR	ikinci IHDR
+the destination is a .yaif: use yaif encode	hedef bir .yaif: yaif encode kullanın
+the source is a .yaif: use yaif decode	kaynak bir .yaif: yaif decode kullanın
+truncated file	dosya kesilmiş
+truncated file (missing frames)	dosya kesilmiş (kareler eksik)
+unknown decode option %1	bilinmeyen decode seçeneği: %1
+unknown mode %1	bilinmeyen kip: %1
+unknown option %1	bilinmeyen seçenek: %1
+unsupported RAWH version	desteklenmeyen RAWH sürümü
+unsupported YAIF version (only v2)	desteklenmeyen YAIF sürümü (yalnızca v2)
+unsupported bit depth	desteklenmeyen bit derinliği
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	desteklenmeyen çıktı uzantısı: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 mevcut (şu anki %2): %3
+TIFF compression failed	TIFF sıkıştırması başarısız
+decimal separator	,
+thousands separator	.

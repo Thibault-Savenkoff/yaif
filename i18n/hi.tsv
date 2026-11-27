@@ -1,0 +1,107 @@
+# Hindi. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                तस्वीरों के लिए वेवलेट q 90
+                       .yaif is)	                       .yaif लॉसलेस हो)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 प्रेडिक्टिव (4 सबसे मज़बूत), 5 लॉसी वेवलेट
+              TIFF 16-bit float (linear)	              TIFF 16-बिट फ़्लोट (लीनियर)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              JPEG स्रोत अपनी गुणवत्ता रखता है, 50 + Q/2, अधिकतम 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16-बिट, बाकी 8-बिट); .pgm: कच्चा सेंसर फ़्रेम
+    -d ms     frame delay (animation)	    -d ms     फ़्रेमों के बीच देरी (एनिमेशन)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   लॉसी में प्रति सैंपल अधिकतम त्रुटि (डिफ़ॉल्ट 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: लगभग 4 गुना तेज़, फ़ाइलें 2-6 % बड़ी
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR आउटपुट: PNG 16-बिट, AVIF/HEIC 10-बिट (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    विधि (डिफ़ॉल्ट: एन्कोडर सब आज़माता है): 0 पैलेट,
+    -live f.mov  adds the Live Photo video	    -live f.mov  Live Photo का वीडियो जोड़ता है
+    -look  camera's look (canon, default) or darktable's	    -look  कैमरे का लुक (canon, डिफ़ॉल्ट) या darktable का
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  डिफ़ॉल्ट adaptive: ग्राफ़िक के लिए लॉसलेस,
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (डिफ़ॉल्ट: लॉसलेस, अगर
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  वेवलेट गुणवत्ता (डिफ़ॉल्ट 90, ~45 dB: देखने में लॉसलेस;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  गुणवत्ता (डिफ़ॉल्ट: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif गेन मैप के साथ (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: LibRaw से डेवलप
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    लॉसी स्रोत लॉसी रहता है, PNG/TIFF लॉसलेस (-m से चुनें)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR गेन मैप (iPhone HEIC): .jpg Ultra HDR में लिखा जाता है,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: सेंसर फ़्रेम लॉसलेस सुरक्षित (स्तर 6)
+    animation: dst_000.png, dst_001.png...	    एनिमेशन: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    encode जो भी स्रोत पढ़े -> decode जो भी लक्ष्य लिखे, एक चरण में,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (प्रारूप एक्सटेंशन से)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    पहले स्रोत का मेटाडेटा (EXIF/GPS, XMP, ICC, टेक्स्ट) रखा जाता है
+    several sources = animation	    कई स्रोत = एनिमेशन
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    स्रोत: PNG, JPEG, HEIC/HEIF/AVIF (libheif), कैमरा RAW (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    मेटाडेटा और HDR गेन मैप सहित; decode के विकल्प।
+    without dst: the first source with .yaif, next to it	    dst के बिना: पहले स्रोत के पास .yaif के साथ
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  केवल थंबनेल (512 px), तुरंत
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 मौजूद है। [r] बदलें, [n] नया नाम, [c] रद्द करें:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 पढ़ने योग्य चित्र नहीं है, और encode का गंतव्य .yaif पर समाप्त होना चाहिए (DNG, PNG, ... के लिए: yaif convert या yaif decode)
+%1: value missing	%1: मान गायब है
+-look: canon or darktable	-look: canon या darktable
+-m: lossy or lossless	-m: lossy या lossless
+Applying the gain map (%1x%2)...	गेन मैप लागू हो रहा है (%1x%2)...
+CRC mismatch	CRC मेल नहीं खाता
+Cancelled.	रद्द किया गया।
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	LibRaw से RAW डेवलप हो रहा है (%1 बिट, कैमरे का व्हाइट बैलेंस, %2)...
+Done: %1 bytes (%2) in %3	पूर्ण: %1 बाइट (%2), %3 में
+Done: %1 bytes, %2 % of the source (%3) in %4	पूर्ण: %1 बाइट, स्रोत का %2 % (%3), %4 में
+Done: wrote %1 frames (%2...) in %3	पूर्ण: %1 फ़्रेम लिखे गए (%2...), %3 में
+Done: wrote %1 in %2	पूर्ण: %1 लिखा गया, %2 में
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	JPEG एन्कोडिंग विफल (मेमोरी समाप्त)
+RAW development failed: %1	RAW डेवलप विफल: %1
+RAW files have one frame	RAW फ़ाइलों में एक ही फ़्रेम होता है
+RAW frame too large	RAW फ़्रेम बहुत बड़ा है
+RAW frame without RAWH	RAWH के बिना RAW फ़्रेम
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW स्रोत हमेशा लॉसलेस होते हैं, स्तर 6 (-m lossy और -l नहीं)
+Reading %1 with LibRaw...	LibRaw से %1 पढ़ा जा रहा है...
+Reading %1...	%1 पढ़ा जा रहा है...
+Usage:	उपयोग:
+WebP: %1	WebP: %1
+Writing %1	%1 लिखा जा रहा है
+Writing %1 (%2x%3)...	%1 लिखा जा रहा है (%2x%3)...
+Writing %1 with its gain map...	%1 गेन मैप के साथ लिखा जा रहा है...
+Writing %1...	%1 लिखा जा रहा है...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	RAW फ़्रेम .dng, .png, .tif, .jpg में डिकोड होता है (या .pgm: कच्चा सेंसर फ़्रेम)
+all frames must have the same size: %1	सभी फ़्रेम एक ही आकार के होने चाहिए: %1
+bad FDLT	अमान्य FDLT
+bad FDLT region	अमान्य FDLT क्षेत्र
+bad GMAP	अमान्य GMAP
+bad IHDR	अमान्य IHDR
+bad PREV	अमान्य PREV
+bad RAW frame header	अमान्य RAW फ़्रेम हेडर
+bad RAWH	अमान्य RAWH
+bad plane count	अमान्य प्लेन संख्या
+bad size	अमान्य आकार
+cannot read %1	%1 पढ़ा नहीं जा सकता
+cannot read HEIC %1: %2	HEIC %1 पढ़ा नहीं जा सकता: %2
+cannot read RAW %1: %2	RAW %1 पढ़ा नहीं जा सकता: %2
+cannot read image %1	चित्र %1 पढ़ा नहीं जा सकता
+cannot write %1	%1 लिखा नहीं जा सकता
+corrupt GMAP	दूषित GMAP
+corrupt PREV	दूषित PREV
+corrupt frame	दूषित फ़्रेम
+delta frame before full frame	पूर्ण फ़्रेम से पहले डेल्टा फ़्रेम
+encode needs at least one source	encode को कम से कम एक स्रोत चाहिए
+eps must be 1..64	eps 1..64 के बीच होना चाहिए
+frame before IHDR	IHDR से पहले फ़्रेम
+image too large for this system (over 500 Mpx)	चित्र इस सिस्टम के लिए बहुत बड़ा है (500 Mpx से अधिक)
+image too large: YAIF stores at most 65535 x 65535 pixels	चित्र बहुत बड़ा है: YAIF अधिकतम 65535 x 65535 पिक्सेल सहेजता है
+level 0 needs an image of 256 colours or less	स्तर 0 को अधिकतम 256 रंगों का चित्र चाहिए
+level 5 is lossy only (-m lossy or adaptive)	स्तर 5 केवल लॉसी है (-m lossy या adaptive)
+level must be 0..%1	स्तर 0..%1 के बीच होना चाहिए
+missing value after %1	%1 के बाद मान गायब है
+no IHDR	IHDR नहीं है
+not a YAIF file	यह YAIF फ़ाइल नहीं है
+quality must be 0..100	गुणवत्ता 0..100 के बीच होनी चाहिए
+quality must be 1..100	गुणवत्ता 1..100 के बीच होनी चाहिए
+second IHDR	दूसरा IHDR
+the destination is a .yaif: use yaif encode	गंतव्य एक .yaif है: yaif encode का उपयोग करें
+the source is a .yaif: use yaif decode	स्रोत एक .yaif है: yaif decode का उपयोग करें
+truncated file	कटी हुई फ़ाइल
+truncated file (missing frames)	कटी हुई फ़ाइल (फ़्रेम गायब)
+unknown decode option %1	अज्ञात decode विकल्प %1
+unknown mode %1	अज्ञात मोड %1
+unknown option %1	अज्ञात विकल्प %1
+unsupported RAWH version	असमर्थित RAWH संस्करण
+unsupported YAIF version (only v2)	असमर्थित YAIF संस्करण (केवल v2)
+unsupported bit depth	असमर्थित बिट गहराई
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	असमर्थित आउटपुट एक्सटेंशन: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 उपलब्ध है (यह %2 है): %3
+TIFF compression failed	TIFF संपीड़न विफल

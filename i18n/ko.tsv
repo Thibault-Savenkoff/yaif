@@ -1,0 +1,107 @@
+# Korean. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                그래픽은 무손실, 사진은 웨이블릿 q 90
+                       .yaif is)	                       .yaif가 무손실이면 무손실)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 예측 (4가 가장 강함), 5 손실 웨이블릿
+              TIFF 16-bit float (linear)	              TIFF 16비트 부동소수점 (선형)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              JPEG 원본은 자체 품질을 유지, 50 + Q/2, 최대 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF는 16비트, 나머지는 8비트); .pgm: 센서 원시 프레임
+    -d ms     frame delay (animation)	    -d ms     프레임 간격 (애니메이션)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   손실 시 샘플당 최대 오차 (기본값 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: 약 4배 빠름, 파일은 2-6 % 큼
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR 출력: PNG 16비트, AVIF/HEIC 10비트 (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    방식 (기본값: 인코더가 모두 시도): 0 팔레트,
+    -live f.mov  adds the Live Photo video	    -live f.mov  Live Photo 비디오를 추가
+    -look  camera's look (canon, default) or darktable's	    -look  카메라 룩 (canon, 기본값) 또는 darktable 룩
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  기본값 adaptive:
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (기본값: 원본
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  웨이블릿 품질 (기본값 90, ~45 dB: 육안상 무손실;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  품질 (기본값: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif는 게인 맵 포함 (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: LibRaw로 현상
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    손실 원본은 손실 유지, PNG/TIFF는 무손실 (-m으로 선택)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR 게인 맵 (iPhone HEIC): .jpg는 Ultra HDR로 기록,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: 센서 프레임을 무손실로 보존 (레벨 6)
+    animation: dst_000.png, dst_001.png...	    애니메이션: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    encode가 읽는 모든 소스 -> decode가 쓰는 모든 대상, 한 번에,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (형식은 확장자에 따름)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    첫 번째 소스의 메타데이터 (EXIF/GPS, XMP, ICC, 텍스트) 유지
+    several sources = animation	    소스 여러 개 = 애니메이션
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    소스: PNG, JPEG, HEIC/HEIF/AVIF (libheif), 카메라 RAW (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    메타데이터와 HDR 게인 맵 포함, decode 옵션 사용 가능.
+    without dst: the first source with .yaif, next to it	    dst 생략: 첫 번째 소스 옆에 .yaif로 저장
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  썸네일만 (512 px), 즉시
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1이(가) 이미 있습니다. [r] 바꾸기, [n] 새 이름, [c] 취소:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1은(는) 읽을 수 있는 이미지가 아니며, encode 대상은 .yaif로 끝나야 합니다 (DNG, PNG, ...: yaif convert 또는 yaif decode)
+%1: value missing	%1: 값이 없습니다
+-look: canon or darktable	-look: canon 또는 darktable
+-m: lossy or lossless	-m: lossy 또는 lossless
+Applying the gain map (%1x%2)...	게인 맵 적용 중 (%1x%2)...
+CRC mismatch	CRC 불일치
+Cancelled.	취소되었습니다.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	LibRaw로 RAW 현상 중 (%1비트, 카메라 화이트 밸런스, %2)...
+Done: %1 bytes (%2) in %3	완료: %1바이트 (%2), %3
+Done: %1 bytes, %2 % of the source (%3) in %4	완료: %1바이트, 원본의 %2 % (%3), %4
+Done: wrote %1 frames (%2...) in %3	완료: %1개 프레임 기록 (%2...), %3
+Done: wrote %1 in %2	완료: %1 기록, %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	JPEG 인코딩 실패 (메모리 부족)
+RAW development failed: %1	RAW 현상 실패: %1
+RAW files have one frame	RAW 파일에는 프레임이 하나뿐입니다
+RAW frame too large	RAW 프레임이 너무 큽니다
+RAW frame without RAWH	RAWH가 없는 RAW 프레임
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW 소스는 항상 무손실, 레벨 6 (-m lossy와 -l 불가)
+Reading %1 with LibRaw...	LibRaw로 %1 읽는 중...
+Reading %1...	%1 읽는 중...
+Usage:	사용법:
+WebP: %1	WebP: %1
+Writing %1	%1 기록 중
+Writing %1 (%2x%3)...	%1 기록 중 (%2x%3)...
+Writing %1 with its gain map...	%1을(를) 게인 맵과 함께 기록 중...
+Writing %1...	%1 기록 중...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	RAW 프레임은 .dng, .png, .tif, .jpg (또는 .pgm: 센서 원시 프레임)로 디코딩됩니다
+all frames must have the same size: %1	모든 프레임의 크기가 같아야 합니다: %1
+bad FDLT	잘못된 FDLT
+bad FDLT region	잘못된 FDLT 영역
+bad GMAP	잘못된 GMAP
+bad IHDR	잘못된 IHDR
+bad PREV	잘못된 PREV
+bad RAW frame header	잘못된 RAW 프레임 헤더
+bad RAWH	잘못된 RAWH
+bad plane count	잘못된 플레인 수
+bad size	잘못된 크기
+cannot read %1	%1을(를) 읽을 수 없습니다
+cannot read HEIC %1: %2	HEIC %1을(를) 읽을 수 없습니다: %2
+cannot read RAW %1: %2	RAW %1을(를) 읽을 수 없습니다: %2
+cannot read image %1	이미지 %1을(를) 읽을 수 없습니다
+cannot write %1	%1을(를) 쓸 수 없습니다
+corrupt GMAP	손상된 GMAP
+corrupt PREV	손상된 PREV
+corrupt frame	손상된 프레임
+delta frame before full frame	전체 프레임보다 델타 프레임이 먼저 나옴
+encode needs at least one source	encode에는 소스가 하나 이상 필요합니다
+eps must be 1..64	eps는 1..64 범위여야 합니다
+frame before IHDR	IHDR보다 프레임이 먼저 나옴
+image too large for this system (over 500 Mpx)	이 시스템에는 이미지가 너무 큽니다 (500 Mpx 초과)
+image too large: YAIF stores at most 65535 x 65535 pixels	이미지가 너무 큽니다: YAIF는 최대 65535 x 65535 픽셀을 저장합니다
+level 0 needs an image of 256 colours or less	레벨 0은 256색 이하의 이미지가 필요합니다
+level 5 is lossy only (-m lossy or adaptive)	레벨 5는 손실 전용입니다 (-m lossy 또는 adaptive)
+level must be 0..%1	레벨은 0..%1 범위여야 합니다
+missing value after %1	%1 뒤에 값이 없습니다
+no IHDR	IHDR 없음
+not a YAIF file	YAIF 파일이 아닙니다
+quality must be 0..100	품질은 0..100 범위여야 합니다
+quality must be 1..100	품질은 1..100 범위여야 합니다
+second IHDR	두 번째 IHDR
+the destination is a .yaif: use yaif encode	대상이 .yaif입니다: yaif encode를 사용하세요
+the source is a .yaif: use yaif decode	소스가 .yaif입니다: yaif decode를 사용하세요
+truncated file	파일이 잘렸습니다
+truncated file (missing frames)	파일이 잘렸습니다 (프레임 누락)
+unknown decode option %1	알 수 없는 decode 옵션: %1
+unknown mode %1	알 수 없는 모드: %1
+unknown option %1	알 수 없는 옵션: %1
+unsupported RAWH version	지원되지 않는 RAWH 버전
+unsupported YAIF version (only v2)	지원되지 않는 YAIF 버전 (v2만)
+unsupported bit depth	지원되지 않는 비트 깊이
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	지원되지 않는 출력 확장자: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 사용 가능 (현재 %2): %3
+TIFF compression failed	TIFF 압축 실패

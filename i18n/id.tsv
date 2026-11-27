@@ -1,0 +1,109 @@
+# Indonesian. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                grafik, wavelet q 90 untuk foto
+                       .yaif is)	                       .yaif juga begitu)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 prediktif (4 terkuat), 5 wavelet dengan kehilangan
+              TIFF 16-bit float (linear)	              TIFF float 16-bit (linear)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              sumber JPEG mempertahankan kualitasnya, 50 + Q/2 hingga 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16-bit, lainnya 8-bit); .pgm: bingkai mentah sensor
+    -d ms     frame delay (animation)	    -d ms     jeda antarbingkai (animasi)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   galat maks. per sampel dengan kehilangan (bawaan 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: sekitar 4x lebih cepat, berkas 2-6 % lebih besar
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      tampilan HDR: PNG 16-bit, AVIF/HEIC 10-bit (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    metode (bawaan: encoder mencoba semuanya): 0 palet,
+    -live f.mov  adds the Live Photo video	    -live f.mov  menambahkan video Live Photo
+    -look  camera's look (canon, default) or darktable's	    -look  tampilan kamera (canon, bawaan) atau darktable
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  bawaan adaptive: tanpa kehilangan untuk
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (bawaan: tanpa kehilangan jika
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  kualitas wavelet (bawaan 90, ~45 dB: visual tanpa kehilangan;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  kualitas (bawaan: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif dengan peta gain (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: dikembangkan dengan LibRaw
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Sumber lossy tetap lossy, PNG/TIFF lossless (-m memilih)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    Peta gain HDR (HEIC iPhone): .jpg ditulis sebagai Ultra HDR,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: bingkai sensor disimpan tanpa kehilangan (level 6)
+    animation: dst_000.png, dst_001.png...	    animasi: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    sumber apa pun dari encode -> tujuan apa pun dari decode, sekali jalan,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (format dari ekstensi)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    metadata (EXIF/GPS, XMP, ICC, teks) sumber pertama dipertahankan
+    several sources = animation	    beberapa sumber = animasi
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    sumber: PNG, JPEG, HEIC/HEIF/AVIF (libheif), RAW kamera (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    beserta metadata dan peta gain HDR; opsi decode.
+    without dst: the first source with .yaif, next to it	    tanpa dst: sumber pertama dengan .yaif, di sebelahnya
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  hanya gambar mini (512 px), instan
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 sudah ada. [r] ganti, [n] nama baru, [c] batal:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 bukan gambar yang bisa dibaca, dan tujuan encode harus berakhiran .yaif (untuk DNG, PNG, ...: yaif convert atau yaif decode)
+%1: value missing	%1: nilai hilang
+-look: canon or darktable	-look: canon atau darktable
+-m: lossy or lossless	-m: lossy atau lossless
+Applying the gain map (%1x%2)...	Menerapkan peta gain (%1x%2)...
+CRC mismatch	CRC tidak cocok
+Cancelled.	Dibatalkan.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	Mengembangkan RAW dengan LibRaw (%1 bit, white balance kamera, %2)...
+Done: %1 bytes (%2) in %3	Selesai: %1 byte (%2) dalam %3
+Done: %1 bytes, %2 % of the source (%3) in %4	Selesai: %1 byte, %2 % dari sumber (%3) dalam %4
+Done: wrote %1 frames (%2...) in %3	Selesai: %1 bingkai ditulis (%2...) dalam %3
+Done: wrote %1 in %2	Selesai: %1 ditulis dalam %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	Penyandian JPEG gagal (kehabisan memori)
+RAW development failed: %1	Pengembangan RAW gagal: %1
+RAW files have one frame	Berkas RAW hanya punya satu bingkai
+RAW frame too large	Bingkai RAW terlalu besar
+RAW frame without RAWH	Bingkai RAW tanpa RAWH
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	Sumber RAW selalu tanpa kehilangan, level 6 (tanpa -m lossy, tanpa -l)
+Reading %1 with LibRaw...	Membaca %1 dengan LibRaw...
+Reading %1...	Membaca %1...
+Usage:	Penggunaan:
+WebP: %1	WebP: %1
+Writing %1	Menulis %1
+Writing %1 (%2x%3)...	Menulis %1 (%2x%3)...
+Writing %1 with its gain map...	Menulis %1 dengan peta gain-nya...
+Writing %1...	Menulis %1...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	bingkai RAW didekode ke .dng, .png, .tif, .jpg (atau .pgm: bingkai mentah sensor)
+all frames must have the same size: %1	semua bingkai harus berukuran sama: %1
+bad FDLT	FDLT tidak valid
+bad FDLT region	wilayah FDLT tidak valid
+bad GMAP	GMAP tidak valid
+bad IHDR	IHDR tidak valid
+bad PREV	PREV tidak valid
+bad RAW frame header	header bingkai RAW tidak valid
+bad RAWH	RAWH tidak valid
+bad plane count	jumlah bidang tidak valid
+bad size	ukuran tidak valid
+cannot read %1	tidak dapat membaca %1
+cannot read HEIC %1: %2	tidak dapat membaca HEIC %1: %2
+cannot read RAW %1: %2	tidak dapat membaca RAW %1: %2
+cannot read image %1	tidak dapat membaca gambar %1
+cannot write %1	tidak dapat menulis %1
+corrupt GMAP	GMAP rusak
+corrupt PREV	PREV rusak
+corrupt frame	bingkai rusak
+delta frame before full frame	bingkai delta sebelum bingkai penuh
+encode needs at least one source	encode memerlukan setidaknya satu sumber
+eps must be 1..64	eps harus antara 1 dan 64
+frame before IHDR	bingkai sebelum IHDR
+image too large for this system (over 500 Mpx)	gambar terlalu besar untuk sistem ini (lebih dari 500 Mpx)
+image too large: YAIF stores at most 65535 x 65535 pixels	gambar terlalu besar: YAIF menyimpan paling banyak 65535 x 65535 piksel
+level 0 needs an image of 256 colours or less	level 0 memerlukan gambar dengan 256 warna atau kurang
+level 5 is lossy only (-m lossy or adaptive)	level 5 hanya dengan kehilangan (-m lossy atau adaptive)
+level must be 0..%1	level harus antara 0 dan %1
+missing value after %1	nilai hilang setelah %1
+no IHDR	tidak ada IHDR
+not a YAIF file	bukan berkas YAIF
+quality must be 0..100	kualitas harus antara 0 dan 100
+quality must be 1..100	kualitas harus antara 1 dan 100
+second IHDR	IHDR kedua
+the destination is a .yaif: use yaif encode	tujuannya adalah .yaif: gunakan yaif encode
+the source is a .yaif: use yaif decode	sumbernya adalah .yaif: gunakan yaif decode
+truncated file	berkas terpotong
+truncated file (missing frames)	berkas terpotong (bingkai hilang)
+unknown decode option %1	opsi decode tidak dikenal: %1
+unknown mode %1	mode tidak dikenal: %1
+unknown option %1	opsi tidak dikenal: %1
+unsupported RAWH version	versi RAWH tidak didukung
+unsupported YAIF version (only v2)	versi YAIF tidak didukung (hanya v2)
+unsupported bit depth	kedalaman bit tidak didukung
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	ekstensi keluaran tidak didukung: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 tersedia (ini %2): %3
+TIFF compression failed	Kompresi TIFF gagal
+decimal separator	,
+thousands separator	.

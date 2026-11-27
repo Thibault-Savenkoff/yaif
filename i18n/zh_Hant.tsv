@@ -1,0 +1,107 @@
+# Traditional Chinese. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                圖形無損，照片用小波 q 90
+                       .yaif is)	                       .yaif 無損則無損）
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 預測（4 最強），5 有損小波
+              TIFF 16-bit float (linear)	              TIFF 16 位元浮點（線性）
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              JPEG 來源保留其自身品質，50 + Q/2，最高 90）
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    （TIFF 16 位元，其餘 8 位元）；.pgm：感光元件原始影格
+    -d ms     frame delay (animation)	    -d ms     影格間隔（動畫）
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   有損時每個樣本的最大誤差（預設 2）
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP：約快 4 倍，檔案大 2-6 %
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR 輸出：PNG 16 位元，AVIF/HEIC 10 位元（PQ），
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    方法（預設：編碼器逐一嘗試）：0 色盤，
+    -live f.mov  adds the Live Photo video	    -live f.mov  加入 Live Photo 影片
+    -look  camera's look (canon, default) or darktable's	    -look  相機風格（canon，預設）或 darktable 風格
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  預設 adaptive：
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC（預設：若
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  小波品質（預設 90，約 45 dB：視覺無損；
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  品質（預設：JPEG/WebP 90，AVIF 85，HEIC 60：約 44 dB）
+    .avif with the gain map (libavif)	    .avif 含增益圖（libavif）
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng：DNG；.png .tif .jpg .webp .avif .heic：以 LibRaw 顯影
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    有損來源維持有損，PNG/TIFF 無損（-m 可選）
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR 增益圖（iPhone HEIC）：.jpg 寫成 Ultra HDR，
+    RAW: sensor frame kept losslessly (level 6)	    RAW：感光元件影格無損保留（等級 6）
+    animation: dst_000.png, dst_001.png...	    動畫：dst_000.png，dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    encode 能讀的任何來源 -> decode 能寫的任何目標，一步完成，
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst：.png .tif .jpg .webp .avif .heic（格式依副檔名）
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    保留第一個來源的中繼資料（EXIF/GPS、XMP、ICC、文字）
+    several sources = animation	    多個來源 = 動畫
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    來源：PNG、JPEG、HEIC/HEIF/AVIF（libheif）、相機 RAW（LibRaw）
+    with its metadata and HDR gain map; decode's options.	    含中繼資料與 HDR 增益圖；可用 decode 的選項。
+    without dst: the first source with .yaif, next to it	    省略 dst：在第一個來源旁產生 .yaif
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  僅縮圖（512 px），瞬間完成
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 已存在。[r] 取代，[n] 新名稱，[c] 取消：
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 不是可讀取的影像，且 encode 的目標必須以 .yaif 結尾（DNG、PNG 等：請用 yaif convert 或 yaif decode）
+%1: value missing	%1：缺少值
+-look: canon or darktable	-look：canon 或 darktable
+-m: lossy or lossless	-m：lossy 或 lossless
+Applying the gain map (%1x%2)...	正在套用增益圖（%1x%2）...
+CRC mismatch	CRC 不符
+Cancelled.	已取消。
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	正在以 LibRaw 顯影 RAW（%1 位元，相機白平衡，%2）...
+Done: %1 bytes (%2) in %3	完成：%1 位元組（%2），耗時 %3
+Done: %1 bytes, %2 % of the source (%3) in %4	完成：%1 位元組，為來源的 %2 %（%3），耗時 %4
+Done: wrote %1 frames (%2...) in %3	完成：已寫入 %1 個影格（%2...），耗時 %3
+Done: wrote %1 in %2	完成：已寫入 %1，耗時 %2
+HEIF: %1	HEIF：%1
+JPEG encoding failed (out of memory)	JPEG 編碼失敗（記憶體不足）
+RAW development failed: %1	RAW 顯影失敗：%1
+RAW files have one frame	RAW 檔案只有一個影格
+RAW frame too large	RAW 影格太大
+RAW frame without RAWH	缺少 RAWH 的 RAW 影格
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW 來源一律無損，等級 6（不可用 -m lossy 與 -l）
+Reading %1 with LibRaw...	正在以 LibRaw 讀取 %1...
+Reading %1...	正在讀取 %1...
+Usage:	用法：
+WebP: %1	WebP：%1
+Writing %1	正在寫入 %1
+Writing %1 (%2x%3)...	正在寫入 %1（%2x%3）...
+Writing %1 with its gain map...	正在寫入 %1（含增益圖）...
+Writing %1...	正在寫入 %1...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	RAW 影格可解碼為 .dng、.png、.tif、.jpg（或 .pgm：感光元件原始影格）
+all frames must have the same size: %1	所有影格的尺寸必須相同：%1
+bad FDLT	FDLT 無效
+bad FDLT region	FDLT 區域無效
+bad GMAP	GMAP 無效
+bad IHDR	IHDR 無效
+bad PREV	PREV 無效
+bad RAW frame header	RAW 影格標頭無效
+bad RAWH	RAWH 無效
+bad plane count	平面數無效
+bad size	尺寸無效
+cannot read %1	無法讀取 %1
+cannot read HEIC %1: %2	無法讀取 HEIC %1：%2
+cannot read RAW %1: %2	無法讀取 RAW %1：%2
+cannot read image %1	無法讀取影像 %1
+cannot write %1	無法寫入 %1
+corrupt GMAP	GMAP 已損毀
+corrupt PREV	PREV 已損毀
+corrupt frame	影格已損毀
+delta frame before full frame	完整影格之前出現了差異影格
+encode needs at least one source	encode 至少需要一個來源
+eps must be 1..64	eps 必須介於 1..64
+frame before IHDR	IHDR 之前出現了影格
+image too large for this system (over 500 Mpx)	影像對此系統而言太大（超過 500 Mpx）
+image too large: YAIF stores at most 65535 x 65535 pixels	影像太大：YAIF 最多儲存 65535 x 65535 像素
+level 0 needs an image of 256 colours or less	等級 0 需要不超過 256 色的影像
+level 5 is lossy only (-m lossy or adaptive)	等級 5 僅限有損（-m lossy 或 adaptive）
+level must be 0..%1	等級必須介於 0..%1
+missing value after %1	%1 之後缺少值
+no IHDR	沒有 IHDR
+not a YAIF file	不是 YAIF 檔案
+quality must be 0..100	品質必須介於 0..100
+quality must be 1..100	品質必須介於 1..100
+second IHDR	第二個 IHDR
+the destination is a .yaif: use yaif encode	目標是 .yaif：請用 yaif encode
+the source is a .yaif: use yaif decode	來源是 .yaif：請用 yaif decode
+truncated file	檔案被截斷
+truncated file (missing frames)	檔案被截斷（缺少影格）
+unknown decode option %1	未知的 decode 選項 %1
+unknown mode %1	未知的模式 %1
+unknown option %1	未知的選項 %1
+unsupported RAWH version	不支援的 RAWH 版本
+unsupported YAIF version (only v2)	不支援的 YAIF 版本（僅 v2）
+unsupported bit depth	不支援的位元深度
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	不支援的輸出副檔名：%1（.png .tif .jpg .webp .avif .heic .heif .pam）
+yaif %1 is available (this is %2): %3	yaif %1 可用（目前為 %2）：%3
+TIFF compression failed	TIFF 壓縮失敗

@@ -1,0 +1,109 @@
+# Vietnamese. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                đồ họa, wavelet q 90 cho ảnh
+                       .yaif is)	                       .yaif cũng vậy)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 dự đoán (4 mạnh nhất), 5 wavelet có mất dữ liệu
+              TIFF 16-bit float (linear)	              TIFF dấu phẩy động 16 bit (tuyến tính)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              nguồn JPEG giữ chất lượng riêng, 50 + Q/2 đến 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16 bit, còn lại 8 bit); .pgm: khung thô của cảm biến
+    -d ms     frame delay (animation)	    -d ms     độ trễ giữa các khung (hoạt ảnh)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   sai số tối đa mỗi mẫu khi có mất dữ liệu (mặc định 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: nhanh hơn khoảng 4 lần, tệp lớn hơn 2-6 %
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      hiển thị HDR: PNG 16 bit, AVIF/HEIC 10 bit (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    phương pháp (mặc định: bộ mã hóa thử hết): 0 bảng màu,
+    -live f.mov  adds the Live Photo video	    -live f.mov  thêm video của Live Photo
+    -look  camera's look (canon, default) or darktable's	    -look  phong cách máy ảnh (canon, mặc định) hoặc darktable
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  mặc định adaptive: không mất dữ liệu cho
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (mặc định: không mất dữ liệu nếu
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  chất lượng wavelet (mặc định 90, ~45 dB: mắt không thấy khác;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  chất lượng (mặc định: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif kèm bản đồ gain (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: hiện ảnh bằng LibRaw
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Nguồn có mất dữ liệu giữ nguyên vậy, PNG/TIFF không mất (-m để chọn)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    Bản đồ gain HDR (HEIC của iPhone): .jpg được ghi ở dạng Ultra HDR,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: khung cảm biến được giữ không mất dữ liệu (mức 6)
+    animation: dst_000.png, dst_001.png...	    hoạt ảnh: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    mọi nguồn encode đọc được -> mọi đích decode ghi được, một bước,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (định dạng theo phần mở rộng)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    siêu dữ liệu (EXIF/GPS, XMP, ICC, văn bản) của nguồn đầu được giữ
+    several sources = animation	    nhiều nguồn = hoạt ảnh
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    nguồn: PNG, JPEG, HEIC/HEIF/AVIF (libheif), RAW máy ảnh (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    kèm siêu dữ liệu và bản đồ gain HDR; có các tùy chọn của decode.
+    without dst: the first source with .yaif, next to it	    không có dst: nguồn đầu tiên với .yaif, ngay bên cạnh
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  chỉ ảnh thu nhỏ (512 px), tức thì
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 đã tồn tại. [r] thay thế, [n] tên mới, [c] hủy:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 không phải ảnh đọc được, và đích của encode phải kết thúc bằng .yaif (với DNG, PNG, ...: yaif convert hoặc yaif decode)
+%1: value missing	%1: thiếu giá trị
+-look: canon or darktable	-look: canon hoặc darktable
+-m: lossy or lossless	-m: lossy hoặc lossless
+Applying the gain map (%1x%2)...	Đang áp dụng bản đồ gain (%1x%2)...
+CRC mismatch	CRC không khớp
+Cancelled.	Đã hủy.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	Đang hiện ảnh RAW bằng LibRaw (%1 bit, cân bằng trắng của máy ảnh, %2)...
+Done: %1 bytes (%2) in %3	Xong: %1 byte (%2) trong %3
+Done: %1 bytes, %2 % of the source (%3) in %4	Xong: %1 byte, %2 % của nguồn (%3) trong %4
+Done: wrote %1 frames (%2...) in %3	Xong: đã ghi %1 khung (%2...) trong %3
+Done: wrote %1 in %2	Xong: đã ghi %1 trong %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	Mã hóa JPEG thất bại (hết bộ nhớ)
+RAW development failed: %1	Hiện ảnh RAW thất bại: %1
+RAW files have one frame	Tệp RAW chỉ có một khung
+RAW frame too large	Khung RAW quá lớn
+RAW frame without RAWH	Khung RAW không có RAWH
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	Nguồn RAW luôn không mất dữ liệu, mức 6 (không dùng -m lossy, không dùng -l)
+Reading %1 with LibRaw...	Đang đọc %1 bằng LibRaw...
+Reading %1...	Đang đọc %1...
+Usage:	Cách dùng:
+WebP: %1	WebP: %1
+Writing %1	Đang ghi %1
+Writing %1 (%2x%3)...	Đang ghi %1 (%2x%3)...
+Writing %1 with its gain map...	Đang ghi %1 cùng bản đồ gain...
+Writing %1...	Đang ghi %1...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	một khung RAW được giải mã thành .dng, .png, .tif, .jpg (hoặc .pgm: khung thô của cảm biến)
+all frames must have the same size: %1	mọi khung phải có cùng kích thước: %1
+bad FDLT	FDLT không hợp lệ
+bad FDLT region	vùng FDLT không hợp lệ
+bad GMAP	GMAP không hợp lệ
+bad IHDR	IHDR không hợp lệ
+bad PREV	PREV không hợp lệ
+bad RAW frame header	tiêu đề khung RAW không hợp lệ
+bad RAWH	RAWH không hợp lệ
+bad plane count	số mặt phẳng không hợp lệ
+bad size	kích thước không hợp lệ
+cannot read %1	không đọc được %1
+cannot read HEIC %1: %2	không đọc được HEIC %1: %2
+cannot read RAW %1: %2	không đọc được RAW %1: %2
+cannot read image %1	không đọc được ảnh %1
+cannot write %1	không ghi được %1
+corrupt GMAP	GMAP bị hỏng
+corrupt PREV	PREV bị hỏng
+corrupt frame	khung bị hỏng
+delta frame before full frame	khung delta đứng trước khung đầy đủ
+encode needs at least one source	encode cần ít nhất một nguồn
+eps must be 1..64	eps phải nằm trong khoảng 1..64
+frame before IHDR	khung đứng trước IHDR
+image too large for this system (over 500 Mpx)	ảnh quá lớn với hệ thống này (hơn 500 Mpx)
+image too large: YAIF stores at most 65535 x 65535 pixels	ảnh quá lớn: YAIF chỉ lưu tối đa 65535 x 65535 điểm ảnh
+level 0 needs an image of 256 colours or less	mức 0 cần ảnh có tối đa 256 màu
+level 5 is lossy only (-m lossy or adaptive)	mức 5 chỉ có mất dữ liệu (-m lossy hoặc adaptive)
+level must be 0..%1	mức phải nằm trong khoảng 0..%1
+missing value after %1	thiếu giá trị sau %1
+no IHDR	không có IHDR
+not a YAIF file	không phải tệp YAIF
+quality must be 0..100	chất lượng phải nằm trong khoảng 0..100
+quality must be 1..100	chất lượng phải nằm trong khoảng 1..100
+second IHDR	IHDR thứ hai
+the destination is a .yaif: use yaif encode	đích là tệp .yaif: hãy dùng yaif encode
+the source is a .yaif: use yaif decode	nguồn là tệp .yaif: hãy dùng yaif decode
+truncated file	tệp bị cắt cụt
+truncated file (missing frames)	tệp bị cắt cụt (thiếu khung)
+unknown decode option %1	tùy chọn decode không rõ: %1
+unknown mode %1	chế độ không rõ: %1
+unknown option %1	tùy chọn không rõ: %1
+unsupported RAWH version	phiên bản RAWH không được hỗ trợ
+unsupported YAIF version (only v2)	phiên bản YAIF không được hỗ trợ (chỉ v2)
+unsupported bit depth	độ sâu bit không được hỗ trợ
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	phần mở rộng đầu ra không được hỗ trợ: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 đã có (hiện là %2): %3
+TIFF compression failed	Nén TIFF thất bại
+decimal separator	,
+thousands separator	.

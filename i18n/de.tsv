@@ -1,0 +1,109 @@
+# German. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                Grafiken, Wavelet q 90 für Fotos
+                       .yaif is)	                       .yaif es ist)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 prädiktiv (4 am stärksten), 5 verlustbehaftete Wavelets
+              TIFF 16-bit float (linear)	              TIFF 16 Bit Gleitkomma (linear)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              eine JPEG-Quelle behält ihre Qualität, 50 + Q/2 bis 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF 16 Bit, sonst 8 Bit); .pgm: reines Sensorbild
+    -d ms     frame delay (animation)	    -d ms     Bildabstand (Animation)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   max. Fehler pro Wert, verlustbehaftet (Standard 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: etwa 4x schneller, Dateien 2-6 % größer
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR-Wiedergabe: PNG 16 Bit, AVIF/HEIC 10 Bit (PQ),
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    Methode (Standard: der Encoder probiert alle): 0 Palette,
+    -live f.mov  adds the Live Photo video	    -live f.mov  fügt das Video der Live Photo hinzu
+    -look  camera's look (canon, default) or darktable's	    -look  Look der Kamera (canon, Standard) oder von darktable
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  Standard adaptive: verlustfrei für
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (Standard: verlustfrei, wenn die
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  Wavelet-Qualität (Standard 90, ~45 dB: optisch verlustfrei;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  Qualität (Standard: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif mit der Gain-Map (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: entwickelt mit LibRaw
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    Verlustbehaftete Quelle bleibt so, PNG/TIFF verlustfrei (-m wählt)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR-Gain-Map (iPhone-HEIC): .jpg wird als Ultra HDR geschrieben,
+    RAW: sensor frame kept losslessly (level 6)	    RAW: Sensorbild bleibt verlustfrei erhalten (Stufe 6)
+    animation: dst_000.png, dst_001.png...	    Animation: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    jede Quelle von encode -> jedes Ziel von decode, in einem Schritt,
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (Format nach Endung)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    Metadaten (EXIF/GPS, XMP, ICC, Text) der ersten Quelle bleiben erhalten
+    several sources = animation	    mehrere Quellen = Animation
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    Quellen: PNG, JPEG, HEIC/HEIF/AVIF (libheif), Kamera-RAW (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    mit Metadaten und HDR-Gain-Map; Optionen von decode.
+    without dst: the first source with .yaif, next to it	    ohne dst: die erste Quelle mit .yaif, daneben
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  nur Vorschaubild (512 px), sofort
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 existiert. [r] ersetzen, [n] neuer Name, [c] abbrechen:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 ist kein lesbares Bild, und ein encode-Ziel muss auf .yaif enden (für DNG, PNG, ...: yaif convert oder yaif decode)
+%1: value missing	%1: Wert fehlt
+-look: canon or darktable	-look: canon oder darktable
+-m: lossy or lossless	-m: lossy oder lossless
+Applying the gain map (%1x%2)...	Gain-Map wird angewendet (%1x%2)...
+CRC mismatch	CRC stimmt nicht
+Cancelled.	Abgebrochen.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	RAW wird mit LibRaw entwickelt (%1 Bit, Kamera-Weißabgleich, %2)...
+Done: %1 bytes (%2) in %3	Fertig: %1 Bytes (%2) in %3
+Done: %1 bytes, %2 % of the source (%3) in %4	Fertig: %1 Bytes, %2 % der Quelle (%3) in %4
+Done: wrote %1 frames (%2...) in %3	Fertig: %1 Bilder geschrieben (%2...) in %3
+Done: wrote %1 in %2	Fertig: %1 geschrieben in %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	JPEG-Kodierung fehlgeschlagen (Speicher voll)
+RAW development failed: %1	RAW-Entwicklung fehlgeschlagen: %1
+RAW files have one frame	RAW-Dateien haben ein Bild
+RAW frame too large	RAW-Bild zu groß
+RAW frame without RAWH	RAW-Bild ohne RAWH
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW-Quellen sind immer verlustfrei, Stufe 6 (kein -m lossy, kein -l)
+Reading %1 with LibRaw...	%1 wird mit LibRaw gelesen...
+Reading %1...	%1 wird gelesen...
+Usage:	Verwendung:
+WebP: %1	WebP: %1
+Writing %1	%1 wird geschrieben
+Writing %1 (%2x%3)...	%1 wird geschrieben (%2x%3)...
+Writing %1 with its gain map...	%1 wird mit Gain-Map geschrieben...
+Writing %1...	%1 wird geschrieben...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	ein RAW-Bild wird zu .dng, .png, .tif, .jpg (oder .pgm: reines Sensorbild) dekodiert
+all frames must have the same size: %1	alle Bilder müssen gleich groß sein: %1
+bad FDLT	ungültiges FDLT
+bad FDLT region	ungültige FDLT-Region
+bad GMAP	ungültiges GMAP
+bad IHDR	ungültiges IHDR
+bad PREV	ungültiges PREV
+bad RAW frame header	ungültiger RAW-Bildkopf
+bad RAWH	ungültiges RAWH
+bad plane count	ungültige Ebenenanzahl
+bad size	ungültige Größe
+cannot read %1	%1 kann nicht gelesen werden
+cannot read HEIC %1: %2	HEIC %1 kann nicht gelesen werden: %2
+cannot read RAW %1: %2	RAW %1 kann nicht gelesen werden: %2
+cannot read image %1	Bild %1 kann nicht gelesen werden
+cannot write %1	%1 kann nicht geschrieben werden
+corrupt GMAP	beschädigtes GMAP
+corrupt PREV	beschädigtes PREV
+corrupt frame	beschädigtes Bild
+delta frame before full frame	Delta-Bild vor dem vollständigen Bild
+encode needs at least one source	encode braucht mindestens eine Quelle
+eps must be 1..64	eps muss zwischen 1 und 64 liegen
+frame before IHDR	Bild vor IHDR
+image too large for this system (over 500 Mpx)	Bild für dieses System zu groß (über 500 Mpx)
+image too large: YAIF stores at most 65535 x 65535 pixels	Bild zu groß: YAIF speichert höchstens 65535 x 65535 Pixel
+level 0 needs an image of 256 colours or less	Stufe 0 braucht ein Bild mit höchstens 256 Farben
+level 5 is lossy only (-m lossy or adaptive)	Stufe 5 ist nur verlustbehaftet (-m lossy oder adaptive)
+level must be 0..%1	Stufe muss zwischen 0 und %1 liegen
+missing value after %1	Wert fehlt nach %1
+no IHDR	kein IHDR
+not a YAIF file	keine YAIF-Datei
+quality must be 0..100	Qualität muss zwischen 0 und 100 liegen
+quality must be 1..100	Qualität muss zwischen 1 und 100 liegen
+second IHDR	zweites IHDR
+the destination is a .yaif: use yaif encode	das Ziel ist eine .yaif: nutze yaif encode
+the source is a .yaif: use yaif decode	die Quelle ist eine .yaif: nutze yaif decode
+truncated file	abgeschnittene Datei
+truncated file (missing frames)	abgeschnittene Datei (Bilder fehlen)
+unknown decode option %1	unbekannte decode-Option %1
+unknown mode %1	unbekannter Modus %1
+unknown option %1	unbekannte Option %1
+unsupported RAWH version	nicht unterstützte RAWH-Version
+unsupported YAIF version (only v2)	nicht unterstützte YAIF-Version (nur v2)
+unsupported bit depth	nicht unterstützte Bittiefe
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	nicht unterstützte Ausgabeendung: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 ist verfügbar (dies ist %2): %3
+TIFF compression failed	TIFF-Komprimierung fehlgeschlagen
+decimal separator	,
+thousands separator	.

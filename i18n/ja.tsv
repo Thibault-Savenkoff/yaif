@@ -1,0 +1,107 @@
+# Japanese. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                写真はウェーブレット q 90
+                       .yaif is)	                       .yaif が可逆なら可逆)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 予測 (4 が最強)、5 非可逆ウェーブレット
+              TIFF 16-bit float (linear)	              TIFF 16 ビット浮動小数点 (リニア)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              JPEG ソースは元の品質を保持、50 + Q/2 で最大 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF は 16 ビット、他は 8 ビット); .pgm: センサー生データ
+    -d ms     frame delay (animation)	    -d ms     フレーム間隔 (アニメーション)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   非可逆時のサンプルあたり最大誤差 (既定 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: 約 4 倍高速、ファイルは 2-6 % 大きい
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      HDR 出力: PNG 16 ビット、AVIF/HEIC 10 ビット (PQ)、
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    方式 (既定: エンコーダが試行): 0 パレット、
+    -live f.mov  adds the Live Photo video	    -live f.mov  Live Photo の動画を追加
+    -look  camera's look (canon, default) or darktable's	    -look  カメラ風 (canon、既定) または darktable 風
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  既定 adaptive: グラフィックは可逆、
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (既定: 元の
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  ウェーブレット品質 (既定 90、約 45 dB: 視覚的に可逆;
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  品質 (既定: JPEG/WebP 90、AVIF 85、HEIC 60: 約 44 dB)
+    .avif with the gain map (libavif)	    .avif はゲインマップ付き (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG; .png .tif .jpg .webp .avif .heic: LibRaw で現像
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    非可逆ソースは非可逆のまま、PNG/TIFF は可逆 (-m で選択)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    HDR ゲインマップ (iPhone の HEIC): .jpg は Ultra HDR で書き出し、
+    RAW: sensor frame kept losslessly (level 6)	    RAW: センサーフレームを可逆で保持 (レベル 6)
+    animation: dst_000.png, dst_001.png...	    アニメーション: dst_000.png, dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    encode が読む任意のソース -> decode が書く任意の出力へ 1 手順で、
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (形式は拡張子で決定)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    最初のソースのメタデータ (EXIF/GPS, XMP, ICC, テキスト) は保持
+    several sources = animation	    複数ソース = アニメーション
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    ソース: PNG, JPEG, HEIC/HEIF/AVIF (libheif), カメラ RAW (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    メタデータと HDR ゲインマップ付き; decode のオプションも可。
+    without dst: the first source with .yaif, next to it	    dst なし: 最初のソースの隣に .yaif で出力
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  サムネイルのみ (512 px)、即時
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 は既に存在します。[r] 置換, [n] 新しい名前, [c] 中止:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 は読み取れる画像ではありません。また encode の出力先は .yaif で終わる必要があります (DNG, PNG, ... は yaif convert または yaif decode)
+%1: value missing	%1: 値がありません
+-look: canon or darktable	-look: canon または darktable
+-m: lossy or lossless	-m: lossy または lossless
+Applying the gain map (%1x%2)...	ゲインマップを適用中 (%1x%2)...
+CRC mismatch	CRC が一致しません
+Cancelled.	中止しました。
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	LibRaw で RAW を現像中 (%1 ビット、カメラのホワイトバランス、%2)...
+Done: %1 bytes (%2) in %3	完了: %1 バイト (%2)、%3
+Done: %1 bytes, %2 % of the source (%3) in %4	完了: %1 バイト、元の %2 % (%3)、%4
+Done: wrote %1 frames (%2...) in %3	完了: %1 フレームを書き出し (%2...)、%3
+Done: wrote %1 in %2	完了: %1 を書き出し、%2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	JPEG エンコードに失敗しました (メモリ不足)
+RAW development failed: %1	RAW 現像に失敗しました: %1
+RAW files have one frame	RAW ファイルのフレームは 1 つです
+RAW frame too large	RAW フレームが大きすぎます
+RAW frame without RAWH	RAWH のない RAW フレーム
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	RAW ソースは常に可逆、レベル 6 (-m lossy と -l は不可)
+Reading %1 with LibRaw...	LibRaw で %1 を読み込み中...
+Reading %1...	%1 を読み込み中...
+Usage:	使い方:
+WebP: %1	WebP: %1
+Writing %1	%1 を書き込み中
+Writing %1 (%2x%3)...	%1 を書き込み中 (%2x%3)...
+Writing %1 with its gain map...	%1 をゲインマップ付きで書き込み中...
+Writing %1...	%1 を書き込み中...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	RAW フレームのデコード先: .dng, .png, .tif, .jpg (または .pgm: センサー生データ)
+all frames must have the same size: %1	すべてのフレームは同じサイズである必要があります: %1
+bad FDLT	FDLT が不正です
+bad FDLT region	FDLT の領域が不正です
+bad GMAP	GMAP が不正です
+bad IHDR	IHDR が不正です
+bad PREV	PREV が不正です
+bad RAW frame header	RAW フレームヘッダーが不正です
+bad RAWH	RAWH が不正です
+bad plane count	プレーン数が不正です
+bad size	サイズが不正です
+cannot read %1	%1 を読み込めません
+cannot read HEIC %1: %2	HEIC %1 を読み込めません: %2
+cannot read RAW %1: %2	RAW %1 を読み込めません: %2
+cannot read image %1	画像 %1 を読み込めません
+cannot write %1	%1 を書き込めません
+corrupt GMAP	GMAP が破損しています
+corrupt PREV	PREV が破損しています
+corrupt frame	フレームが破損しています
+delta frame before full frame	完全フレームの前に差分フレームがあります
+encode needs at least one source	encode には少なくとも 1 つのソースが必要です
+eps must be 1..64	eps は 1..64 の範囲で指定してください
+frame before IHDR	IHDR より前にフレームがあります
+image too large for this system (over 500 Mpx)	画像がこのシステムには大きすぎます (500 Mpx 超)
+image too large: YAIF stores at most 65535 x 65535 pixels	画像が大きすぎます: YAIF が保存できるのは最大 65535 x 65535 ピクセルです
+level 0 needs an image of 256 colours or less	レベル 0 は 256 色以下の画像が必要です
+level 5 is lossy only (-m lossy or adaptive)	レベル 5 は非可逆専用です (-m lossy または adaptive)
+level must be 0..%1	レベルは 0..%1 の範囲で指定してください
+missing value after %1	%1 の後に値がありません
+no IHDR	IHDR がありません
+not a YAIF file	YAIF ファイルではありません
+quality must be 0..100	品質は 0..100 の範囲で指定してください
+quality must be 1..100	品質は 1..100 の範囲で指定してください
+second IHDR	2 つ目の IHDR
+the destination is a .yaif: use yaif encode	出力先が .yaif です: yaif encode を使ってください
+the source is a .yaif: use yaif decode	入力元が .yaif です: yaif decode を使ってください
+truncated file	ファイルが途中で切れています
+truncated file (missing frames)	ファイルが途中で切れています (フレーム不足)
+unknown decode option %1	不明な decode オプション: %1
+unknown mode %1	不明なモード: %1
+unknown option %1	不明なオプション: %1
+unsupported RAWH version	未対応の RAWH バージョン
+unsupported YAIF version (only v2)	未対応の YAIF バージョン (v2 のみ)
+unsupported bit depth	未対応のビット深度
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	未対応の出力拡張子: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 が利用可能です (現在は %2): %3
+TIFF compression failed	TIFF 圧縮に失敗しました

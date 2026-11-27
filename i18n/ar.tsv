@@ -1,0 +1,107 @@
+# Arabic. English text<TAB>translation; %1..%4 are the message arguments. Keep the layout (indent, option names).
+                                graphics, wavelet q 90 for photos	                                للرسومات، والمويجات q 90 للصور
+                       .yaif is)	                       ملف .yaif كذلك)
+              1-4 predictive (4 strongest), 5 lossy wavelet	              1-4 تنبؤي (4 الأقوى)، 5 مويجات مع فقدان
+              TIFF 16-bit float (linear)	              TIFF عائم 16 بت (خطي)
+              a JPEG source keeps its own quality, 50 + Q/2 up to 90)	              يحتفظ مصدر JPEG بجودته، 50 + Q/2 حتى 90)
+    (TIFF 16 bits, others 8 bits); .pgm: bare sensor frame	    (TIFF بـ 16 بت، والباقي 8 بت)؛ .pgm: إطار المستشعر الخام
+    -d ms     frame delay (animation)	    -d ms     التأخير بين الإطارات (رسوم متحركة)
+    -e 1-64   lossy max error per sample (default 2)	    -e 1-64   أقصى خطأ لكل عينة مع فقدان (الافتراضي 2)
+    -fast     WebP: about 4x faster, files 2-6 % larger	    -fast     WebP: أسرع بنحو 4 مرات، والملفات أكبر بنسبة 2-6 %
+    -hdr      HDR rendition: PNG 16 bits, AVIF/HEIC 10 bits (PQ),	    -hdr      عرض HDR: PNG بـ 16 بت، AVIF/HEIC بـ 10 بت (PQ)،
+    -l 0-5    method (default: the encoder tries them): 0 palette,	    -l 0-5    الطريقة (الافتراضي: يجرّبها المرمّز كلها): 0 لوحة ألوان،
+    -live f.mov  adds the Live Photo video	    -live f.mov  يضيف فيديو Live Photo
+    -look  camera's look (canon, default) or darktable's	    -look  مظهر الكاميرا (canon، الافتراضي) أو darktable
+    -m adaptive|lossless|lossy  default adaptive: lossless for	    -m adaptive|lossless|lossy  الافتراضي adaptive: بدون فقدان
+    -m lossy|lossless  WebP/AVIF/HEIC (default: lossless if the	    -m lossy|lossless  WebP/AVIF/HEIC (الافتراضي: بدون فقدان إذا كان
+    -q 0-100  wavelet quality (default 90, ~45 dB: visually lossless;	    -q 0-100  جودة المويجات (الافتراضي 90، ~45 dB: بدون فقدان مرئي؛
+    -q 1-100  quality (default: JPEG/WebP 90, AVIF 85, HEIC 60: ~44 dB)	    -q 1-100  الجودة (الافتراضي: JPEG/WebP 90، AVIF 85، HEIC 60: ~44 dB)
+    .avif with the gain map (libavif)	    .avif مع خريطة الكسب (libavif)
+    .dng: DNG; .png .tif .jpg .webp .avif .heic: developed with LibRaw	    .dng: DNG؛ .png .tif .jpg .webp .avif .heic: يُظهَّر بـ LibRaw
+    A lossy source stays lossy, a PNG/TIFF lossless (-m to choose)	    المصدر مع الفقدان يبقى كذلك، وPNG/TIFF بدون فقدان (-m للاختيار)
+    HDR gain map (iPhone HEIC): .jpg is written Ultra HDR, a lossy	    خريطة كسب HDR (HEIC من iPhone): يُكتب .jpg بصيغة Ultra HDR،
+    RAW: sensor frame kept losslessly (level 6)	    RAW: يُحفظ إطار المستشعر بدون فقدان (المستوى 6)
+    animation: dst_000.png, dst_001.png...	    رسوم متحركة: dst_000.png، dst_001.png...
+    any source encode reads -> any dst decode writes, in one step,	    أي مصدر يقرؤه encode -> أي وجهة يكتبها decode، في خطوة واحدة،
+    dst: .png .tif .jpg .webp .avif .heic (format from the extension)	    dst: .png .tif .jpg .webp .avif .heic (الصيغة حسب الامتداد)
+    metadata (EXIF/GPS, XMP, ICC, text) of the first source are kept	    تُحفظ بيانات المصدر الأول الوصفية (EXIF/GPS وXMP وICC والنص)
+    several sources = animation	    عدة مصادر = رسوم متحركة
+    sources: PNG, JPEG, HEIC/HEIF/AVIF (libheif), camera RAW (LibRaw)	    المصادر: PNG وJPEG وHEIC/HEIF/AVIF (libheif) وRAW الكاميرا (LibRaw)
+    with its metadata and HDR gain map; decode's options.	    مع بياناته الوصفية وخريطة كسب HDR؛ خيارات decode.
+    without dst: the first source with .yaif, next to it	    بدون dst: المصدر الأول بامتداد .yaif بجانبه
+  yaif preview <src.yaif> <dst.png>  thumbnail only (512 px), instant	  yaif preview <src.yaif> <dst.png>  الصورة المصغرة فقط (512 px)، فوري
+%1 exists. [r] replace, [n] new name, [c] cancel: 	%1 موجود. [r] استبدال، [n] اسم جديد، [c] إلغاء:
+%1 is not a readable image, and an encode destination must end in .yaif (for DNG, PNG, ...: yaif convert or yaif decode)	%1 ليست صورة قابلة للقراءة، ويجب أن تنتهي وجهة encode بـ .yaif (لـ DNG وPNG وغيرها: yaif convert أو yaif decode)
+%1: value missing	%1: القيمة مفقودة
+-look: canon or darktable	-look: canon أو darktable
+-m: lossy or lossless	-m: lossy أو lossless
+Applying the gain map (%1x%2)...	جارٍ تطبيق خريطة الكسب (%1x%2)...
+CRC mismatch	عدم تطابق CRC
+Cancelled.	أُلغي.
+Developing the RAW with LibRaw (%1 bits, camera white balance, %2)...	جارٍ تظهير RAW بـ LibRaw (%1 بت، توازن أبيض الكاميرا، %2)...
+Done: %1 bytes (%2) in %3	تم: %1 بايت (%2) خلال %3
+Done: %1 bytes, %2 % of the source (%3) in %4	تم: %1 بايت، %2 % من المصدر (%3) خلال %4
+Done: wrote %1 frames (%2...) in %3	تم: كُتب %1 إطارًا (%2...) خلال %3
+Done: wrote %1 in %2	تم: كُتب %1 خلال %2
+HEIF: %1	HEIF: %1
+JPEG encoding failed (out of memory)	فشل ترميز JPEG (نفدت الذاكرة)
+RAW development failed: %1	فشل تظهير RAW: %1
+RAW files have one frame	ملفات RAW فيها إطار واحد
+RAW frame too large	إطار RAW كبير جدًا
+RAW frame without RAWH	إطار RAW بدون RAWH
+RAW sources are always lossless, level 6 (no -m lossy, no -l)	مصادر RAW بدون فقدان دائمًا، المستوى 6 (لا -m lossy ولا -l)
+Reading %1 with LibRaw...	جارٍ قراءة %1 بـ LibRaw...
+Reading %1...	جارٍ قراءة %1...
+Usage:	الاستخدام:
+WebP: %1	WebP: %1
+Writing %1	جارٍ كتابة %1
+Writing %1 (%2x%3)...	جارٍ كتابة %1 (%2x%3)...
+Writing %1 with its gain map...	جارٍ كتابة %1 مع خريطة الكسب...
+Writing %1...	جارٍ كتابة %1...
+a RAW frame decodes to .dng, .png, .tif, .jpg (or .pgm: bare sensor frame)	يُفكّ ترميز إطار RAW إلى .dng أو .png أو .tif أو .jpg (أو .pgm: إطار المستشعر الخام)
+all frames must have the same size: %1	يجب أن تكون كل الإطارات بالحجم نفسه: %1
+bad FDLT	FDLT غير صالح
+bad FDLT region	منطقة FDLT غير صالحة
+bad GMAP	GMAP غير صالح
+bad IHDR	IHDR غير صالح
+bad PREV	PREV غير صالح
+bad RAW frame header	ترويسة إطار RAW غير صالحة
+bad RAWH	RAWH غير صالح
+bad plane count	عدد المستويات غير صالح
+bad size	حجم غير صالح
+cannot read %1	تعذّرت قراءة %1
+cannot read HEIC %1: %2	تعذّرت قراءة HEIC %1: %2
+cannot read RAW %1: %2	تعذّرت قراءة RAW %1: %2
+cannot read image %1	تعذّرت قراءة الصورة %1
+cannot write %1	تعذّرت الكتابة إلى %1
+corrupt GMAP	GMAP تالف
+corrupt PREV	PREV تالف
+corrupt frame	إطار تالف
+delta frame before full frame	إطار دلتا قبل الإطار الكامل
+encode needs at least one source	يحتاج encode إلى مصدر واحد على الأقل
+eps must be 1..64	يجب أن تكون eps بين 1 و64
+frame before IHDR	إطار قبل IHDR
+image too large for this system (over 500 Mpx)	الصورة أكبر من أن يتحمّلها هذا النظام (أكثر من 500 Mpx)
+image too large: YAIF stores at most 65535 x 65535 pixels	الصورة كبيرة جدًا: يخزّن YAIF 65535 x 65535 بكسل كحد أقصى
+level 0 needs an image of 256 colours or less	يحتاج المستوى 0 إلى صورة بـ 256 لونًا أو أقل
+level 5 is lossy only (-m lossy or adaptive)	المستوى 5 مع فقدان فقط (-m lossy أو adaptive)
+level must be 0..%1	يجب أن يكون المستوى بين 0 و%1
+missing value after %1	القيمة مفقودة بعد %1
+no IHDR	لا يوجد IHDR
+not a YAIF file	ليس ملف YAIF
+quality must be 0..100	يجب أن تكون الجودة بين 0 و100
+quality must be 1..100	يجب أن تكون الجودة بين 1 و100
+second IHDR	IHDR ثانٍ
+the destination is a .yaif: use yaif encode	الوجهة ملف .yaif: استخدم yaif encode
+the source is a .yaif: use yaif decode	المصدر ملف .yaif: استخدم yaif decode
+truncated file	ملف مبتور
+truncated file (missing frames)	ملف مبتور (إطارات مفقودة)
+unknown decode option %1	خيار decode غير معروف %1
+unknown mode %1	وضع غير معروف %1
+unknown option %1	خيار غير معروف %1
+unsupported RAWH version	إصدار RAWH غير مدعوم
+unsupported YAIF version (only v2)	إصدار YAIF غير مدعوم (v2 فقط)
+unsupported bit depth	عمق بت غير مدعوم
+unsupported output extension: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)	امتداد إخراج غير مدعوم: %1 (.png .tif .jpg .webp .avif .heic .heif .pam)
+yaif %1 is available (this is %2): %3	yaif %1 متاح (الحالي %2): %3
+TIFF compression failed	فشل ضغط TIFF
